@@ -11,7 +11,14 @@ export const createSupabaseClient = (token: string) => {
   const supabaseClient = createClient<DB>(
     Deno.env.get("SUPABASE_URL") ?? "",
     Deno.env.get("SUPABASE_ANON_KEY") ?? "",
-    { global: { headers: { Authorization: token } } }
+    {
+      global: { headers: { Authorization: token } },
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+      },
+    }
   );
 
   return supabaseClient;
@@ -20,7 +27,14 @@ export const createSupabaseClient = (token: string) => {
 export const createSupabaseServerClient = () => {
   const supabaseClient = createClient<DB>(
     Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+    {
+      auth: {
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+        persistSession: false,
+      },
+    }
   );
 
   return supabaseClient;

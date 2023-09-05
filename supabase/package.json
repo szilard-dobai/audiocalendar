@@ -1,0 +1,17 @@
+{
+  "name": "@audiocalendar/supabase",
+  "scripts": {
+    "start": "supabase status || supabase start",
+    "poststart": "supabase migration up",
+    "dev": "supabase functions serve",
+    "reset": "supabase db reset || supabase start",
+    "stop": "supabase stop",
+    "pull-schema": "supabase db remote commit",
+    "lint": "deno lint",
+    "typecheck": "deno check functions/**/*.ts"
+  },
+  "devDependencies": {
+    "@audiocalendar/types": "workspace:*",
+    "supabase": "^1.77.6"
+  }
+}

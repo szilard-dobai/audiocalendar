@@ -1,0 +1,15 @@
+{
+  "name": "@audiocalendar/types",
+  "version": "1.0.0",
+  "description": "",
+  "main": "database.ts",
+  "scripts": {
+    "generate": "supabase gen types typescript --linked > ./database.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "supabase": "^1.77.6"
+  }
+}

@@ -34,7 +34,40 @@ export interface Database {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      spotify_tokens: {
+        Row: {
+          accessToken: string | null
+          expiresAt: number | null
+          expiresIn: number | null
+          lastUpdatedAt: string
+          refreshToken: string | null
+          userId: string
+        }
+        Insert: {
+          accessToken?: string | null
+          expiresAt?: number | null
+          expiresIn?: number | null
+          lastUpdatedAt?: string
+          refreshToken?: string | null
+          userId: string
+        }
+        Update: {
+          accessToken?: string | null
+          expiresAt?: number | null
+          expiresIn?: number | null
+          lastUpdatedAt?: string
+          refreshToken?: string | null
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "spotify_tokens_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never

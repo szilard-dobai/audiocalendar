@@ -127,8 +127,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/types
       supabase:
-        specifier: ^1.77.6
-        version: 1.77.6
+        specifier: ^1.93.0
+        version: 1.93.0
 
 packages:
 
@@ -3603,6 +3603,17 @@ packages:
 
   /supabase@1.77.6:
     resolution: {integrity: sha512-eBVTStN/55RMmf2pNTpmd28afNj5Pn7ta0JudpWDylcaIJH0W+oAnuWdwovCkFWIa5W+nBwoajYRvQKHzwMkkQ==}
+    engines: {npm: '>=8'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      bin-links: 4.0.2
+      node-fetch: 3.3.1
+      tar: 6.1.15
+    dev: true
+
+  /supabase@1.93.0:
+    resolution: {integrity: sha512-7VKWPVy1QSnBcx/ubKIGFOWw9LjL6C1sMTh0d+ox0TP69+KhzphlA4Z/iFPvC6x9gUwhe9UTI0AdqJYsIwrPEA==}
     engines: {npm: '>=8'}
     hasBin: true
     requiresBuild: true

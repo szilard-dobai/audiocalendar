@@ -12,6 +12,6 @@
   },
   "devDependencies": {
     "@audiocalendar/types": "workspace:*",
-    "supabase": "^1.77.6"
+    "supabase": "^1.93.0"
   }
 }

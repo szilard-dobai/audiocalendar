@@ -26,6 +26,9 @@ importers:
 
   app:
     dependencies:
+      '@spotify/web-api-ts-sdk':
+        specifier: ^1.1.1
+        version: 1.1.1
       '@supabase/auth-ui-react':
         specifier: ^0.4.2
         version: 0.4.2(@supabase/supabase-js@2.26.0)
@@ -495,6 +498,10 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
     dev: true
+
+  /@spotify/web-api-ts-sdk@1.1.1:
+    resolution: {integrity: sha512-HKCpfuc7VNMGG5LnkgiSJzC2NlvvM5q+XyG3nm6vQgxAYSrTfhdJtyF/vJLtJCpjZa5I0Q/FdoeDOxqTP8mcaA==}
+    dev: false
 
   /@stitches/core@1.2.8:
     resolution: {integrity: sha512-Gfkvwk9o9kE9r9XNBmJRfV8zONvXThnm1tcuojL04Uy5uRyqg93DC83lDebl0rocZCfKSjUv+fWYtMQmEDJldg==}

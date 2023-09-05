@@ -1,16 +1,12 @@
-import { Database } from "@audiocalendar/types";
-import { createClient } from "@supabase/supabase-js";
-import { useMemo } from "react";
-
-const getSupabaseBrowserClient = () => {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_PROJECT_URL;
-  const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_API_KEY;
-
-  return createClient<Database>(supabaseUrl, supabaseKey);
-};
+import { useContext } from "react";
+import { SupabaseContext } from "../components/SupabaseProvider";
 
 const useSupabase = () => {
-  return useMemo(getSupabaseBrowserClient, []);
+  const supabase = useContext(SupabaseContext);
+  if (!supabase) {
+    throw new Error("No supabase client!");
+  }
+  return supabase;
 };
 
 export default useSupabase;

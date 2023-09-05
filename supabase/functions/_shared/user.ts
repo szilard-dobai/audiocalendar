@@ -7,15 +7,9 @@ export const getUserFromRequest = async (req: Request) => {
     data: { user },
   } = await client.auth.getUser();
 
-  const { data: userData } = await client
-    .from("users")
-    .select("*")
-    .eq("id", user?.id)
-    .single();
-
-  if (!user || !userData) {
+  if (!user) {
     throw new Error("Not authenticated!");
   }
 
-  return userData;
+  return user;
 };

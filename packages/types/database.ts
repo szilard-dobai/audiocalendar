@@ -34,6 +34,70 @@ export interface Database {
   }
   public: {
     Tables: {
+      history: {
+        Row: {
+          album: string
+          albumId: string
+          albumImage: string
+          albumUrl: string
+          artist: string
+          artistId: string
+          artistUrl: string
+          contextUrl: string | null
+          id: string
+          playedAt: string
+          song: string
+          songDuration: number
+          songId: string
+          songPreviewUrl: string | null
+          songUrl: string
+          userId: string
+        }
+        Insert: {
+          album: string
+          albumId: string
+          albumImage: string
+          albumUrl: string
+          artist: string
+          artistId: string
+          artistUrl: string
+          contextUrl?: string | null
+          id?: string
+          playedAt: string
+          song: string
+          songDuration: number
+          songId: string
+          songPreviewUrl?: string | null
+          songUrl: string
+          userId: string
+        }
+        Update: {
+          album?: string
+          albumId?: string
+          albumImage?: string
+          albumUrl?: string
+          artist?: string
+          artistId?: string
+          artistUrl?: string
+          contextUrl?: string | null
+          id?: string
+          playedAt?: string
+          song?: string
+          songDuration?: number
+          songId?: string
+          songPreviewUrl?: string | null
+          songUrl?: string
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "history_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       spotify_tokens: {
         Row: {
           accessToken: string | null
@@ -70,7 +134,34 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      latest_played_songs: {
+        Row: {
+          album: string | null
+          albumId: string | null
+          albumImage: string | null
+          albumUrl: string | null
+          artist: string | null
+          artistId: string | null
+          artistUrl: string | null
+          contextUrl: string | null
+          id: string | null
+          playedAt: string | null
+          song: string | null
+          songDuration: number | null
+          songId: string | null
+          songPreviewUrl: string | null
+          songUrl: string | null
+          userId: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "history_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Functions: {
       [_ in never]: never

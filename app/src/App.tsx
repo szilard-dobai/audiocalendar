@@ -1,28 +1,38 @@
 import { useQuery } from "@tanstack/react-query";
 import Auth from "./components/Auth";
 import ReactQueryProvider from "./components/ReactQueryProvider";
-import { useSpotify } from "./hooks/useSpotify";
 import SpotifyProvider from "./components/SpotifyProvider";
-import { useAuth } from "./hooks/useAuth";
 import SupabaseProvider from "./components/SupabaseProvider";
+import { useAuth } from "./hooks/useAuth";
+import useSupabase from "./hooks/useSupabase";
 
 const A = () => {
-  const x = useSpotify();
+  const supabase = useSupabase();
   const { logout } = useAuth();
 
   const { data } = useQuery({
     queryFn: async () => {
-      return x.player.getRecentlyPlayedTracks();
+      const { data } = await supabase
+        .from("history")
+        .select("*")
+        .order("playedAt", { ascending: false });
+
+      return data;
     },
-    queryKey: ["test"],
+    queryKey: ["test2"],
   });
 
   return (
     <div>
-      {data?.items.map((el) => (
-        <p key={el.played_at + el.track.id}>
-          {el.track.id}, {el.track.name}, {el.track.artists[0].name}
-        </p>
+      {data?.map((el) => (
+        <div key={el.id}>
+          <p>
+            <strong>{el.playedAt}</strong>
+            <br />
+            {el.id}, {el.artist}, {el.album}, {el.song}
+          </p>
+          {el.songPreviewUrl && <audio src={el.songPreviewUrl} controls />}
+        </div>
       ))}
 
       <button onClick={() => logout()}>log out</button>

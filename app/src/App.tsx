@@ -25,9 +25,23 @@ const A = () => {
   return (
     <div>
       {data?.map((el) => (
-        <div key={el.id}>
+        <div
+          key={el.id}
+          style={{
+            paddingBottom: "1rem",
+            marginBottom: "1rem",
+            borderBottom: "1px solid black",
+          }}
+        >
           <p>
             <strong>{el.playedAt}</strong>
+            <br />
+            <img
+              src={el.albumImage}
+              width={100}
+              height={100}
+              style={{ border: "1px solid black" }}
+            />
             <br />
             {el.id}, {el.artist}, {el.album}, {el.song}
           </p>

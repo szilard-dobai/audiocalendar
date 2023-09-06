@@ -1,22 +1,12 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
-import dayjs from "https://esm.sh/dayjs";
+import dayjs from "https://esm.sh/dayjs@1.11.9";
 import { corsHeaders } from "../_shared/cors.ts";
 import { createResponse } from "../_shared/createResponse.ts";
 import { createSpotifyClient } from "../_shared/spotifyClient.ts";
 import { createSupabaseServerClient } from "../_shared/supabaseClient.ts";
 import { mapTrackToSong } from "./mapTrackToSong.ts";
 import type { QueryRange, Song } from "./types.ts";
-
-const validateRequest = (headers: Headers) => {
-  if (
-    headers.get("Authorization") !==
-      `Bearer ${Deno.env.get("SUPABASE_ANON_KEY")}` &&
-    headers.get("WWW-Authenticate") !==
-      `Bearer ${Deno.env.get("VITE_SYNC_SONGS_SECRET")}`
-  ) {
-    throw new Error("Unauthorized!");
-  }
-};
+import { validateRequest } from "./validateRequest.ts";
 
 serve(async (req) => {
   // This is needed in order to invoke function from a browser.
@@ -89,6 +79,7 @@ serve(async (req) => {
     });
   }
 });
+
 // To invoke:
 // curl -i --location --request POST 'http://localhost:54321/functions/v1/sync-songs' \
 //   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \

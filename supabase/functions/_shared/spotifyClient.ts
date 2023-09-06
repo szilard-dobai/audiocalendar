@@ -27,6 +27,7 @@ export const createSpotifyClient = async ({
       !expiresIn ||
       dayjs((expiresAt + expiresIn) * 1000).isBefore(now))
   ) {
+    console.log(`Refreshed token for ${userId}`);
     const newToken = await getNewAccessToken(refreshToken);
     token = newToken.access_token;
     await supabase.from("spotify_tokens").upsert(

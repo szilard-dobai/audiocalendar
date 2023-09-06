@@ -14,10 +14,7 @@ const createSpotifyClient = (session: Session | null | undefined) => {
 
   const client = SpotifyApi.withAccessToken(
     import.meta.env.VITE_SPOTIFY_CLIENT_ID,
-    {
-      access_token: session.provider_token,
-      refresh_token: session.provider_refresh_token,
-    } as AccessToken
+    { access_token: session.provider_token } as AccessToken
     // NOTE: withAccessToken() is typed as requiring additional properties on the argument object but it's not really the case
   );
 

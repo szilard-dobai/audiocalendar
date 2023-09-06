@@ -43,7 +43,10 @@ const useLogin = () => {
     mutationFn: async () => {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "spotify",
-        options: { scopes: Scopes.userRecents.join(" ") },
+        options: {
+          scopes: Scopes.userRecents.join(" "),
+          redirectTo: window.location.origin,
+        },
       });
       if (error) {
         throw error;

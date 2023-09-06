@@ -24,6 +24,8 @@ const A = () => {
 
   return (
     <div>
+      <button onClick={() => logout()}>Log out</button>
+
       {data?.map((el) => (
         <div
           key={el.id}
@@ -48,8 +50,6 @@ const A = () => {
           {el.songPreviewUrl && <audio src={el.songPreviewUrl} controls />}
         </div>
       ))}
-
-      <button onClick={() => logout()}>log out</button>
     </div>
   );
 };

@@ -9,7 +9,7 @@ const Auth = ({ children }: PropsWithChildren) => {
   }
 
   if (status === "unauthenticated") {
-    return <button onClick={() => login()}>Login</button>;
+    return <button onClick={() => login()}>Log in</button>;
   }
 
   return <>{children}</>;

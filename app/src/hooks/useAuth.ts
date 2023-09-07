@@ -18,19 +18,47 @@ const getStatus = (
 };
 
 export const useAuth = () => {
-  const { mutate: login, isLoading: isLoggingIn } = useLogin();
-  const { mutate: logout, isLoading: isLoggingOut } = useLogout();
+  const registerMutation = useRegister();
+  const loginMutation = useLogin();
+  const logoutMutation = useLogout();
   const { data: session, isLoading: isLoadingSession } = useSession();
 
-  const isLoading = isLoggingIn || isLoggingOut || isLoadingSession;
-
   return {
-    isLoading,
-    login,
-    logout,
+    registerMutation,
+    loginMutation,
+    logoutMutation,
     session,
-    status: getStatus(session, isLoading),
+    isLoading: isLoadingSession,
+    status: getStatus(session, isLoadingSession),
   };
+};
+
+const useRegister = () => {
+  const supabase = useSupabase();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      email,
+      password,
+    }: {
+      email: string;
+      password: string;
+    }) => {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+      if (error) {
+        throw error.message;
+      }
+      return data;
+    },
+    onSuccess: (session) => {
+      queryClient.setQueryData(["session"], session);
+    },
+    retry: false,
+  });
 };
 
 const useLogin = () => {
@@ -50,7 +78,7 @@ const useLogin = () => {
         password,
       });
       if (error) {
-        throw error;
+        throw error.message;
       }
       return data;
     },
@@ -69,7 +97,7 @@ const useLogout = () => {
     mutationFn: async () => {
       const { error } = await supabase.auth.signOut();
       if (error) {
-        throw error;
+        throw error.message;
       }
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["session"] }),
@@ -85,7 +113,7 @@ const useSession = () => {
     queryFn: async () => {
       const { data, error } = await supabase.auth.getSession();
       if (error) {
-        throw error;
+        throw error.message;
       }
       return data.session;
     },

@@ -11,7 +11,9 @@ import useSupabase from "./hooks/useSupabase";
 const A = () => {
   const supabase = useSupabase();
   // const spotify = useSpotify();
-  const { logout } = useAuth();
+  const {
+    logoutMutation: { mutate: logout },
+  } = useAuth();
   const { mutate, isLoading } = useAuthorizeSpotify();
 
   const { data } = useQuery({

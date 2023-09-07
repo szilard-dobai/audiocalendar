@@ -70,6 +70,6 @@ export const getNewAccessToken = async (
   });
 
   const json: RefreshTokenResponse = await response.json();
-
+  console.log(json);
   return json;
 };

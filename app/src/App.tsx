@@ -1,9 +1,11 @@
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useQuery } from "@tanstack/react-query";
 import Auth from "./components/Auth";
 import ReactQueryProvider from "./components/ReactQueryProvider";
 import SpotifyProvider from "./components/SpotifyProvider";
 import SupabaseProvider from "./components/SupabaseProvider";
 import { useAuth } from "./hooks/useAuth";
+import { useAuthorizeGoogle } from "./hooks/useAuthorizeGoogle";
 import { useAuthorizeSpotify } from "./hooks/useAuthorizeSpotify";
 import useSupabase from "./hooks/useSupabase";
 // import { useSpotify } from "./hooks/useSpotify";
@@ -14,7 +16,10 @@ const A = () => {
   const {
     logoutMutation: { mutate: logout },
   } = useAuth();
-  const { mutate, isLoading } = useAuthorizeSpotify();
+  const { mutate: authorizeSpotify, isLoading: isAuthorizingSpotify } =
+    useAuthorizeSpotify();
+  const { mutate: authorizeGoogle, isLoading: isAuthorizingGoogle } =
+    useAuthorizeGoogle();
 
   const { data } = useQuery({
     queryFn: async () => {
@@ -33,9 +38,16 @@ const A = () => {
   return (
     <div>
       <button onClick={() => logout()}>Log out</button>
-      <button onClick={() => mutate()} disabled={isLoading}>
+      <button
+        onClick={() => authorizeSpotify()}
+        disabled={isAuthorizingSpotify}
+      >
         Authorize Spotify
       </button>
+      <button onClick={() => authorizeGoogle()} disabled={isAuthorizingGoogle}>
+        Authorize Google
+      </button>
+
       {data?.map((el) => (
         <div
           key={el.id}
@@ -68,11 +80,13 @@ const App = () => {
   return (
     <ReactQueryProvider>
       <SupabaseProvider>
-        <Auth>
-          <SpotifyProvider>
-            <A />
-          </SpotifyProvider>
-        </Auth>
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+          <Auth>
+            <SpotifyProvider>
+              <A />
+            </SpotifyProvider>
+          </Auth>
+        </GoogleOAuthProvider>
       </SupabaseProvider>
     </ReactQueryProvider>
   );

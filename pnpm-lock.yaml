@@ -26,6 +26,9 @@ importers:
 
   app:
     dependencies:
+      '@react-oauth/google':
+        specifier: ^0.11.1
+        version: 0.11.1(react-dom@18.2.0)(react@18.2.0)
       '@spotify/web-api-ts-sdk':
         specifier: ^1.1.1
         version: 1.1.1
@@ -492,6 +495,16 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
     dev: true
+
+  /@react-oauth/google@0.11.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-tywZisXbsdaRBVbEu0VX6dRbOSL2I6DgY97woq5NMOOOz+xtDsm418vqq+Vx10KMtra3kdHMRMf0hXLWrk2RMg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /@spotify/web-api-ts-sdk@1.1.1:
     resolution: {integrity: sha512-HKCpfuc7VNMGG5LnkgiSJzC2NlvvM5q+XyG3nm6vQgxAYSrTfhdJtyF/vJLtJCpjZa5I0Q/FdoeDOxqTP8mcaA==}

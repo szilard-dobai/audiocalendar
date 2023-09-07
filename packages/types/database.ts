@@ -34,6 +34,43 @@ export interface Database {
   }
   public: {
     Tables: {
+      google_tokens: {
+        Row: {
+          accessToken: string | null
+          expiresAt: number | null
+          expiresIn: number | null
+          lastUpdatedAt: string
+          redirectUri: string | null
+          refreshToken: string | null
+          userId: string
+        }
+        Insert: {
+          accessToken?: string | null
+          expiresAt?: number | null
+          expiresIn?: number | null
+          lastUpdatedAt?: string
+          redirectUri?: string | null
+          refreshToken?: string | null
+          userId: string
+        }
+        Update: {
+          accessToken?: string | null
+          expiresAt?: number | null
+          expiresIn?: number | null
+          lastUpdatedAt?: string
+          redirectUri?: string | null
+          refreshToken?: string | null
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "google_tokens_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       history: {
         Row: {
           album: string

@@ -25,7 +25,7 @@ export const createSpotifyClient = async ({
     !accessToken ||
     !expiresAt ||
     !expiresIn ||
-    dayjs(expiresAt).add(expiresIn, "seconds").isBefore(now)
+    dayjs(expiresAt).isBefore(now)
   ) {
     if (!refreshToken) {
       return;

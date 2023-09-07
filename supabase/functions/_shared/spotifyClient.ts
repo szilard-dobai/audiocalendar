@@ -19,34 +19,36 @@ export const createSpotifyClient = async ({
 }: SpotifyToken) => {
   const supabase = createSupabaseServerClient();
   const now = dayjs();
-  let token: string;
+  let token: string | null;
 
   if (
-    refreshToken &&
-    (!expiresAt ||
-      !expiresIn ||
-      dayjs((expiresAt + expiresIn) * 1000).isBefore(now))
+    !accessToken ||
+    !expiresAt ||
+    !expiresIn ||
+    dayjs(expiresAt).add(expiresIn, "seconds").isBefore(now)
   ) {
-    console.log(`Refreshed token for ${userId}`);
+    if (!refreshToken) {
+      return;
+    }
+
+    console.log(`Refreshing token for ${userId}`);
     const newToken = await getNewAccessToken(refreshToken);
     token = newToken.access_token;
     await supabase.from("spotify_tokens").upsert(
       {
-        accessToken,
-        userId: userId,
-        expiresAt: now.add(newToken.expires_in, "seconds").valueOf() / 1000,
+        userId,
+        accessToken: token,
+        expiresAt: now.add(newToken.expires_in, "seconds").valueOf(),
       },
       { onConflict: "userId" }
     );
   } else {
-    token = accessToken!;
+    token = accessToken;
   }
 
-  const spotify = SpotifyApi.withAccessToken(CLIENT_ID, {
+  return SpotifyApi.withAccessToken(CLIENT_ID, {
     access_token: token,
   } as AccessToken);
-
-  return spotify;
 };
 
 type RefreshTokenResponse = {

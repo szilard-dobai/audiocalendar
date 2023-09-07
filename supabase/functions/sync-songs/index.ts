@@ -21,14 +21,6 @@ serve(async (req) => {
 
     const supabase = createSupabaseServerClient();
 
-    const { data: spotifyTokens } = await supabase
-      .from("spotify_tokens")
-      .select("*");
-
-    if (!spotifyTokens) {
-      throw new Error("No spotify tokens!");
-    }
-
     const { data: latestPlayedSongs } = await supabase
       .from("latest_played_songs")
       .select("*")
@@ -39,33 +31,52 @@ serve(async (req) => {
         {}
       ) || {};
 
-    for (const token of spotifyTokens) {
-      const lastSong = latestUserSongMap[token.userId];
-      const userId = token.userId;
+    const { data: spotifyTokens } = await supabase
+      .from("spotify_tokens")
+      .select("*");
+    if (!spotifyTokens) {
+      throw new Error("No spotify tokens!");
+    }
 
-      const spotify = await createSpotifyClient(token);
-      if (!spotify) {
-        console.error(`Error creating spotify client for ${userId}`);
-        continue;
-      }
+    const promises = await Promise.allSettled(
+      spotifyTokens.map(async (token) => {
+        const userId = token.userId;
+        const latestSong = latestUserSongMap[userId];
 
-      const recentlyPlayedTracksFilter: QueryRange | undefined =
-        lastSong?.playedAt
-          ? {
-              timestamp: dayjs(lastSong.playedAt).valueOf(),
-              type: "after",
-            }
-          : undefined;
-      const { items: songs } = await spotify.player.getRecentlyPlayedTracks(
-        20,
-        recentlyPlayedTracksFilter
-      );
-      await supabase.from("history").insert(
-        songs.map((track) => ({
-          ...mapTrackToSong(track),
-          userId,
-        }))
-      );
+        const spotify = await createSpotifyClient(token);
+        if (!spotify) {
+          throw new Error(`Error creating spotify client for ${userId}`);
+        }
+
+        try {
+          const recentlyPlayedTracksFilter: QueryRange | undefined =
+            latestSong?.playedAt
+              ? {
+                  timestamp: dayjs(latestSong.playedAt).valueOf(),
+                  type: "after",
+                }
+              : undefined;
+          const { items: songs } = await spotify.player.getRecentlyPlayedTracks(
+            50,
+            recentlyPlayedTracksFilter
+          );
+          await supabase.from("history").insert(
+            songs.map((track) => ({
+              ...mapTrackToSong(track),
+              userId,
+            }))
+          );
+        } catch (e) {
+          throw new Error(`${e.message} for ${userId}`);
+        }
+      })
+    );
+
+    const rejectedPromises = promises.filter(
+      ({ status }) => status === "rejected"
+    ) as PromiseRejectedResult[];
+    if (rejectedPromises.length) {
+      throw new Error(rejectedPromises.map(({ reason }) => reason).join(", "));
     }
 
     return createResponse({

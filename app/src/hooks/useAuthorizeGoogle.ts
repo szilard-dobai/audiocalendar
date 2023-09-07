@@ -8,7 +8,7 @@ export const useAuthorizeGoogle = () => {
     scope: "https://www.googleapis.com/auth/calendar",
     flow: "auth-code",
     onSuccess: (response) =>
-      supabase.functions.invoke("exchange-google-code", {
+      supabase.functions.invoke("setup-google", {
         body: JSON.stringify({
           ...response,
           redirectUri: window.location.origin,

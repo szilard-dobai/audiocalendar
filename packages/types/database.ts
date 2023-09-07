@@ -34,6 +34,28 @@ export interface Database {
   }
   public: {
     Tables: {
+      google_calendars: {
+        Row: {
+          id: string
+          userId: string
+        }
+        Insert: {
+          id: string
+          userId: string
+        }
+        Update: {
+          id?: string
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "google_calendars_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       google_tokens: {
         Row: {
           accessToken: string | null

@@ -9,6 +9,7 @@ import { mapTrackToSong } from "./mapTrackToSong.ts";
 import type { QueryRange, Song } from "./types.ts";
 import { validateRequest } from "./validateRequest.ts";
 
+// NOTE: possible optimization: have a function that queries the list of users & latest songs, then for each one calls a different function that actually does the syncing
 serve(async (req) => {
   // This is needed in order to invoke function from a browser.
   // Note: might not need this actually

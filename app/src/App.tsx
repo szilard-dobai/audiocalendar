@@ -4,11 +4,15 @@ import ReactQueryProvider from "./components/ReactQueryProvider";
 import SpotifyProvider from "./components/SpotifyProvider";
 import SupabaseProvider from "./components/SupabaseProvider";
 import { useAuth } from "./hooks/useAuth";
+import { useAuthorizeSpotify } from "./hooks/useAuthorizeSpotify";
 import useSupabase from "./hooks/useSupabase";
+// import { useSpotify } from "./hooks/useSpotify";
 
 const A = () => {
   const supabase = useSupabase();
+  // const spotify = useSpotify();
   const { logout } = useAuth();
+  const { mutate, isLoading } = useAuthorizeSpotify();
 
   const { data } = useQuery({
     queryFn: async () => {
@@ -16,16 +20,20 @@ const A = () => {
         .from("history")
         .select("*")
         .order("playedAt", { ascending: false });
-
+      // const data = await spotify.player.getRecentlyPlayedTracks();
       return data;
     },
     queryKey: ["test2"],
   });
 
+  console.log(data);
+
   return (
     <div>
       <button onClick={() => logout()}>Log out</button>
-
+      <button onClick={() => mutate()} disabled={isLoading}>
+        Authorize Spotify
+      </button>
       {data?.map((el) => (
         <div
           key={el.id}

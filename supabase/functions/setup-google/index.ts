@@ -66,7 +66,7 @@ serve(async (req) => {
   } catch (error) {
     const slack = createSlackClient();
     await slack.chat.postMessage({
-      text: `Uh oh, \`setup-google\' encountered an error: ${error.message}!`,
+      text: `Uh oh, \`setup-google\` encountered an error: ${error.message}!`,
       channel: "C05QUF7G30F",
     });
 

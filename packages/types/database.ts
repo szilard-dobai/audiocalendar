@@ -95,6 +95,7 @@ export interface Database {
       }
       history: {
         Row: {
+          addedToCalendar: boolean
           album: string
           albumId: string
           albumImage: string
@@ -113,6 +114,7 @@ export interface Database {
           userId: string
         }
         Insert: {
+          addedToCalendar?: boolean
           album: string
           albumId: string
           albumImage: string
@@ -131,6 +133,7 @@ export interface Database {
           userId: string
         }
         Update: {
+          addedToCalendar?: boolean
           album?: string
           albumId?: string
           albumImage?: string

@@ -1,10 +1,10 @@
+import { encode } from "https://deno.land/std@0.201.0/encoding/base64.ts";
 import {
   SpotifyApi,
   type AccessToken,
 } from "https://esm.sh/@spotify/web-api-ts-sdk";
-import { SpotifyToken } from "../sync-songs/types.ts";
-import { encode } from "https://deno.land/std@0.201.0/encoding/base64.ts";
 import dayjs from "https://esm.sh/dayjs";
+import { SpotifyToken } from "../sync-songs/types.ts";
 import { createSupabaseServerClient } from "./supabaseClient.ts";
 
 const CLIENT_ID = Deno.env.get("VITE_SPOTIFY_CLIENT_ID") || "";
@@ -39,6 +39,8 @@ export const createSpotifyClient = async ({
         userId,
         accessToken: token,
         expiresAt: now.add(newToken.expires_in, "seconds").valueOf(),
+        expiresIn: newToken.expires_in,
+        refreshToken: newToken.refresh_token,
       },
       { onConflict: "userId" }
     );
@@ -55,6 +57,7 @@ type RefreshTokenResponse = {
   access_token: string;
   token_type: string;
   expires_in: number;
+  refresh_token: string;
   scope: string;
 };
 export const getNewAccessToken = async (

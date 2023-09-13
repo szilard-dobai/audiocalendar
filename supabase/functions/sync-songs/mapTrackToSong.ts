@@ -1,5 +1,5 @@
 import type { PlayHistory } from "https://esm.sh/@spotify/web-api-ts-sdk";
-import type { Song } from "./types.ts";
+import type { Song } from "../_shared/supabaseClient.ts";
 
 export const mapTrackToSong = (
   song: PlayHistory
@@ -29,5 +29,6 @@ export const mapTrackToSong = (
     songUrl: song.track.external_urls.spotify,
     contextUrl: song.context?.external_urls?.spotify,
     songPreviewUrl: song.track.preview_url,
+    addedToCalendar: false,
   };
 };

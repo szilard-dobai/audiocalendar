@@ -4,9 +4,12 @@ import { corsHeaders } from "../_shared/cors.ts";
 import { createResponse } from "../_shared/createResponse.ts";
 import { createSlackClient } from "../_shared/slackClient.ts";
 import { createSpotifyClient } from "../_shared/spotifyClient.ts";
-import { createSupabaseServerClient } from "../_shared/supabaseClient.ts";
+import {
+  createSupabaseServerClient,
+  type Song,
+} from "../_shared/supabaseClient.ts";
 import { mapTrackToSong } from "./mapTrackToSong.ts";
-import type { QueryRange, Song } from "./types.ts";
+import type { QueryRange } from "./types.ts";
 import { validateRequest } from "./validateRequest.ts";
 
 // NOTE: possible optimization: have a function that queries the list of users & latest songs, then for each one calls a different function that actually does the syncing
@@ -39,7 +42,7 @@ serve(async (req) => {
       throw new Error("No spotify tokens!");
     }
 
-    const promises = await Promise.allSettled(
+    await Promise.all(
       spotifyTokens.map(async (token) => {
         const userId = token.userId;
         const latestSong = latestUserSongMap[userId];
@@ -61,24 +64,16 @@ serve(async (req) => {
             50,
             recentlyPlayedTracksFilter
           );
-          await supabase.from("history").insert(
-            songs.map((track) => ({
-              ...mapTrackToSong(track),
-              userId,
-            }))
-          );
+          await supabase
+            .from("history")
+            .insert(
+              songs.map((track) => ({ ...mapTrackToSong(track), userId }))
+            );
         } catch (e) {
           throw new Error(`${e.message} for ${userId}`);
         }
       })
     );
-
-    const rejectedPromises = promises.filter(
-      ({ status }) => status === "rejected"
-    ) as PromiseRejectedResult[];
-    if (rejectedPromises.length) {
-      throw new Error(rejectedPromises.map(({ reason }) => reason).join(", "));
-    }
 
     return createResponse({
       code: 200,

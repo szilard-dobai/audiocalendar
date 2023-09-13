@@ -7,6 +7,11 @@ import { type Database as DB } from "../../../packages/types/database.ts";
 export type Client = SupabaseClient<DB>;
 export type Database = DB;
 
+export type Song = Database["public"]["Tables"]["history"]["Row"];
+export type Calendar = Database["public"]["Tables"]["google_calendars"]["Row"];
+export type SpotifyToken =
+  Database["public"]["Tables"]["spotify_tokens"]["Row"];
+
 export const createSupabaseClient = (token: string) => {
   const supabaseClient = createClient<DB>(
     Deno.env.get("SUPABASE_URL") ?? "",

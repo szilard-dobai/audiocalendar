@@ -8,6 +8,7 @@ import {
   createSupabaseServerClient,
   type Song,
 } from "../_shared/supabaseClient.ts";
+import { verifyPromises } from "../_shared/verifyPromises.ts";
 import { mapTrackToSong } from "./mapTrackToSong.ts";
 import type { QueryRange } from "./types.ts";
 import { validateRequest } from "./validateRequest.ts";
@@ -42,7 +43,7 @@ serve(async (req) => {
       throw new Error("No spotify tokens!");
     }
 
-    await Promise.all(
+    const promises = await Promise.allSettled(
       spotifyTokens.map(async (token) => {
         const userId = token.userId;
         const latestSong = latestUserSongMap[userId];
@@ -74,6 +75,8 @@ serve(async (req) => {
         }
       })
     );
+
+    verifyPromises(promises);
 
     return createResponse({
       code: 200,

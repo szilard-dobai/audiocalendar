@@ -5,6 +5,7 @@ import { corsHeaders } from "../_shared/cors.ts";
 import { createResponse } from "../_shared/createResponse.ts";
 import { createSlackClient } from "../_shared/slackClient.ts";
 import { createSupabaseServerClient } from "../_shared/supabaseClient.ts";
+import { verifyPromises } from "../_shared/verifyPromises.ts";
 import { getCalendars, getSongs, getTokens } from "./helpers.ts";
 
 const GOOGLE_CLIENT_ID = Deno.env.get("VITE_GOOGLE_CLIENT_ID");
@@ -39,7 +40,7 @@ serve(async (req) => {
 
     const gCal = google.calendar("v3");
 
-    await Promise.all(
+    const promises = await Promise.allSettled(
       tokens.map(async (token) => {
         const userId = token.userId;
         const songs = songsMap[userId];
@@ -94,6 +95,8 @@ serve(async (req) => {
         }
       })
     );
+
+    verifyPromises(promises);
 
     return createResponse({
       code: 200,

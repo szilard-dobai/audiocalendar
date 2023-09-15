@@ -4,8 +4,10 @@ import {
   type AccessToken,
 } from "https://esm.sh/@spotify/web-api-ts-sdk";
 import dayjs from "https://esm.sh/dayjs";
-import { SpotifyToken } from "../sync-songs/types.ts";
-import { createSupabaseServerClient } from "./supabaseClient.ts";
+import {
+  createSupabaseServerClient,
+  type SpotifyToken,
+} from "./supabaseClient.ts";
 
 const CLIENT_ID = Deno.env.get("VITE_SPOTIFY_CLIENT_ID") || "";
 const CLIENT_SECRET = Deno.env.get("VITE_SPOTIFY_CLIENT_SECRET") || "";

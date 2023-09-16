@@ -50,7 +50,8 @@ serve(async (req) => {
 
         const spotify = await createSpotifyClient(token);
         if (!spotify) {
-          throw new Error(`Error creating spotify client for ${userId}`);
+          console.log(`Error creating spotify client for ${userId}`);
+          return;
         }
 
         try {

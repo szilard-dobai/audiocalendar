@@ -4,6 +4,7 @@
   "packageManager": "pnpm@7.15.0",
   "workspaces": [
     "app",
+    "client",
     "packages/*",
     "supabase"
   ],

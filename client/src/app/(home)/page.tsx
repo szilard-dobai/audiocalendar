@@ -6,7 +6,9 @@ import dna from "../../../public/dna.svg";
 import folder from "../../../public/folder.svg";
 import history from "../../../public/history.svg";
 import banner from "../../../public/undraw_walk_in_the_city.svg";
+import imagination from "../../../public/undraw_imagination.svg";
 import Benefit from "./(components)/Benefit";
+import FAQ from "./(components)/FAQ";
 
 const Home = () => {
   return (
@@ -29,7 +31,9 @@ const Home = () => {
               </p>
             </hgroup>
 
-            <Button variant="solid">Get Started</Button>
+            <Link href="/account" passHref legacyBehavior>
+              <Button variant="solid">Get Started</Button>
+            </Link>
             <Link href="#cta" passHref legacyBehavior>
               <Button variant="outline" className="ml-5">
                 Learn More
@@ -78,41 +82,10 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="faq" className="my-36">
-          <dl>
-            <dt>How does Audiocalendar work?</dt>
-            <dd>
-              Audiocalendar connects to your Spotify and Google accounts.
-              Whenever you listen to a song on Spotify, it automatically creates
-              an event in your Google Calendar.
-            </dd>
+        <Image src={imagination} alt="imagination" />
 
-            <dt>Is my data safe?</dt>
-            <dd>
-              We take your privacy seriously. Audiocalendar only accesses the
-              necessary information to create calendar events. Your data is
-              secure and never shared with third parties.
-            </dd>
-
-            <dt>Can I customize my calendar events?</dt>
-            <dd>
-              Absolutely! You have full control over event titles, descriptions,
-              and calendar settings. Make it personal and meaningful.
-            </dd>
-
-            <dt>Is Audiocalendar free to use?</dt>
-            <dd>
-              Yes, we offer a free plan with essential features. For advanced
-              functionality and additional customization options, we offer a
-              premium subscription.
-            </dd>
-
-            <dt>Can I unlink my accounts?</dt>
-            <dd>
-              Yes, you can unlink your Spotify and Google accounts at any time
-              within the Audiocalendar settings.
-            </dd>
-          </dl>
+        <section id="faq" className="my-36 bg-brand-50 p-8 rounded-lg">
+          <FAQ />
         </section>
 
         <section id="cta" className="my-36">

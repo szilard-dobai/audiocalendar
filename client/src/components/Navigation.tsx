@@ -5,9 +5,9 @@ import Button from "./Button";
 
 const Navigation = () => {
   return (
-    <nav className="p-3 w-full rounded-b-lg border flex flex-row items-center justify-between text-white bg-brand mb-10">
+    <nav className="py-3 px-16 w-full rounded-b-lg border flex flex-row items-center justify-between text-white bg-brand mb-10">
       {/* <Image /> */}
-      <p>LOGO</p>
+      <p>[LOGO]</p>
 
       <Link href="/account" passHref legacyBehavior>
         <Button variant="solid">My Account</Button>

@@ -22,11 +22,11 @@ const Home = () => {
         >
           <div className="md:col-start-1 md:col-end-7 md:row-start-1 md:z-10">
             <hgroup className="mb-10">
-              <h1 className="text-5xl font-bold text-primary mb-2">
+              <h1 className="text-3xl md:text-5xl font-bold text-primary mb-2">
                 Never Lose a Song Again with{" "}
                 <span className="text-brand">Audiocalendar</span>
               </h1>
-              <p className="text-2xl text-secondary">
+              <p className="text-lg md:text-2xl text-secondary">
                 Your Personal Soundtrack, Organized Automatically
               </p>
             </hgroup>
@@ -34,7 +34,7 @@ const Home = () => {
             <Link href="/account" passHref legacyBehavior>
               <Button variant="solid">Get Started</Button>
             </Link>
-            <Link href="#cta" passHref legacyBehavior>
+            <Link href="#faq" passHref legacyBehavior>
               <Button variant="outline" className="ml-5">
                 Learn More
               </Button>
@@ -50,10 +50,15 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="benefits" className="my-36 text-center">
+        <section
+          id="benefits"
+          className="my-36 text-center bg-complement-50 px-4 py-16 rounded-lg"
+        >
           <hgroup className="mb-14">
-            <h2 className="text-5xl font-bold text-primary mb-2">Benefits</h2>
-            <p className="text-xl text-secondary">
+            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-2">
+              Benefits
+            </h2>
+            <p className="text-md md:text-xl text-secondary">
               See How Audiocalendar Can Transform Your Music Experience
             </p>
           </hgroup>
@@ -88,9 +93,21 @@ const Home = () => {
           <FAQ />
         </section>
 
-        <section id="cta" className="my-36">
-          <h2>Start Organizing Your Music Journey Today</h2>
-          <button>Sign Up Now</button>
+        <section
+          id="cta"
+          className="my-36 bg-brand-50 w-full rounded-lg p-16 relative overflow-hidden z-0 text-center max-h-72"
+        >
+          <div className="absolute -top-12 -right-6 w-1/3 h-4/5 bg-brand-200 rotate-12 rounded-3xl -z-10" />
+          <div className="absolute top-[-5%] left-[-10%] w-[15rem] h-[20rem] bg-brand-300 rotate-[-30deg] rounded-3xl -z-10" />
+
+          <h2 className="text-3xl md:text-5xl font-bold text-primary mb-10">
+            Start Organizing Your Music
+            <br />
+            Journey <span className="text-complement">Today</span>
+          </h2>
+          <Link href="/account" passHref legacyBehavior>
+            <Button variant="solid">Sign Up Now</Button>
+          </Link>
         </section>
 
         <footer className="my-36">Follow Us on [Social Media Icons]</footer>

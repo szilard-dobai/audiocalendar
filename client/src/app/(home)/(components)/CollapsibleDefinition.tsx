@@ -14,11 +14,14 @@ const CollapsibleDefinition = ({
   description,
 }: Props) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const ref = useRef<HTMLElement>(null);
+  const collapsibleRef = useRef<HTMLElement>(null);
 
-  const style: CSSProperties = isCollapsed
+  const collapsibleStyle: CSSProperties = isCollapsed
     ? { opacity: "0", maxHeight: "0px" }
-    : { opacity: "100", maxHeight: ref.current?.scrollHeight + "px" };
+    : {
+        opacity: "100",
+        maxHeight: collapsibleRef.current?.scrollHeight + "px",
+      };
 
   return (
     <div
@@ -39,12 +42,13 @@ const CollapsibleDefinition = ({
           <span aria-label="up pointing triangle">▲</span>
         )}
       </div>
+
       <dd
-        ref={ref}
+        ref={collapsibleRef}
         className={`overflow-hidden max-h-0 transition-all duration-300 ease-in-out ${
           isCollapsed ? "text-brand-800" : "text-complement-800"
         }`}
-        style={style}
+        style={collapsibleStyle}
       >
         {description}
       </dd>

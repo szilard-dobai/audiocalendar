@@ -1,14 +1,12 @@
 import Button from "@/components/Button";
 import Navigation from "@/components/Navigation";
 import Image from "next/image";
-import bookmark from "../../../public/bookmark.svg";
-import folder from "../../../public/folder.svg";
-import banner from "../../../public/undraw_walk_in_the_city.svg";
-import wave from "../../../public/wave.svg";
-import dna from "../../../public/dna.svg";
-import history from "../../../public/history.svg";
-import Benefit from "./(components)/Benefit";
 import Link from "next/link";
+import dna from "../../../public/dna.svg";
+import folder from "../../../public/folder.svg";
+import history from "../../../public/history.svg";
+import banner from "../../../public/undraw_walk_in_the_city.svg";
+import Benefit from "./(components)/Benefit";
 
 const Home = () => {
   return (
@@ -32,42 +30,47 @@ const Home = () => {
             </hgroup>
 
             <Button variant="solid">Get Started</Button>
-            <Link className="ml-5" href="#cta">
-              <Button variant="outline">Learn More</Button>
+            <Link href="#cta" passHref legacyBehavior>
+              <Button variant="outline" className="ml-5">
+                Learn More
+              </Button>
             </Link>
           </div>
 
           <div className="md:col-start-6 md:col-end-11 md:row-start-1 md:z-0">
             <Image
               src={banner}
-              alt="people"
+              alt="person walking in the city with headphones on"
               className="aspect-auto lg:max-w-md lg:w-full max-w-xs"
             />
           </div>
         </section>
 
         <section id="benefits" className="my-36 text-center">
-          <h2 className="text-5xl font-bold text-primary mb-2">Benefits</h2>
-          <p className="text-xl text-secondary mb-14">
-            See How Audiocalendar Can Transform Your Music Experience
-          </p>
+          <hgroup className="mb-14">
+            <h2 className="text-5xl font-bold text-primary mb-2">Benefits</h2>
+            <p className="text-xl text-secondary">
+              See How Audiocalendar Can Transform Your Music Experience
+            </p>
+          </hgroup>
+
           <div className="flex flex-col md:flex-row md:items-stretch md:justify-evenly gap-16">
             <Benefit
-              imageAlt="history"
+              imageAlt="history illustration"
               imageSrc={history}
               title="Never Forget a Beat"
               description='Audiocalendar ensures you never have to ask yourself again "What was that song I listened to last night called?" It automatically logs every song you play, so you can revisit your musical moments anytime.'
             />
 
             <Benefit
-              imageAlt="dna"
+              imageAlt="dna illustration"
               imageSrc={dna}
               title="Discover Your Music DNA"
               description="By tracking your listening habits, Audiocalendar provides valuable insights into your favorite genres, artists, and most-played songs. Uncover your unique music profile and enhance your listening experience."
             />
 
             <Benefit
-              imageAlt="folder"
+              imageAlt="folder illustration"
               imageSrc={folder}
               title="Streamlined Song Tracking"
               description="Audiocalendar simplifies the process of keeping tabs on your music journey. Effortlessly manage and organize your song history to make every listening session unforgettable."

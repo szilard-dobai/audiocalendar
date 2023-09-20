@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React from "react";
 
 type Props = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -16,8 +16,11 @@ const styles: Record<Props["variant"], string> = {
     "py-3 px-6 rounded-lg disabled:opacity-50 bg-gradient-to-br from-brand-400 to-brand-600 text-white hover:from-brand-500 hover:to-brand-700 active:from-brand-600 active:to-brand-800 disabled:from-brand-100 disabled:to-brand-300 disabled:text-brand-700",
 };
 
-const Button = ({ variant, className, ...rest }: Props) => {
-  return <button className={`${styles[variant]} ${className}`} {...rest} />;
-};
+const Button = React.forwardRef<HTMLButtonElement, Props>(
+  ({ variant, className = "", ...rest }: Props, ref) => (
+    <button className={`${styles[variant]} ${className}`} {...rest} ref={ref} />
+  )
+);
+Button.displayName = "Button";
 
 export default Button;

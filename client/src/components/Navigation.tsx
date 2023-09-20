@@ -9,8 +9,9 @@ const Navigation = () => {
       {/* <Image /> */}
       <p>LOGO</p>
 
-      <Button variant="solid">My Account</Button>
-      {/* <Link href="/account"></Link> */}
+      <Link href="/account" passHref legacyBehavior>
+        <Button variant="solid">My Account</Button>
+      </Link>
     </nav>
   );
 };

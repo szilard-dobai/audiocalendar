@@ -9,7 +9,7 @@ type Props = {
 };
 
 const Benefit = ({
-  className,
+  className = "",
   title,
   description,
   imageSrc,

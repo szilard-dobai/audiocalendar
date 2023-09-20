@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type { PropsWithChildren } from "react";
@@ -13,7 +15,15 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={`${inter.className} min-h-screen max-w-screen-xl mx-auto`}
+      >
+        <Navigation />
+
+        {children}
+
+        <Footer />
+      </body>
     </html>
   );
 };

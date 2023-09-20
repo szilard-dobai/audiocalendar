@@ -9,10 +9,9 @@ const config: Config = {
   plugins: [],
   theme: {
     extend: {
-      cursor: {
-        headphone: 'url("../../public/headphone.svg"), pointer',
-      },
       colors: {
+        primary: "#2f2e41",
+        secondary: "#454464",
         brand: {
           DEFAULT: "#1db954",
           "50": "#f0fdf4",

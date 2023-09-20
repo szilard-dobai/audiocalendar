@@ -1,90 +1,81 @@
-import Image from "next/image";
-
-import svg from "../../../public/undraw_walk_in_the_city.svg";
 import Button from "@/components/Button";
+import Navigation from "@/components/Navigation";
+import Image from "next/image";
+import bookmark from "../../../public/bookmark.svg";
+import folder from "../../../public/folder.svg";
+import banner from "../../../public/undraw_walk_in_the_city.svg";
+import wave from "../../../public/wave.svg";
+import dna from "../../../public/dna.svg";
+import history from "../../../public/history.svg";
+import Benefit from "./(components)/Benefit";
+import Link from "next/link";
+
 const Home = () => {
   return (
-    <>
-      <main className="flex min-h-screen max-w-screen-xl mx-auto flex-col items-center justify-between p-24">
+    <div className="min-h-screen max-w-screen-xl mx-auto">
+      <Navigation />
+
+      <main className="flex flex-col items-center justify-between px-16">
         <section
           id="hero"
-          className="flex flex-col gap-12 md:gap-0 md:grid md:grid-cols-10 py-12 items-center"
+          className="flex flex-col gap-12 md:gap-0 md:grid md:grid-cols-10 my-36 items-center"
         >
           <div className="md:col-start-1 md:col-end-7 md:row-start-1 md:z-10">
             <hgroup className="mb-10">
-              <h1 className="text-5xl font-bold text-gray-900">
+              <h1 className="text-5xl font-bold text-primary mb-2">
                 Never Lose a Song Again with{" "}
                 <span className="text-brand">Audiocalendar</span>
               </h1>
-              <p className="text-2xl text-gray-700">
+              <p className="text-2xl text-secondary">
                 Your Personal Soundtrack, Organized Automatically
               </p>
             </hgroup>
 
             <Button variant="solid">Get Started</Button>
-            <Button variant="outline" className="ml-5">
-              Learn More
-            </Button>
+            <Link className="ml-5" href="#cta">
+              <Button variant="outline">Learn More</Button>
+            </Link>
           </div>
 
           <div className="md:col-start-6 md:col-end-11 md:row-start-1 md:z-0">
             <Image
-              src={svg}
+              src={banner}
               alt="people"
               className="aspect-auto lg:max-w-md lg:w-full max-w-xs"
             />
           </div>
         </section>
 
-        <section id="benefits" className="py-12">
-          <dl className="flex flex-col lg:flex-row lg:items-stretch lg:justify-evenly gap-16">
-            <div className="flex-1 bg-brand-50 p-2 rounded-lg border border-brand-700 text-brand-700 hover:bg-brand-100 cursor-headphone">
-              <dt className="text-xl font-semibold mb-4">Never Miss a Beat</dt>
-              <dd className="text-brand-800">
-                Keep track of every song you listen to on Spotify
-              </dd>
-              <dd className="text-brand-800">
-                Automatically create a Google Calendar event for each song
-              </dd>
-              <dd className="text-brand-800">
-                Say goodbye to forgotten music gems
-              </dd>
-            </div>
+        <section id="benefits" className="my-36 text-center">
+          <h2 className="text-5xl font-bold text-primary mb-2">Benefits</h2>
+          <p className="text-xl text-secondary mb-14">
+            See How Audiocalendar Can Transform Your Music Experience
+          </p>
+          <div className="flex flex-col md:flex-row md:items-stretch md:justify-evenly gap-16">
+            <Benefit
+              imageAlt="history"
+              imageSrc={history}
+              title="Never Forget a Beat"
+              description='Audiocalendar ensures you never have to ask yourself again "What was that song I listened to last night called?" It automatically logs every song you play, so you can revisit your musical moments anytime.'
+            />
 
-            <div className="flex-1 bg-complement-50 p-2 rounded-lg border border-complement-700 text-complement-700 hover:bg-complement-100 cursor-headphone">
-              <dt className="text-xl font-semibold mb-4">
-                Effortless Organization
-              </dt>
-              <dd className="text-complement-800">
-                No more manual data entry or playlists
-              </dd>
-              <dd className="text-complement-800">
-                Audiocalendar seamlessly integrates with Spotify and Google
-                Calendar
-              </dd>
-              <dd className="text-complement-800">
-                Enjoy your music, we&apos;ll handle the rest
-              </dd>
-            </div>
+            <Benefit
+              imageAlt="dna"
+              imageSrc={dna}
+              title="Discover Your Music DNA"
+              description="By tracking your listening habits, Audiocalendar provides valuable insights into your favorite genres, artists, and most-played songs. Uncover your unique music profile and enhance your listening experience."
+            />
 
-            <div className="flex-1 bg-brand-50 p-2 rounded-lg border border-brand-700 text-brand-700 hover:bg-brand-100 cursor-headphone">
-              <dt className="text-xl font-semibold mb-4">
-                Rediscover Your Favorites
-              </dt>
-              <dd className="text-brand-800">
-                Easily search and filter your music history
-              </dd>
-              <dd className="text-brand-800">
-                Relive the moments tied to your favorite songs
-              </dd>
-              <dd className="text-brand-800">
-                Share your musical journey with friends
-              </dd>
-            </div>
-          </dl>
+            <Benefit
+              imageAlt="folder"
+              imageSrc={folder}
+              title="Streamlined Song Tracking"
+              description="Audiocalendar simplifies the process of keeping tabs on your music journey. Effortlessly manage and organize your song history to make every listening session unforgettable."
+            />
+          </div>
         </section>
 
-        <section id="faq">
+        <section id="faq" className="my-36">
           <dl>
             <dt>How does Audiocalendar work?</dt>
             <dd>
@@ -121,14 +112,14 @@ const Home = () => {
           </dl>
         </section>
 
-        <section id="cta">
+        <section id="cta" className="my-36">
           <h2>Start Organizing Your Music Journey Today</h2>
           <button>Sign Up Now</button>
         </section>
 
-        <footer>Follow Us on [Social Media Icons]</footer>
+        <footer className="my-36">Follow Us on [Social Media Icons]</footer>
       </main>
-    </>
+    </div>
   );
 };
 

@@ -5,8 +5,8 @@ import Link from "next/link";
 import dna from "../../../public/dna.svg";
 import folder from "../../../public/folder.svg";
 import history from "../../../public/history.svg";
-import banner from "../../../public/undraw_walk_in_the_city.svg";
 import imagination from "../../../public/undraw_imagination.svg";
+import banner from "../../../public/undraw_walk_in_the_city.svg";
 import Benefit from "./(components)/Benefit";
 import FAQ from "./(components)/FAQ";
 
@@ -44,7 +44,7 @@ const Home = () => {
           <div className="md:col-start-6 md:col-end-11 md:row-start-1 md:z-0">
             <Image
               src={banner}
-              alt="person walking in the city with headphones on"
+              alt="person listening to music in the city"
               className="aspect-auto lg:max-w-md lg:w-full max-w-xs"
             />
           </div>
@@ -87,7 +87,10 @@ const Home = () => {
           </div>
         </section>
 
-        <Image src={imagination} alt="imagination" />
+        <Image
+          src={imagination}
+          alt="person listening to music in the nature"
+        />
 
         <section id="faq" className="my-36 bg-brand-50 p-8 rounded-lg">
           <FAQ />
@@ -105,6 +108,7 @@ const Home = () => {
             <br />
             Journey <span className="text-complement">Today</span>
           </h2>
+
           <Link href="/account" passHref legacyBehavior>
             <Button variant="solid">Sign Up Now</Button>
           </Link>

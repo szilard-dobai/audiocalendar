@@ -7,7 +7,7 @@ const Benefits = () => {
   return (
     <section
       id="benefits"
-      className="my-36 text-center bg-complement-50 px-4 py-16 rounded-lg"
+      className="my-20 md:my-36 text-center bg-complement-50 px-4 py-16 rounded-lg"
     >
       <hgroup className="mb-14">
         <h2 className="text-3xl md:text-5xl font-bold text-primary mb-2">

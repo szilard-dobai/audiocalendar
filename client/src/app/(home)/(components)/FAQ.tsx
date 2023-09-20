@@ -1,7 +1,7 @@
 import CollapsibleDefinition from "./CollapsibleDefinition";
 
 const FAQ = () => (
-  <section id="faq" className="my-36 bg-brand-50 p-8 rounded-lg">
+  <section id="faq" className="my-20 md:my-36 bg-brand-50 p-8 rounded-lg">
     <dl className="flex flex-col gap-4">
       <CollapsibleDefinition
         term="How does Audiocalendar work?"

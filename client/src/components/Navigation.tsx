@@ -3,7 +3,7 @@ import Button from "./Button";
 
 const Navigation = () => {
   return (
-    <nav className="py-3 px-16 w-full rounded-b-lg border flex flex-row items-center justify-between text-white bg-brand-400 mb-10">
+    <nav className="py-3 px-4 sm:px-16 w-full rounded-b-lg border flex flex-row items-center justify-between text-white bg-brand-400 mb-10">
       <Link href="/" className="text-black">
         [LOGO]
       </Link>

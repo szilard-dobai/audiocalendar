@@ -15,7 +15,7 @@ const Home = () => {
       <Image
         src={imagination}
         alt="person listening to music in the nature"
-        className="w-3/4 h-auto"
+        className="w-full md:w-3/4 h-auto"
         priority
       />
 

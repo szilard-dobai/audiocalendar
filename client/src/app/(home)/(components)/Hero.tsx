@@ -9,7 +9,7 @@ const Hero = () => {
       id="hero"
       className="flex flex-col gap-12 md:gap-0 md:grid md:grid-cols-10 my-36 items-center"
     >
-      <div className="md:col-start-1 md:col-end-7 md:row-start-1 md:z-10">
+      <div className="md:col-start-1 md:col-end-7 md:row-start-1 md:z-10 text-center md:text-left">
         <hgroup className="mb-10">
           <h1 className="text-3xl md:text-5xl font-bold text-primary mb-2">
             Never Lose a Song Again with{" "}

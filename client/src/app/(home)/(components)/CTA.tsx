@@ -5,7 +5,7 @@ const CTA = () => {
   return (
     <section
       id="cta"
-      className="my-36 bg-brand-50 w-full rounded-lg p-16 relative overflow-hidden z-0 text-center max-h-72"
+      className="my-36 bg-brand-50 w-full rounded-lg p-16 relative overflow-hidden z-0 text-center"
     >
       <div className="absolute -top-12 -right-6 w-1/3 h-4/5 bg-brand-200 rotate-12 rounded-3xl -z-10" />
       <div className="absolute top-[-5%] left-[-10%] w-[15rem] h-[20rem] bg-brand-300 rotate-[-30deg] rounded-3xl -z-10" />

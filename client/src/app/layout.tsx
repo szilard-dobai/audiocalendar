@@ -15,12 +15,12 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="overflow-y-scroll scroll-smooth">
       <body
-        className={`${inter.className} min-h-screen max-w-screen-xl mx-auto`}
+        className={`${inter.className} min-h-screen max-w-screen-xl mx-auto flex flex-col`}
       >
         <Navigation />
-        {children}
+        <main className="flex-1 px-16">{children}</main>
         <Footer />
 
         <Analytics />

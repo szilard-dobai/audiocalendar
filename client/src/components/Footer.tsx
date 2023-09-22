@@ -5,7 +5,7 @@ import github from "../../public/github-mark-white.svg";
 
 const Footer = () => {
   return (
-    <footer className="w-4/5 sm:w-2/3 lg:w-1/2 mx-auto mt-36 py-3 px-0 md:px-16 bg-brand rounded-t-lg text-white text-md text-center flex flex-row justify-center items-center gap-2">
+    <footer className="w-4/5 sm:w-2/3 lg:w-1/2 min-w-min mx-auto mt-36 py-3 px-3 md:px-16 bg-brand rounded-t-lg text-white text-md text-center flex flex-row justify-center items-center gap-2">
       <span className="whitespace-nowrap">
         Szilard&apos;s Emporium © {new Date().getFullYear()}
       </span>

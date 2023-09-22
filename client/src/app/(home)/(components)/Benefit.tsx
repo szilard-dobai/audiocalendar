@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { type ReactNode } from "react";
 
 type Props = {
   className?: string;
   imageSrc: any;
   imageAlt: string;
   title: string;
-  description: string;
+  description: ReactNode;
 };
 
 const Benefit = ({
@@ -24,7 +25,7 @@ const Benefit = ({
         alt={imageAlt}
         className="w-20 md:w-32 mb-5 hover:scale-110 transition ease-in-out duration-300"
       />
-      <h2 className="text-lg md:text-2xl font-bold text-[#2f2e41]">{title}</h2>
+      <h2 className="text-lg md:text-2xl font-bold text-brand">{title}</h2>
       <p className="text-md md:text-lg text-secondary">{description}</p>
     </div>
   );

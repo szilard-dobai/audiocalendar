@@ -1,7 +1,11 @@
-import React from "react";
+import {
+  forwardRef,
+  type ButtonHTMLAttributes,
+  type DetailedHTMLProps,
+} from "react";
 
-type Props = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
+type Props = DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > & {
   variant?: "solid" | "gradient" | "outline";
@@ -30,7 +34,7 @@ const styles: Record<
   },
 };
 
-const Button = React.forwardRef<HTMLButtonElement, Props>(
+const Button = forwardRef<HTMLButtonElement, Props>(
   (
     { color = "brand", variant = "solid", className = "", ...rest }: Props,
     ref

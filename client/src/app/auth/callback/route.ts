@@ -5,12 +5,13 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (req: NextRequest) => {
   const supabase = createRouteHandlerClient({ cookies });
   const { searchParams } = new URL(req.url);
-  const code = searchParams.get("code");
-  console.log("callback activated!");
 
+  const code = searchParams.get("code");
+  console.log("code", code);
   if (code) {
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  return NextResponse.redirect(new URL("/account", req.url));
+  const next = searchParams.get("next");
+  return NextResponse.redirect(new URL(next ? next : "/account", req.url));
 };

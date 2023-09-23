@@ -144,6 +144,9 @@ importers:
       autoprefixer:
         specifier: 10.4.15
         version: 10.4.15(postcss@8.4.30)
+      dayjs:
+        specifier: ^1.11.9
+        version: 1.11.9
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1

@@ -67,7 +67,7 @@ const Register = () => {
           disabled={isLoading}
           onClick={() => handleProviderLogin("google")}
         >
-          <Image src={google} alt="Google" className="inline w-8 mr-2" />
+          <Image src={google} alt="Google Logo" className="inline w-8 mr-2" />
           Sign up with Google
         </Button>
         <Button
@@ -76,7 +76,7 @@ const Register = () => {
           disabled={isLoading}
           onClick={() => handleProviderLogin("spotify")}
         >
-          <Image src={spotify} alt="Spotify" className="inline w-8 mr-2" />
+          <Image src={spotify} alt="Spotify Logo" className="inline w-8 mr-2" />
           Sign up with Spotify
         </Button>
       </div>

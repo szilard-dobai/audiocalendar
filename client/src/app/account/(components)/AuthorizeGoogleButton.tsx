@@ -25,7 +25,7 @@ const AuthorizeGoogleButton = () => {
       variant="outline"
       onClick={authorizeGoogle}
     >
-      <Image src={google} alt="Google" className="inline w-8 mr-2" />
+      <Image src={google} alt="Google Logo" className="inline w-8 mr-2" />
       Authorize Google
     </Button>
   );

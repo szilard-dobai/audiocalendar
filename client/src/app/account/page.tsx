@@ -1,5 +1,6 @@
 import AuthorizeGoogleButton from "./(components)/AuthorizeGoogleButton";
 import AuthorizeSpotifyButton from "./(components)/AuthorizeSpotifyButton";
+import SongHistory from "./(components)/SongHistory";
 
 const Account = async () => {
   return (
@@ -7,6 +8,7 @@ const Account = async () => {
       Account page
       <AuthorizeGoogleButton />
       <AuthorizeSpotifyButton />
+      <SongHistory />
     </>
   );
 };

@@ -5,9 +5,10 @@ import SongHistory from "./(components)/SongHistory";
 const Account = async () => {
   return (
     <>
-      Account page
-      <AuthorizeGoogleButton />
-      <AuthorizeSpotifyButton />
+      <div className="flex justify-end gap-3 mb-6">
+        <AuthorizeGoogleButton />
+        <AuthorizeSpotifyButton />
+      </div>
       <SongHistory />
     </>
   );

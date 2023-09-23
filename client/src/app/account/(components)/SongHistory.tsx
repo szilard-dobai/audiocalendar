@@ -18,26 +18,19 @@ const SongHistory = async () => {
   return (
     <div>
       {data?.map((el) => (
-        <div
-          key={el.id}
-          style={{
-            paddingBottom: "1rem",
-            marginBottom: "1rem",
-            borderBottom: "1px solid black",
-          }}
-        >
-          <p>
-            <strong>{el.playedAt}</strong>
-            <br />
+        <div key={el.id} className="border-b pb-4 mb-4">
+          <p className="mb-3">
+            <span className="font-semibold">{el.playedAt}</span>
             <Image
               src={el.albumImage}
               width={100}
               height={100}
-              style={{ border: "1px solid black" }}
+              className="border"
               alt={`${el.artist} -  ${el.album}`}
             />
-            <br />
-            {el.id}, {el.artist}, {el.album}, {el.song}
+            <span>
+              {el.artist} - {el.song} ({el.album})
+            </span>
           </p>
           {el.songPreviewUrl && <audio src={el.songPreviewUrl} controls />}
         </div>

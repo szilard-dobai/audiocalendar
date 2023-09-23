@@ -117,6 +117,9 @@ importers:
       '@audiocalendar/types':
         specifier: workspace:*
         version: link:../packages/types
+      '@react-oauth/google':
+        specifier: ^0.11.1
+        version: 0.11.1(react-dom@18.2.0)(react@18.2.0)
       '@supabase/auth-helpers-nextjs':
         specifier: ^0.8.1
         version: 0.8.1(@supabase/supabase-js@2.26.0)

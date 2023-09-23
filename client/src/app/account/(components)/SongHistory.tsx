@@ -4,7 +4,11 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 
 const getData = async () => {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  // NOTE: Without this weird hack, building the app crashes...
+  const cookiesData = cookies();
+  const supabase = createServerComponentClient<Database>({
+    cookies: () => cookiesData,
+  });
 
   return supabase
     .from("history")

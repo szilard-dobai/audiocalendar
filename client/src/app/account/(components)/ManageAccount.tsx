@@ -19,6 +19,7 @@ const ManageAccount = ({ user }: Props) => {
       <Button onClick={() => setIsModalOpen(true)}>Manage Account</Button>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <LinkSpotify isAccessGranted={user.hasSpotifyAccess} />
+        <hr className="my-6" />
         <LinkGoogle isAccessGranted={user.hasGoogleAccess} />
       </Modal>
     </div>

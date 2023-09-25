@@ -80,7 +80,7 @@ const LinkSpotify = ({ isAccessGranted, className }: Props) => {
           target="_blank"
           className="font-semibold hover:underline"
         >
-          Account Settings
+          🔗 Account Settings
         </Link>{" "}
         and remove the app from there too.
       </p>

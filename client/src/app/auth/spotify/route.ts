@@ -4,13 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   const supabase = createRouteHandlerClient({ cookies });
-  const body = await req.json();
 
-  const { access_token, expires, expires_in, refresh_token } = body;
-
+  const { access_token, expires, expires_in, refresh_token } = await req.json();
   const {
     data: { session },
   } = await supabase.auth.getSession();
+
   await supabase.from("spotify_tokens").upsert(
     {
       userId: session!.user.id,

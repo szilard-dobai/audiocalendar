@@ -19,6 +19,7 @@ const AuthorizeGoogleButton = () => {
         }),
       }),
   });
+
   return (
     <Button
       className="flex items-center"

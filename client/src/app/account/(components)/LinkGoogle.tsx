@@ -20,7 +20,6 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
     scope: "https://www.googleapis.com/auth/calendar",
     flow: "auth-code",
     onSuccess: async (response) => {
-      console.log("start loading");
       setIsLoading(true);
       setError(null);
 
@@ -36,7 +35,6 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
       }
 
       setIsLoading(false);
-      console.log("finish loading");
     },
   });
 

@@ -1,9 +1,10 @@
 "use client";
 
-import Modal from "@/components/Modal";
-import UnlinkSpotify from "./UnlinkSpotify";
-import { useState } from "react";
 import Button from "@/components/Button";
+import Modal from "@/components/Modal";
+import { useState } from "react";
+import UnlinkGoogle from "./UnlinkGoogle";
+import UnlinkSpotify from "./UnlinkSpotify";
 
 const ManageAccount = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,7 +13,8 @@ const ManageAccount = () => {
     <div>
       <Button onClick={() => setIsModalOpen(true)}>Manage Account</Button>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <UnlinkSpotify />
+        <UnlinkSpotify className="mb-6" />
+        <UnlinkGoogle />
       </Modal>
     </div>
   );

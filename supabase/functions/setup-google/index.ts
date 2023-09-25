@@ -5,6 +5,7 @@ import { createResponse } from "../_shared/createResponse.ts";
 import { createSlackClient } from "../_shared/slackClient.ts";
 import { createSupabaseServerClient } from "../_shared/supabaseClient.ts";
 import { getUserFromRequest } from "../_shared/user.ts";
+import { createCalendar, getCalendar } from "./calendar.ts";
 import { parseBody } from "./parseBody.ts";
 
 const GOOGLE_CLIENT_ID = Deno.env.get("VITE_GOOGLE_CLIENT_ID");
@@ -21,7 +22,6 @@ serve(async (req) => {
 
     const supabase = createSupabaseServerClient();
     const user = await getUserFromRequest(req);
-    const calendar = google.calendar("v3");
 
     const oauth2Client = new google.auth.OAuth2(
       GOOGLE_CLIENT_ID,
@@ -30,7 +30,6 @@ serve(async (req) => {
     );
     const { tokens } = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
-
     await supabase.from("google_tokens").upsert(
       {
         userId: user.id,
@@ -43,25 +42,35 @@ serve(async (req) => {
       { onConflict: "userId" }
     );
 
-    const { data } = await calendar.calendars.insert({
-      auth: oauth2Client,
-      requestBody: {
-        summary: "Audiocalendar",
-        description: "Complete history of songs listened to on Spotify",
-      },
-    });
+    const gcal = google.calendar({ version: "v3", auth: oauth2Client });
 
-    const calendarId = data.id;
-    if (!calendarId) {
+    const { data: previousCalendar } = await supabase
+      .from("google_calendars")
+      .select("*")
+      .eq("userId", user.id)
+      .maybeSingle();
+    if (previousCalendar) {
+      const { data } = await getCalendar(gcal, previousCalendar.id);
+      if (data.id) {
+        return createResponse({
+          code: 200,
+          data: { calendarId: previousCalendar.id },
+        });
+      }
+    }
+
+    const { data: newCalendar } = await createCalendar(gcal);
+    if (!newCalendar?.id) {
       throw new Error(`Error creating calendar for ${user.id}`);
     }
     await supabase
       .from("google_calendars")
-      .upsert({ id: calendarId, userId: user.id }, { onConflict: "userId" });
+      .upsert({ id: newCalendar.id, userId: user.id }, { onConflict: "userId" })
+      .throwOnError();
 
     return createResponse({
       code: 200,
-      data: null,
+      data: { calendarId: newCalendar.id },
     });
   } catch (error) {
     const slack = createSlackClient();

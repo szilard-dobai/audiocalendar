@@ -7,7 +7,11 @@ import Link from "next/link";
 import { useState } from "react";
 import spotify from "../../../../public/spotify.svg";
 
-const UnlinkSpotify = () => {
+type Props = {
+  className?: JSX.IntrinsicElements["div"]["className"];
+};
+
+const UnlinkSpotify = ({ className }: Props) => {
   const supabase = createSupabaseClient();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,9 +36,9 @@ const UnlinkSpotify = () => {
   };
 
   return (
-    <div>
+    <div className={className}>
       <p className="mb-3">
-        Click the link below to revoke Audiocalendar&apos;s access to your
+        Click the button below to revoke Audiocalendar&apos;s access to your
         Spotify account. For extra security, go to your{" "}
         <Link
           href="https://www.spotify.com/account/apps/"

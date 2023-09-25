@@ -1,13 +1,6 @@
-import {
-  forwardRef,
-  type ButtonHTMLAttributes,
-  type DetailedHTMLProps,
-} from "react";
+import { forwardRef } from "react";
 
-type Props = DetailedHTMLProps<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
-> & {
+type Props = JSX.IntrinsicElements["button"] & {
   variant?: "solid" | "gradient" | "outline";
   color?: "brand" | "complement";
 };

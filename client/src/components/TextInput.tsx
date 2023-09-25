@@ -1,9 +1,4 @@
-import type { DetailedHTMLProps, InputHTMLAttributes } from "react";
-
-type Props = DetailedHTMLProps<
-  InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
-> & {
+type Props = JSX.IntrinsicElements["input"] & {
   error?: string;
   label?: string;
 };

@@ -8,7 +8,7 @@ import { useState } from "react";
 import spotify from "../../../../public/spotify.svg";
 
 type Props = {
-  className?: JSX.IntrinsicElements["div"]["className"];
+  className?: string;
 };
 
 const UnlinkSpotify = ({ className }: Props) => {

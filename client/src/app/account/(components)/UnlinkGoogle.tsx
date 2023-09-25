@@ -8,7 +8,7 @@ import { useState } from "react";
 import google from "../../../../public/google.svg";
 
 type Props = {
-  className?: JSX.IntrinsicElements["div"]["className"];
+  className?: string;
 };
 
 const UnlinkGoogle = ({ className }: Props) => {

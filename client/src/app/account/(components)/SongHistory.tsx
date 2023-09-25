@@ -1,15 +1,9 @@
-import { Database } from "@audiocalendar/types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createSupabaseClient } from "@/utils/server/supabase";
 import dayjs from "dayjs";
-import { cookies } from "next/headers";
 import Image from "next/image";
 
 const getData = async () => {
-  // NOTE: Without this weird hack, building the app crashes...
-  const cookiesData = cookies();
-  const supabase = createServerComponentClient<Database>({
-    cookies: () => cookiesData,
-  });
+  const supabase = createSupabaseClient();
 
   return supabase
     .from("history")

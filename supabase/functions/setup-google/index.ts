@@ -50,7 +50,7 @@ serve(async (req) => {
         description: "Complete history of songs listened to on Spotify",
       },
     });
-    console.log(data);
+
     const calendarId = data.id;
     if (!calendarId) {
       throw new Error(`Error creating calendar for ${user.id}`);

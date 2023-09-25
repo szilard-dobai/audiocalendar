@@ -2,7 +2,7 @@
 
 import useOutsideClickCallback from "@/utils/client/useOutsideClickCallback";
 import Image from "next/image";
-import { useEffect, useRef, type PropsWithChildren } from "react";
+import { useLayoutEffect, useRef, type PropsWithChildren } from "react";
 import close from "../../public/close.svg";
 
 type Props = PropsWithChildren<{
@@ -14,7 +14,7 @@ const Modal = ({ isOpen, children, onClose }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   useOutsideClickCallback(ref, onClose);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isOpen) {
       document.documentElement.style.overflow = "hidden";
     } else {
@@ -29,7 +29,7 @@ const Modal = ({ isOpen, children, onClose }: Props) => {
   return (
     <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 p-3 z-50">
       <div
-        className="relative max-h-full w-full max-w-xl rounded-lg bg-white overflow-y-scroll no-scrollbar py-12 px-6"
+        className="relative max-h-full w-full max-w-xl rounded-lg bg-white overflow-y-scroll no-scrollbar pt-12 p-6 md:p-12"
         ref={ref}
       >
         <Image

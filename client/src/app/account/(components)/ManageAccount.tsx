@@ -2,19 +2,24 @@
 
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
+import { User } from "@/types";
 import { useState } from "react";
-import UnlinkGoogle from "./UnlinkGoogle";
-import UnlinkSpotify from "./UnlinkSpotify";
+import LinkGoogle from "./LinkGoogle";
+import LinkSpotify from "./LinkSpotify";
 
-const ManageAccount = () => {
+type Props = {
+  user: User;
+};
+
+const ManageAccount = ({ user }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div>
       <Button onClick={() => setIsModalOpen(true)}>Manage Account</Button>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <UnlinkSpotify className="mb-6" />
-        <UnlinkGoogle />
+        <LinkSpotify isAccessGranted={user.hasSpotifyAccess} />
+        <LinkGoogle isAccessGranted={user.hasGoogleAccess} />
       </Modal>
     </div>
   );

@@ -1,8 +1,20 @@
 import { forwardRef } from "react";
+import google from "../../public/google.svg";
+import spotify from "../../public/spotify.svg";
+import Image from "next/image";
 
 type Props = JSX.IntrinsicElements["button"] & {
   variant?: "solid" | "gradient" | "outline";
   color?: "brand" | "complement";
+  image?: "google" | "spotify";
+};
+
+const imageMap: Record<
+  NonNullable<Props["image"]>,
+  { src: any; alt: string }
+> = {
+  google: { src: google, alt: "Google Logo" },
+  spotify: { src: spotify, alt: "Spotify Logo" },
 };
 
 const styles: Record<
@@ -29,15 +41,32 @@ const styles: Record<
 
 const Button = forwardRef<HTMLButtonElement, Props>(
   (
-    { color = "brand", variant = "solid", className = "", ...rest }: Props,
+    {
+      color = "brand",
+      variant = "solid",
+      className = "",
+      image,
+      children,
+      ...rest
+    }: Props,
     ref
-  ) => (
-    <button
-      className={`${styles[color][variant]} ${className}`}
-      {...rest}
-      ref={ref}
-    />
-  )
+  ) => {
+    const renderImage = () => {
+      const { src, alt } = imageMap[image!];
+      return <Image src={src} alt={alt} className="inline w-8 mr-2" />;
+    };
+
+    return (
+      <button
+        className={`${styles[color][variant]} flex items-center ${className}`}
+        {...rest}
+        ref={ref}
+      >
+        {!!image && renderImage()}
+        {children}
+      </button>
+    );
+  }
 );
 Button.displayName = "Button";
 

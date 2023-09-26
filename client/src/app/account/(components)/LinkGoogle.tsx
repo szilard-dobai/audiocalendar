@@ -1,8 +1,10 @@
 "use client";
 
 import Button from "@/components/Button";
+import QueryKeys from "@/hooks/queryKeys";
 import { createSupabaseClient } from "@/utils/client/supabase";
 import { useGoogleLogin } from "@react-oauth/google";
+import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -13,6 +15,7 @@ type Props = {
 
 const LinkGoogle = ({ isAccessGranted, className }: Props) => {
   const supabase = createSupabaseClient();
+  const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,6 +38,7 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
       }
 
       setIsLoading(false);
+      queryClient.invalidateQueries({ queryKey: QueryKeys.currentUser() });
     },
   });
 
@@ -75,6 +79,7 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
     }
 
     setIsLoading(false);
+    queryClient.invalidateQueries({ queryKey: QueryKeys.currentUser() });
   };
 
   const renderRevokeAccess = () => (

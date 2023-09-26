@@ -9,7 +9,7 @@ const Account = async () => {
   return (
     <>
       <div className="flex justify-end gap-3 mb-6">
-        <ManageAccount user={user} />
+        <ManageAccount initialData={user} />
         <Logout />
       </div>
       <SongHistory />

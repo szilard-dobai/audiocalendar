@@ -1,8 +1,10 @@
 "use client";
 
 import Button from "@/components/Button";
+import QueryKeys from "@/hooks/queryKeys";
 import { createSupabaseClient } from "@/utils/client/supabase";
 import { Scopes, SpotifyApi } from "@spotify/web-api-ts-sdk";
+import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -13,6 +15,7 @@ type Props = {
 
 const LinkSpotify = ({ isAccessGranted, className }: Props) => {
   const supabase = createSupabaseClient();
+  const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,6 +31,7 @@ const LinkSpotify = ({ isAccessGranted, className }: Props) => {
     ).catch((error) => setError(`Oh no! An error occured: ${error.message}`));
 
     setIsLoading(false);
+    queryClient.invalidateQueries({ queryKey: QueryKeys.currentUser() });
   };
 
   const renderGrantAccess = () => (
@@ -67,6 +71,7 @@ const LinkSpotify = ({ isAccessGranted, className }: Props) => {
     }
 
     setIsLoading(false);
+    queryClient.invalidateQueries({ queryKey: QueryKeys.currentUser() });
   };
 
   const renderRevokeAccess = () => (

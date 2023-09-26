@@ -1,11 +1,9 @@
 import { z } from "zod";
 
-export const dateSchema = z.union([z.string(), z.date()]);
-
 export const CurrentUser = z.object({
   id: z.string(),
   email: z.string(),
-  created_at: dateSchema,
+  created_at: z.string(),
   hasGoogleAccess: z.boolean(),
   hasSpotifyAccess: z.boolean(),
 });

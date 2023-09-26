@@ -2,13 +2,13 @@
 
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
-import { User } from "@/types";
 import { useState } from "react";
+import type { CurrentUser } from "../me/schema";
 import LinkGoogle from "./LinkGoogle";
 import LinkSpotify from "./LinkSpotify";
 
 type Props = {
-  user: User;
+  user: CurrentUser;
 };
 
 const ManageAccount = ({ user }: Props) => {

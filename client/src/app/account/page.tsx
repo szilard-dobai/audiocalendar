@@ -1,34 +1,10 @@
-import type { User } from "@/types";
-import { createSupabaseClient } from "@/utils/server/supabase";
 import Logout from "./(components)/LogoutButton";
 import ManageAccount from "./(components)/ManageAccount";
 import SongHistory from "./(components)/SongHistory";
-
-const getUserData = async (): Promise<User> => {
-  const supabase = createSupabaseClient();
-
-  const { data: googleToken } = await supabase
-    .from("google_tokens")
-    .select("*")
-    .single();
-  const { data: spotifyToken } = await supabase
-    .from("spotify_tokens")
-    .select("*")
-    .single();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  return {
-    ...user!,
-    hasGoogleAccess: !!googleToken && !!googleToken.accessToken,
-    hasSpotifyAccess: !!spotifyToken && !!spotifyToken.accessToken,
-  };
-};
+import { getCurrentUser } from "./me/route";
 
 const Account = async () => {
-  const user = await getUserData();
+  const user = await getCurrentUser();
 
   return (
     <>

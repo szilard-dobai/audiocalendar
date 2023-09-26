@@ -1,7 +1,7 @@
 import Logout from "./(components)/LogoutButton";
 import ManageAccount from "./(components)/ManageAccount";
 import SongHistory from "./(components)/SongHistory";
-import { getCurrentUser } from "./me/route";
+import { getCurrentUser } from "./me/getCurrentUser";
 
 const Account = async () => {
   const user = await getCurrentUser();

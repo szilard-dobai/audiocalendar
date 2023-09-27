@@ -2,8 +2,8 @@ import { CurrentUser, GetCurrentUserOutput } from "@/app/account/me/schema";
 import { useQuery } from "@tanstack/react-query";
 import QueryKeys from "./queryKeys";
 
-const useGetCurrentUserQuery = (initialData: unknown) => {
-  return useQuery<unknown, string, CurrentUser>({
+const useGetCurrentUserQuery = (initialData: CurrentUser) =>
+  useQuery<CurrentUser>({
     queryFn: async () => {
       const response = await fetch("/account/me", { method: "GET" });
       const body = GetCurrentUserOutput.parse(await response.json());
@@ -16,6 +16,5 @@ const useGetCurrentUserQuery = (initialData: unknown) => {
     queryKey: QueryKeys.currentUser(),
     initialData,
   });
-};
 
 export default useGetCurrentUserQuery;

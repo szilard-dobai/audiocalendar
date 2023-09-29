@@ -23,7 +23,7 @@ const AccountLayout = ({ children }: PropsWithChildren) => {
             <li key={href}>
               <Link
                 href={href}
-                className={`cursor-pointer hover:font-semibold ${
+                className={`text-xl cursor-pointer hover:font-semibold ${
                   pathname === href ? "text-brand" : "text-primary"
                 }`}
               >

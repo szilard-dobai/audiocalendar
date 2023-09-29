@@ -22,6 +22,7 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
   const grantAccess = useGoogleLogin({
     scope: "https://www.googleapis.com/auth/calendar",
     flow: "auth-code",
+    redirect_uri: window.location.origin,
     onSuccess: async (response) => {
       setIsLoading(true);
       setError(null);

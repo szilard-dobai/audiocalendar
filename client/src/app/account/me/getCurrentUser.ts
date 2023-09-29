@@ -27,8 +27,8 @@ export const getCurrentUser = async () => {
     id: user.id,
     email: user.email!,
     created_at: user.created_at,
-    hasGoogleAccess: !!googleToken && !!googleToken.accessToken,
-    hasSpotifyAccess: !!spotifyToken && !!spotifyToken.accessToken,
+    hasGoogleAccess: !!googleToken && !!googleToken.refreshToken,
+    hasSpotifyAccess: !!spotifyToken && !!spotifyToken.refreshToken,
   };
   GetCurrentUserOutput.parse(currentUser);
 

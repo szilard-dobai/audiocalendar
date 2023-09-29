@@ -2,6 +2,7 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 import { PostSpotifyInput } from "./schema";
+import type { Database } from "@audiocalendar/types";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -9,7 +10,7 @@ export const POST = async (req: NextRequest) => {
     const { access_token, expires, expires_in, refresh_token } =
       PostSpotifyInput.parse(body);
 
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = createRouteHandlerClient<Database>({ cookies });
     const {
       data: { session },
     } = await supabase.auth.getSession();
@@ -23,6 +24,11 @@ export const POST = async (req: NextRequest) => {
       },
       { onConflict: "userId" }
     );
+    await supabase
+      .from("notifications")
+      .update({ resolved: true })
+      .eq("userId", session!.user.id)
+      .eq("type", "INVALID_SPOTIFY_REFRESH_TOKEN");
 
     return NextResponse.redirect(new URL("/account", req.url));
   } catch (error) {

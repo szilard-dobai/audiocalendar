@@ -35,7 +35,21 @@ export const createSpotifyClient = async ({
     }
 
     console.log(`Refreshing token for ${userId}`);
-    const newToken = await getNewAccessToken(refreshToken);
+    const newToken = await getNewAccessToken(refreshToken)
+      .catch(async (error) => {
+        await supabase.from("notifications").insert({
+          userId,
+          message:
+            "We encountered problems fetching data from your Spotify account. Please re-authorize Audiocalendar.",
+          type: "INVALID_SPOTIFY_REFRESH_TOKEN",
+        });
+        await supabase
+          .from("spotify_tokens")
+          .update({ userId, refreshToken: null })
+          .eq("userId", userId);
+        throw `Error refreshing token for ${userId}: ${error}`;
+      })
+      .then((token) => token);
     token = newToken.access_token;
     await supabase.from("spotify_tokens").upsert(
       {
@@ -76,6 +90,5 @@ export const getNewAccessToken = async (
   });
 
   const json: RefreshTokenResponse = await response.json();
-  console.log(json);
   return json;
 };

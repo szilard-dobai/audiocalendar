@@ -1,7 +1,7 @@
 "use client";
 
 import { useIsFetching, useIsMutating } from "@tanstack/react-query";
-import { BeatLoader } from "react-spinners";
+import Loader from "./Loader";
 
 type Props = { className?: string };
 
@@ -13,7 +13,7 @@ const GlobalLoader = ({ className = "" }: Props) => {
     return null;
   }
 
-  return <BeatLoader size="0.5rem" color="#6c63ff" />;
+  return <Loader />;
 };
 
 export default GlobalLoader;

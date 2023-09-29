@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
+import Loader from "@/components/Loader";
 import useGetSongHistory from "@/hooks/useGetSongHistory";
 import dayjs from "dayjs";
 import Image from "next/image";
@@ -42,7 +43,7 @@ const SongHistory = () => {
       </div>
 
       {isLoading ? (
-        <p>Loading ...</p>
+        <Loader />
       ) : !data?.songs?.length ? (
         <p>
           Nothing here yet! Make sure you connected your{" "}

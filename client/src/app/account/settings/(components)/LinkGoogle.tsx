@@ -86,13 +86,12 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
   const renderRevokeAccess = () => (
     <>
       <p className="mb-3">
-        Click the button below to revoke{" "}
-        <span className="font-semibold text-brand">Audiocalendar</span>&apos;s{" "}
-        access to your Google account. For extra security, go to your{" "}
+        Click the button below to revoke Audiocalendar&apos;s access to your
+        Google account. For extra security, go to your{" "}
         <Link
           href="https://myaccount.google.com/connections/"
           target="_blank"
-          className="font-semibold hover:underline"
+          className="text-brand font-semibold hover:underline"
         >
           🔗 Account Settings
         </Link>{" "}

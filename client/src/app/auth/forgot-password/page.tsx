@@ -8,12 +8,17 @@ import { useState, type FormEvent } from "react";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const { mutate, isLoading, isSuccess, error } = useResetPassword();
+  const {
+    mutate: resetPassword,
+    isLoading,
+    isSuccess,
+    error,
+  } = useResetPassword();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    mutate({ email });
+    resetPassword({ email });
   };
 
   return (

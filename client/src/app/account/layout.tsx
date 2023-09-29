@@ -1,5 +1,6 @@
 "use client";
 
+import GlobalLoader from "@/components/GlobalLoader";
 import Logout from "@/components/LogoutButton";
 import QueryClientProvider from "@/components/QueryClientProvider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -31,6 +32,8 @@ const AccountLayout = ({ children }: PropsWithChildren) => {
               </Link>
             </li>
           ))}
+
+          <GlobalLoader />
 
           <Logout className="ml-auto" />
         </ul>

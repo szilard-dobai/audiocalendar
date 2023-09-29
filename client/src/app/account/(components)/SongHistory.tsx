@@ -25,18 +25,19 @@ const SongHistory = () => {
             </p>
           )}
           <Button
-            disabled={page === 1}
+            disabled={page === 1 || isFetching || isLoading}
             onClick={() => setPage((page) => Math.max(page - 1, 1))}
           >
             Previous Page
           </Button>
           <Button
-            disabled={!maximumPage || page === maximumPage}
+            disabled={
+              !maximumPage || page === maximumPage || isFetching || isLoading
+            }
             onClick={() => setPage((page) => page + 1)}
           >
             Next Page
           </Button>
-          {isFetching && <p>... fetching more ...</p>}
         </div>
       </div>
 

@@ -160,6 +160,40 @@ export interface Database {
           }
         ]
       }
+      notifications: {
+        Row: {
+          createdAt: string
+          id: string
+          message: string
+          resolved: boolean
+          type: Database["public"]["Enums"]["notification_type"]
+          userId: string
+        }
+        Insert: {
+          createdAt?: string
+          id?: string
+          message: string
+          resolved?: boolean
+          type?: Database["public"]["Enums"]["notification_type"]
+          userId: string
+        }
+        Update: {
+          createdAt?: string
+          id?: string
+          message?: string
+          resolved?: boolean
+          type?: Database["public"]["Enums"]["notification_type"]
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_userId_fkey"
+            columns: ["userId"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       spotify_tokens: {
         Row: {
           accessToken: string | null
@@ -229,7 +263,10 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      notification_type:
+        | "INVALID_SPOTIFY_REFRESH_TOKEN"
+        | "INVALID_GOOGLE_REFRESH_TOKEN"
+        | "OTHER"
     }
     CompositeTypes: {
       [_ in never]: never

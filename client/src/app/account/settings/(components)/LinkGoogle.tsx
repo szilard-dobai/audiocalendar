@@ -1,9 +1,11 @@
 "use client";
 
 import Button from "@/components/Button";
+import Modal from "@/components/Modal";
 import useGrantGoogleAccess from "@/hooks/useGrantGoogleAccess";
 import useRevokeGoogleAccess from "@/hooks/useRevokeGoogleAccess";
 import Link from "next/link";
+import { useState } from "react";
 
 type Props = {
   isAccessGranted: boolean;
@@ -11,6 +13,7 @@ type Props = {
 };
 
 const LinkGoogle = ({ isAccessGranted, className }: Props) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     mutate: grantAccess,
     isLoading: isGrantingAccess,
@@ -22,12 +25,15 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
     error: errorRevokingAccess,
   } = useRevokeGoogleAccess();
 
+  const openModal = () => setIsModalOpen(true);
+
+  const closeModal = () => setIsModalOpen(false);
+
   const renderGrantAccess = () => (
     <>
       <p className="mb-3">
-        Click the button below to grant{" "}
-        <span className="font-semibold text-brand">Audiocalendar</span> access
-        to your Google Calendar.
+        Click the button below to grant Audiocalendar access to your Google
+        Calendar.
       </p>
 
       <Button
@@ -64,7 +70,7 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
         className="ml-auto"
         variant="outline"
         disabled={isRevokingAccess}
-        onClick={() => revokeAccess()}
+        onClick={openModal}
         image="google"
       >
         Revoke Access
@@ -72,6 +78,27 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
       {!!errorRevokingAccess && (
         <p className="text-rose-500 italic">{errorRevokingAccess}</p>
       )}
+
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <p className="mb-12">
+          Are you sure you want to remove Audiocalendar&apos;s access to your
+          Google account?
+        </p>
+        <div className="flex justify-between gap-3">
+          <Button variant="outline" onClick={closeModal}>
+            No, I&apos;ve changed my mind
+          </Button>
+          <Button
+            disabled={isRevokingAccess}
+            onClick={() => {
+              revokeAccess();
+              closeModal();
+            }}
+          >
+            Yes, I&apos;m sure
+          </Button>
+        </div>
+      </Modal>
     </>
   );
 

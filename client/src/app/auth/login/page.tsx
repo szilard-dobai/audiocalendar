@@ -2,8 +2,7 @@
 
 import Button from "@/components/Button";
 import TextInput from "@/components/TextInput";
-import { createSupabaseClient } from "@/utils/client/supabase";
-import type { AuthTokenResponse, OAuthResponse } from "@supabase/supabase-js";
+import useLogin from "@/hooks/useLogin";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
@@ -11,49 +10,20 @@ import google from "../../../../public/google.svg";
 import spotify from "../../../../public/spotify.svg";
 
 const Login = () => {
-  const supabase = createSupabaseClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { mutateAsync: login, isLoading, error } = useLogin();
 
-  const wrapAsync = async <T extends AuthTokenResponse | OAuthResponse>(
-    promise: Promise<T>
-  ) => {
-    setError(null);
-    setIsLoading(true);
-    const { data, error } = await promise;
-    setIsLoading(false);
-
-    if (error) {
-      setError(error.message);
-      return;
-    }
-
+  const handleLogin = async (provider?: "google" | "spotify") => {
+    const data = await (provider
+      ? login({ provider })
+      : login({ email, password }));
     window.location.replace("url" in data ? data.url : "/account");
   };
 
-  const handleEmailLogin = async () =>
-    wrapAsync(
-      supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
-    );
-
-  const handleProviderLogin = (provider: "google" | "spotify") =>
-    wrapAsync(
-      supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      })
-    );
-
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleEmailLogin();
+    handleLogin();
   };
 
   return (
@@ -70,7 +40,7 @@ const Login = () => {
           className="flex items-center"
           variant="outline"
           disabled={isLoading}
-          onClick={() => handleProviderLogin("google")}
+          onClick={() => handleLogin("google")}
         >
           <Image src={google} alt="Google Logo" className="inline w-8 mr-2" />
           Sign in with Google
@@ -79,7 +49,7 @@ const Login = () => {
           className="flex items-center"
           variant="outline"
           disabled={isLoading}
-          onClick={() => handleProviderLogin("spotify")}
+          onClick={() => handleLogin("spotify")}
         >
           <Image src={spotify} alt="Spotify Logo" className="inline w-8 mr-2" />
           Sign in with Spotify
@@ -105,7 +75,7 @@ const Login = () => {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        {error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
+        {!!error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
 
         <Button
           className="mb-4"

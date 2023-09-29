@@ -1,12 +1,9 @@
 "use client";
 
 import Button from "@/components/Button";
-import QueryKeys from "@/hooks/queryKeys";
-import { createSupabaseClient } from "@/utils/client/supabase";
-import { Scopes, SpotifyApi } from "@spotify/web-api-ts-sdk";
-import { useQueryClient } from "@tanstack/react-query";
+import useGrantSpotifyAccess from "@/hooks/useGrantSpotifyAccess";
+import useRevokeSpotifyAccess from "@/hooks/useRevokeSpotifyAccess";
 import Link from "next/link";
-import { useState } from "react";
 
 type Props = {
   isAccessGranted: boolean;
@@ -14,25 +11,16 @@ type Props = {
 };
 
 const LinkSpotify = ({ isAccessGranted, className }: Props) => {
-  const supabase = createSupabaseClient();
-  const queryClient = useQueryClient();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const grantAccess = async () => {
-    setIsLoading(true);
-    setError(null);
-
-    await SpotifyApi.performUserAuthorization(
-      process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
-      `${window.location.origin}/account/settings`,
-      Scopes.userRecents,
-      `${window.location.origin}/auth/spotify`
-    ).catch((error) => setError(`Oh no! An error occured: ${error.message}`));
-
-    setIsLoading(false);
-    queryClient.invalidateQueries({ queryKey: QueryKeys.currentUser() });
-  };
+  const {
+    mutate: grantAccess,
+    isLoading: isGrantingAccess,
+    error: errorGrantingAccess,
+  } = useGrantSpotifyAccess();
+  const {
+    mutate: revokeAccess,
+    isLoading: isRevokingAccess,
+    error: errorRevokingAccess,
+  } = useRevokeSpotifyAccess();
 
   const renderGrantAccess = () => (
     <>
@@ -46,33 +34,16 @@ const LinkSpotify = ({ isAccessGranted, className }: Props) => {
         className="ml-auto"
         variant="outline"
         image="spotify"
-        disabled={isLoading}
-        onClick={grantAccess}
+        disabled={isGrantingAccess}
+        onClick={() => grantAccess()}
       >
         Authorize Spotify
       </Button>
+      {!!errorGrantingAccess && (
+        <p className="text-rose-500 italic">{errorGrantingAccess}</p>
+      )}
     </>
   );
-
-  const revokeAccess = async () => {
-    setIsLoading(true);
-    setError(null);
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    const response = await supabase
-      .from("spotify_tokens")
-      .delete()
-      .eq("userId", user!.id);
-
-    if (response.error) {
-      setError(`Oh no! An error occured: ${response.error.message}`);
-    }
-
-    setIsLoading(false);
-    queryClient.invalidateQueries({ queryKey: QueryKeys.currentUser() });
-  };
 
   const renderRevokeAccess = () => (
     <>
@@ -92,19 +63,21 @@ const LinkSpotify = ({ isAccessGranted, className }: Props) => {
       <Button
         className="ml-auto"
         variant="outline"
-        disabled={isLoading}
-        onClick={revokeAccess}
+        disabled={isRevokingAccess}
+        onClick={() => revokeAccess()}
         image="spotify"
       >
         Revoke Access
       </Button>
+      {!!errorRevokingAccess && (
+        <p className="text-rose-500 italic">{errorRevokingAccess}</p>
+      )}
     </>
   );
 
   return (
     <div className={className}>
       {isAccessGranted ? renderRevokeAccess() : renderGrantAccess()}
-      {error && <p className="text-rose-500 italic">{error}</p>}
     </div>
   );
 };

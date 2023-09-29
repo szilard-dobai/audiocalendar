@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import useGetSongHistory from "@/hooks/useGetSongHistory";
 import dayjs from "dayjs";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const PAGE_SIZE = 20;
@@ -18,9 +19,11 @@ const SongHistory = () => {
       <div className="flex items-center justify-between mb-6">
         <h1 className="font-semibold text-2xl">Song History</h1>
         <div className="flex items-center gap-3">
-          <p>
-            Page {page} {data?.count && `of ${maximumPage}`}
-          </p>
+          {!!data?.count && (
+            <p>
+              Page {page} of {maximumPage}
+            </p>
+          )}
           <Button
             disabled={page === 1}
             onClick={() => setPage((page) => Math.max(page - 1, 1))}
@@ -28,7 +31,7 @@ const SongHistory = () => {
             Previous Page
           </Button>
           <Button
-            disabled={page === maximumPage}
+            disabled={!maximumPage || page === maximumPage}
             onClick={() => setPage((page) => page + 1)}
           >
             Next Page
@@ -39,6 +42,17 @@ const SongHistory = () => {
 
       {isLoading ? (
         <p>Loading ...</p>
+      ) : !data?.songs?.length ? (
+        <p>
+          Nothing here yet! Make sure you connected your{" "}
+          <Link
+            href="/account/settings"
+            className="text-brand font-semibold cursor-pointer hover:underline"
+          >
+            Spotify account
+          </Link>{" "}
+          and that you have listened to some music since then.
+        </p>
       ) : (
         data?.songs?.map((el) => (
           <div key={el.id} className="border-b pb-4 mb-4">

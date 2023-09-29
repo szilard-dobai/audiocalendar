@@ -4,7 +4,11 @@ import Button from "@/components/Button";
 import useLogout from "@/hooks/useLogout";
 import { useRouter } from "next/navigation";
 
-const Logout = () => {
+type Props = {
+  className?: string;
+};
+
+const Logout = ({ className = "" }: Props) => {
   const router = useRouter();
   const { mutateAsync: logout, isLoading } = useLogout();
 
@@ -15,7 +19,7 @@ const Logout = () => {
 
   return (
     <Button
-      className="flex items-center"
+      className={`${className} flex items-center`}
       variant="outline"
       disabled={isLoading}
       onClick={handleClick}

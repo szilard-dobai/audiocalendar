@@ -25,7 +25,7 @@ const LinkSpotify = ({ isAccessGranted, className }: Props) => {
 
     await SpotifyApi.performUserAuthorization(
       process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
-      `${window.location.origin}/account`,
+      `${window.location.origin}/account/settings`,
       Scopes.userRecents,
       `${window.location.origin}/auth/spotify`
     ).catch((error) => setError(`Oh no! An error occured: ${error.message}`));

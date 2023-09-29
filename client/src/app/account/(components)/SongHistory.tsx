@@ -8,7 +8,8 @@ const getData = async () => {
   return supabase
     .from("history")
     .select("*")
-    .order("playedAt", { ascending: false });
+    .order("playedAt", { ascending: false })
+    .limit(20);
 };
 
 const SongHistory = async () => {

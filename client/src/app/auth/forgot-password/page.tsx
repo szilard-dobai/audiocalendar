@@ -2,33 +2,18 @@
 
 import Button from "@/components/Button";
 import TextInput from "@/components/TextInput";
-import { createSupabaseClient } from "@/utils/client/supabase";
+import useResetPassword from "@/hooks/useResetPassword";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 
 const ForgotPassword = () => {
-  const supabase = createSupabaseClient();
   const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const { mutate, isLoading, isSuccess, error } = useResetPassword();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setError(null);
-    setSuccess(null);
-    setIsLoading(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/callback?next=/auth/reset-password`,
-    });
-    setIsLoading(false);
-
-    if (error) {
-      setError(error.message);
-      return;
-    }
-    setSuccess("Email sent! Please check your inbox.");
+    mutate({ email });
   };
 
   return (
@@ -51,8 +36,12 @@ const ForgotPassword = () => {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
-        {error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
-        {success && <p className="text-brand font-semibold mb-6">{success}</p>}
+        {!!error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
+        {isSuccess && (
+          <p className="text-brand font-semibold mb-6">
+            Email sent! Please check your inbox.
+          </p>
+        )}
 
         <Button className="mb-4" type="submit" disabled={isLoading || !email}>
           Submit

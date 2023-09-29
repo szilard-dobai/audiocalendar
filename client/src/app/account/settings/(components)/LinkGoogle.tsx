@@ -1,12 +1,9 @@
 "use client";
 
 import Button from "@/components/Button";
-import QueryKeys from "@/hooks/queryKeys";
-import { createSupabaseClient } from "@/utils/client/supabase";
-import { useGoogleLogin } from "@react-oauth/google";
-import { useQueryClient } from "@tanstack/react-query";
+import useGrantGoogleAccess from "@/hooks/useGrantGoogleAccess";
+import useRevokeGoogleAccess from "@/hooks/useRevokeGoogleAccess";
 import Link from "next/link";
-import { useState } from "react";
 
 type Props = {
   isAccessGranted: boolean;
@@ -14,34 +11,16 @@ type Props = {
 };
 
 const LinkGoogle = ({ isAccessGranted, className }: Props) => {
-  const supabase = createSupabaseClient();
-  const queryClient = useQueryClient();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const grantAccess = useGoogleLogin({
-    scope: "https://www.googleapis.com/auth/calendar",
-    flow: "auth-code",
-    redirect_uri: window.location.origin,
-    onSuccess: async (response) => {
-      setIsLoading(true);
-      setError(null);
-
-      const { error } = await supabase.functions.invoke("setup-google", {
-        body: JSON.stringify({
-          ...response,
-          redirectUri: window.location.origin,
-        }),
-      });
-
-      if (error) {
-        setError(`Oh no! An error occured: ${error.message}`);
-      }
-
-      setIsLoading(false);
-      queryClient.invalidateQueries({ queryKey: QueryKeys.currentUser() });
-    },
-  });
+  const {
+    mutate: grantAccess,
+    isLoading: isGrantingAccess,
+    error: errorGrantingAccess,
+  } = useGrantGoogleAccess();
+  const {
+    mutate: revokeAccess,
+    isLoading: isRevokingAccess,
+    error: errorRevokingAccess,
+  } = useRevokeGoogleAccess();
 
   const renderGrantAccess = () => (
     <>
@@ -55,33 +34,16 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
         className="ml-auto"
         variant="outline"
         image="google"
-        disabled={isLoading}
-        onClick={grantAccess}
+        disabled={isGrantingAccess}
+        onClick={() => grantAccess()}
       >
         Authorize Google
       </Button>
+      {!!errorGrantingAccess && (
+        <p className="text-rose-500 italic">{errorGrantingAccess}</p>
+      )}
     </>
   );
-
-  const revokeAccess = async () => {
-    setIsLoading(true);
-    setError(null);
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    const response = await supabase
-      .from("google_tokens")
-      .delete()
-      .eq("userId", user!.id);
-
-    if (response.error) {
-      setError(`Oh no! An error occured: ${response.error.message}`);
-    }
-
-    setIsLoading(false);
-    queryClient.invalidateQueries({ queryKey: QueryKeys.currentUser() });
-  };
 
   const renderRevokeAccess = () => (
     <>
@@ -101,19 +63,21 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
       <Button
         className="ml-auto"
         variant="outline"
-        disabled={isLoading}
-        onClick={revokeAccess}
+        disabled={isRevokingAccess}
+        onClick={() => revokeAccess()}
         image="google"
       >
         Revoke Access
       </Button>
+      {!!errorRevokingAccess && (
+        <p className="text-rose-500 italic">{errorRevokingAccess}</p>
+      )}
     </>
   );
 
   return (
     <div className={className}>
       {isAccessGranted ? renderRevokeAccess() : renderGrantAccess()}
-      {error && <p className="text-rose-500 italic">{error}</p>}
     </div>
   );
 };

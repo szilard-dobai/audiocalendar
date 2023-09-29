@@ -5,16 +5,14 @@ import { PostSpotifyInput } from "./schema";
 
 export const POST = async (req: NextRequest) => {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
-
     const body = await req.json();
     const { access_token, expires, expires_in, refresh_token } =
       PostSpotifyInput.parse(body);
 
+    const supabase = createRouteHandlerClient({ cookies });
     const {
       data: { session },
     } = await supabase.auth.getSession();
-
     await supabase.from("spotify_tokens").upsert(
       {
         userId: session!.user.id,

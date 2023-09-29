@@ -10,7 +10,6 @@ import { getCalendars, getSongs, getTokens } from "./helpers.ts";
 
 const GOOGLE_CLIENT_ID = Deno.env.get("VITE_GOOGLE_CLIENT_ID");
 const GOOGLE_CLIENT_SECRET = Deno.env.get("VITE_GOOGLE_CLIENT_SECRET");
-
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY");
 const PUSH_TO_CALENDAR_SECRET = Deno.env.get("VITE_PUSH_TO_CALENDAR_SECRET");
 
@@ -58,8 +57,9 @@ serve(async (req) => {
           access_token: token?.accessToken,
           refresh_token: token?.refreshToken,
         });
-        gAuth.on("tokens", (tokens) =>
-          supabase.from("google_tokens").upsert(
+        gAuth.on("tokens", async (tokens) => {
+          console.log(`Refreshed access token for ${userId}`);
+          await supabase.from("google_tokens").upsert(
             {
               userId: userId,
               accessToken: tokens.access_token,
@@ -67,31 +67,37 @@ serve(async (req) => {
               refreshToken: tokens.refresh_token,
             },
             { onConflict: "userId" }
-          )
-        );
+          );
+        });
 
         for (const song of songs) {
           const playedAt = dayjs(song.playedAt);
-          await gCal.events.insert({
-            calendarId,
-            auth: gAuth,
-            requestBody: {
-              start: {
-                dateTime: playedAt
-                  .subtract(song.songDuration, "ms")
-                  .toISOString(),
+          try {
+            await gCal.events.insert({
+              calendarId,
+              auth: gAuth,
+              requestBody: {
+                start: {
+                  dateTime: playedAt
+                    .subtract(song.songDuration, "ms")
+                    .toISOString(),
+                },
+                end: { dateTime: playedAt.toISOString() },
+                description: `Artist: <a href="${song.artistUrl}">${song.artist}</a>\nAlbum: <a href="${song.albumUrl}">${song.album}</a>\nSong: <a href="${song.songUrl}">${song.song}</a>`,
+                reminders: { useDefault: false, overrides: [] },
+                summary: `${song.artist}: ${song.song}`,
+                colorId: Math.floor(Math.random() * 11 + 1).toString(),
               },
-              end: { dateTime: playedAt.toISOString() },
-              description: `Artist: <a href="${song.artistUrl}">${song.artist}</a>\nAlbum: <a href="${song.albumUrl}">${song.album}</a>\nSong: <a href="${song.songUrl}">${song.song}</a>`,
-              reminders: { useDefault: false, overrides: [] },
-              summary: `${song.artist}: ${song.song}`,
-              colorId: Math.floor(Math.random() * 11 + 1).toString(),
-            },
-          });
-          await supabase
-            .from("history")
-            .update({ addedToCalendar: true })
-            .eq("id", song.id);
+            });
+            await supabase
+              .from("history")
+              .update({ addedToCalendar: true })
+              .eq("id", song.id);
+          } catch (e) {
+            throw new Error(
+              `Failed pushing song to calendar for ${userId}: ${e.message}`
+            );
+          }
         }
       })
     );

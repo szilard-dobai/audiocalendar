@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 const Auth = ({ children }: PropsWithChildren) => {

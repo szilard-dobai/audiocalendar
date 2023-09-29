@@ -6,7 +6,7 @@ import { createSupabaseClient } from "@/utils/client/supabase";
 import type { AuthResponse, OAuthResponse } from "@supabase/supabase-js";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import google from "../../../../public/google.svg";
 import spotify from "../../../../public/spotify.svg";
 
@@ -51,6 +51,11 @@ const Register = () => {
       })
     );
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleEmailRegister();
+  };
+
   return (
     <div className="flex flex-col items-start">
       <hgroup className="mb-12">
@@ -81,33 +86,35 @@ const Register = () => {
         </Button>
       </div>
 
-      <TextInput
-        className="mb-4 w-1/3"
-        id="email"
-        label="E-Mail"
-        type="text"
-        placeholder="example@mail.com"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-      />
-      <TextInput
-        className="mb-12 w-1/3"
-        id="password"
-        label="Password"
-        type="password"
-        placeholder="**********"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-      />
-      {error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
+      <form className="w-full" onSubmit={handleSubmit}>
+        <TextInput
+          className="mb-4 w-1/3"
+          id="email"
+          label="E-Mail"
+          type="text"
+          placeholder="example@mail.com"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+        <TextInput
+          className="mb-12 w-1/3"
+          id="password"
+          label="Password"
+          type="password"
+          placeholder="**********"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        {error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
 
-      <Button
-        className="mb-4"
-        onClick={handleEmailRegister}
-        disabled={isLoading || !password || !email}
-      >
-        Sign up
-      </Button>
+        <Button
+          className="mb-4"
+          type="submit"
+          disabled={isLoading || !password || !email}
+        >
+          Sign up
+        </Button>
+      </form>
 
       <Link
         className="text-secondary hover:underline text-sm"

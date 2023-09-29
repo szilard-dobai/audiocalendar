@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 import TextInput from "@/components/TextInput";
 import { createSupabaseClient } from "@/utils/client/supabase";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 
 const ForgotPassword = () => {
   const supabase = createSupabaseClient();
@@ -13,7 +13,9 @@ const ForgotPassword = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const handleClick = async () => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     setError(null);
     setSuccess(null);
     setIsLoading(true);
@@ -39,25 +41,23 @@ const ForgotPassword = () => {
         </p>
       </hgroup>
 
-      <TextInput
-        className="mb-4 w-1/3"
-        id="email"
-        label="E-Mail"
-        type="text"
-        placeholder="example@mail.com"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-      />
-      {error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
-      {success && <p className="text-brand font-semibold mb-6">{success}</p>}
+      <form className="w-full" onSubmit={handleSubmit}>
+        <TextInput
+          className="mb-4 w-1/3"
+          id="email"
+          label="E-Mail"
+          type="text"
+          placeholder="example@mail.com"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+        {error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
+        {success && <p className="text-brand font-semibold mb-6">{success}</p>}
 
-      <Button
-        className="mb-4"
-        onClick={handleClick}
-        disabled={isLoading || !email}
-      >
-        Submit
-      </Button>
+        <Button className="mb-4" type="submit" disabled={isLoading || !email}>
+          Submit
+        </Button>
+      </form>
 
       <Link
         className="text-secondary hover:underline text-sm"

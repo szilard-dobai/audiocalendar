@@ -1,5 +1,5 @@
-import { Database } from "@audiocalendar/types";
-import { SupabaseClient, createClient } from "@supabase/supabase-js";
+import { type Database } from "@audiocalendar/types";
+import { type SupabaseClient, createClient } from "@supabase/supabase-js";
 import { createContext, useMemo, type PropsWithChildren } from "react";
 
 type SupabaseContextType = SupabaseClient<Database> | null;

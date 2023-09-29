@@ -1,4 +1,4 @@
-import { Session } from "@supabase/supabase-js";
+import { type Session } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useSupabase from "./useSupabase";
 

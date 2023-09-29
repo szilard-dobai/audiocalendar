@@ -1,4 +1,4 @@
-import { Database } from "@audiocalendar/types";
+import { type Database } from "@audiocalendar/types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 

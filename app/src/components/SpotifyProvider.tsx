@@ -1,5 +1,5 @@
-import { AccessToken, SpotifyApi } from "@spotify/web-api-ts-sdk";
-import { Session } from "@supabase/supabase-js";
+import { type AccessToken, SpotifyApi } from "@spotify/web-api-ts-sdk";
+import { type Session } from "@supabase/supabase-js";
 import { createContext, useMemo, type PropsWithChildren } from "react";
 import { useAuth } from "../hooks/useAuth";
 

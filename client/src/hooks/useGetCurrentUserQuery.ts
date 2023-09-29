@@ -1,4 +1,4 @@
-import { CurrentUser, GetCurrentUserOutput } from "@/app/account/me/schema";
+import { type CurrentUser, GetCurrentUserOutput } from "@/app/account/me/schema";
 import { useQuery } from "@tanstack/react-query";
 import QueryKeys from "./queryKeys";
 

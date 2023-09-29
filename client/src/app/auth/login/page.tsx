@@ -5,10 +5,10 @@ import TextInput from "@/components/TextInput";
 import { createSupabaseClient } from "@/utils/client/supabase";
 import type { AuthTokenResponse, OAuthResponse } from "@supabase/supabase-js";
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
+import { useState, type FormEvent } from "react";
 import google from "../../../../public/google.svg";
 import spotify from "../../../../public/spotify.svg";
-import Link from "next/link";
 
 const Login = () => {
   const supabase = createSupabaseClient();
@@ -51,6 +51,11 @@ const Login = () => {
       })
     );
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleEmailLogin();
+  };
+
   return (
     <div className="flex flex-col items-start">
       <hgroup className="mb-12">
@@ -81,33 +86,35 @@ const Login = () => {
         </Button>
       </div>
 
-      <TextInput
-        className="mb-4 w-1/3"
-        id="email"
-        label="E-Mail"
-        type="text"
-        placeholder="example@mail.com"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-      />
-      <TextInput
-        className="mb-12 w-1/3"
-        id="password"
-        label="Password"
-        type="password"
-        placeholder="**********"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-      />
-      {error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
+      <form className="w-full" onSubmit={handleSubmit}>
+        <TextInput
+          className="mb-4 w-1/3"
+          id="email"
+          label="E-Mail"
+          type="text"
+          placeholder="example@mail.com"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+        <TextInput
+          className="mb-12 w-1/3"
+          id="password"
+          label="Password"
+          type="password"
+          placeholder="**********"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        {error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
 
-      <Button
-        className="mb-4"
-        onClick={handleEmailLogin}
-        disabled={isLoading || !password || !email}
-      >
-        Log in
-      </Button>
+        <Button
+          className="mb-4"
+          type="submit"
+          disabled={isLoading || !password || !email}
+        >
+          Log in
+        </Button>
+      </form>
 
       <Link
         className="text-secondary hover:underline text-sm"

@@ -14,17 +14,21 @@ const SongHistory = () => {
   const [page, setPage] = useState(1);
   const { data, isLoading, isFetching } = useGetSongHistory(page, PAGE_SIZE);
   const maximumPage = data?.count ? Math.ceil(data.count / PAGE_SIZE) : 0;
+  const showPagination = maximumPage > 1;
 
   return (
     <>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-baseline justify-between mb-1 gap-3">
         <h1 className="font-semibold text-2xl">Song History</h1>
-        <div className="flex items-center gap-3">
-          {!!data?.count && (
-            <p>
-              Page {page} of {maximumPage}
-            </p>
-          )}
+        {showPagination && (
+          <p>
+            Page {page} of {maximumPage}
+          </p>
+        )}
+      </div>
+
+      {showPagination && (
+        <div className="flex items-center justify-end gap-3 mb-6">
           <Button
             disabled={page === 1 || isFetching || isLoading}
             onClick={() => setPage((page) => Math.max(page - 1, 1))}
@@ -40,7 +44,7 @@ const SongHistory = () => {
             Next Page
           </Button>
         </div>
-      </div>
+      )}
 
       {isLoading ? (
         <Loader />

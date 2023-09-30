@@ -7,8 +7,8 @@ const Navigation = () => {
       <Link href="/" className="text-white">
         <picture>
           {/* // TODO: Figure out how to make this work with next/image */}
-          <source media="(min-width: 640px)" srcSet="./logo-with-text.svg" />
-          <img src="./logo.svg" alt="logo" className="h-11" />
+          <source media="(min-width: 640px)" srcSet="/logo-with-text.svg" />
+          <img src="/logo.svg" alt="logo" className="h-11" />
         </picture>
       </Link>
 

@@ -25,13 +25,13 @@ const CollapsibleDefinition = ({
 
   return (
     <div
-      className={`select-none cursor-pointer p-4 rounded-lg border-4 ${
+      className={`text-left select-none cursor-pointer p-4 rounded-lg border-4 ${
         isCollapsed ? "border-brand" : "border-complement bg-complement-50"
       } transition-all duration-300 ease-in-out ${className}`}
       onClick={() => setIsCollapsed((previous) => !previous)}
     >
       <div
-        className={`flex justify-between font-semibold text-lg ${
+        className={`flex justify-between items-center gap-3 font-semibold text-lg ${
           isCollapsed ? "text-brand-700" : "text-complement-700"
         }`}
       >
@@ -45,7 +45,7 @@ const CollapsibleDefinition = ({
 
       <dd
         ref={collapsibleRef}
-        className={`text-left overflow-hidden max-h-0 transition-all duration-300 ease-in-out ${
+        className={`overflow-hidden max-h-0 transition-all duration-300 ease-in-out ${
           isCollapsed ? "text-brand-800" : "text-complement-800"
         }`}
         style={collapsibleStyle}

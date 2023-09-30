@@ -16,27 +16,29 @@ const Menu = () => {
   const pathname = usePathname();
 
   return (
-    <ul className="flex items-center gap-6 mb-12">
-      {PAGES.map(({ href, label, showBubble }) => (
-        <li key={href}>
-          <Link
-            href={href}
-            className={`text-xl cursor-pointer hover:font-semibold ${
-              pathname === href ? "text-brand" : "text-primary"
-            }`}
-          >
-            {label}
-            {showBubble && !!data?.length && (
-              <span className="inline-block w-3 h-3 bg-red-500 rounded-full mx-3 -translate-x-1/2 animate-pulse" />
-            )}
-          </Link>
-        </li>
-      ))}
+    <div className="flex items-center gap-6 mb-12">
+      <ul className="flex items-center gap-6">
+        {PAGES.map(({ href, label, showBubble }) => (
+          <li key={href}>
+            <Link
+              href={href}
+              className={`text-xl cursor-pointer hover:font-semibold ${
+                pathname === href ? "text-brand" : "text-primary"
+              }`}
+            >
+              {label}
+              {showBubble && !!data?.length && (
+                <span className="inline-block w-3 h-3 bg-red-500 rounded-full mx-3 -translate-x-1/2 animate-pulse" />
+              )}
+            </Link>
+          </li>
+        ))}
+      </ul>
 
       <GlobalLoader />
 
       <Logout className="ml-auto" />
-    </ul>
+    </div>
   );
 };
 

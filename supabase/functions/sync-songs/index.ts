@@ -72,6 +72,16 @@ serve(async (req) => {
               songs.map((track) => ({ ...mapTrackToSong(track), userId }))
             );
         } catch (e) {
+          await supabase.from("notifications").insert({
+            userId,
+            message:
+              "We encountered problems fetching data from your Spotify account. Please re-authorize Audiocalendar.",
+            type: "INVALID_SPOTIFY_REFRESH_TOKEN",
+          });
+          await supabase
+            .from("spotify_tokens")
+            .update({ userId, refreshToken: null })
+            .eq("userId", userId);
           throw new Error(`${e.message} for ${userId}`);
         }
       })

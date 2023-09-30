@@ -15,14 +15,23 @@ const useGetSongHistory = (page: number = 1, size: number = 20) => {
   const { from, to } = getPagination(page, size);
 
   return useQuery({
-    queryFn: async () =>
-      supabase
+    queryFn: async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error("User must be logged in!");
+      }
+      return supabase
         .from("history")
         .select("*", { count: "exact" })
+        .eq("userId", session?.user.id)
         .order("playedAt", { ascending: false })
         .range(from, to)
         .throwOnError()
-        .then(({ data, count }) => ({ songs: data, count })),
+        .then(({ data, count }) => ({ songs: data, count }));
+    },
     queryKey: QueryKeys.history(page),
     keepPreviousData: true,
   });

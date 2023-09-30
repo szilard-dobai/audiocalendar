@@ -49,6 +49,11 @@ serve(async (req) => {
           return;
         }
 
+        if (!token.refreshToken) {
+          console.log(`Missing refresh token for ${userId}`);
+          return;
+        }
+
         const gAuth = new google.auth.OAuth2(
           GOOGLE_CLIENT_ID,
           GOOGLE_CLIENT_SECRET
@@ -94,6 +99,16 @@ serve(async (req) => {
               .update({ addedToCalendar: true })
               .eq("id", song.id);
           } catch (e) {
+            await supabase.from("notifications").insert({
+              userId,
+              message:
+                "We encountered problems pushing data to your Google account's calendar. Please re-authorize Audiocalendar.",
+              type: "INVALID_GOOGLE_REFRESH_TOKEN",
+            });
+            await supabase
+              .from("google_tokens")
+              .update({ userId, refreshToken: null })
+              .eq("userId", userId);
             throw new Error(
               `Failed pushing song to calendar for ${userId}: ${e.message}`
             );

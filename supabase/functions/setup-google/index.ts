@@ -41,6 +41,11 @@ serve(async (req) => {
       },
       { onConflict: "userId" }
     );
+    await supabase
+      .from("notifications")
+      .update({ resolved: true })
+      .eq("userId", user.id)
+      .eq("type", "INVALID_GOOGLE_REFRESH_TOKEN");
 
     const gcal = google.calendar({ version: "v3", auth: oauth2Client });
 

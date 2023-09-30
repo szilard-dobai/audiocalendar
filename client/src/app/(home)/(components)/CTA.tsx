@@ -17,7 +17,9 @@ const CTA = () => {
       </h2>
 
       <Link href="/account" passHref legacyBehavior>
-        <Button variant="solid">Sign Up Now</Button>
+        <Button variant="solid" className="mx-auto">
+          Sign Up Now
+        </Button>
       </Link>
     </section>
   );

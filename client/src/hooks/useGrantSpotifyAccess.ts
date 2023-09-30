@@ -19,7 +19,10 @@ const useGrantSpotifyAccess = () => {
       });
     },
     onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: QueryKeys.currentUser() }),
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: QueryKeys.currentUser() }),
+        queryClient.invalidateQueries({ queryKey: QueryKeys.notifications() }),
+      ]),
     retry: 0,
   });
 };

@@ -33,7 +33,7 @@ const ForgotPassword = () => {
 
       <form className="w-full" onSubmit={handleSubmit}>
         <TextInput
-          className="mb-4 w-1/3"
+          className="mb-4 max-w-xs"
           id="email"
           label="E-Mail"
           type="text"

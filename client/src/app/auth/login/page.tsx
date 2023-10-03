@@ -35,7 +35,7 @@ const Login = () => {
         </p>
       </hgroup>
 
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-3 mb-6 flex-wrap">
         <Button
           className="flex items-center"
           variant="outline"
@@ -58,7 +58,7 @@ const Login = () => {
 
       <form className="w-full" onSubmit={handleSubmit}>
         <TextInput
-          className="mb-4 w-1/3"
+          className="mb-4 max-w-xs"
           id="email"
           label="E-Mail"
           type="text"
@@ -67,7 +67,7 @@ const Login = () => {
           onChange={(event) => setEmail(event.target.value)}
         />
         <TextInput
-          className="mb-12 w-1/3"
+          className="mb-12 max-w-xs"
           id="password"
           label="Password"
           type="password"

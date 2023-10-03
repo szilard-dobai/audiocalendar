@@ -35,7 +35,7 @@ const ResetPassword = () => {
       </hgroup>
 
       <TextInput
-        className="mb-12"
+        className="mb-12 w-full max-w-xs"
         id="password"
         label="Password"
         type="password"

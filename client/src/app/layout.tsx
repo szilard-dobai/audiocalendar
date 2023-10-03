@@ -20,7 +20,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
         className={`${inter.className} min-h-screen max-w-screen-xl mx-auto flex flex-col`}
       >
         <Navigation />
-        <main className="flex-1 px-16">{children}</main>
+        <main className="flex-1 px-8 md:px-16">{children}</main>
         <Footer />
 
         <Analytics />

@@ -2,26 +2,15 @@
 
 import Button from "@/components/Button";
 import TextInput from "@/components/TextInput";
-import { createSupabaseClient } from "@/utils/client/supabase";
+import useUpdatePassword from "@/hooks/useUpdatePassword";
 import { useState } from "react";
 
 const ResetPassword = () => {
-  const supabase = createSupabaseClient();
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { mutateAsync: updatePassword, isLoading, error } = useUpdatePassword();
 
   const handleClick = async () => {
-    setError(null);
-    setIsLoading(true);
-    const { error } = await supabase.auth.updateUser({ password });
-    setIsLoading(false);
-
-    if (error) {
-      setError(error.message);
-      return;
-    }
-
+    await updatePassword({ password });
     window.location.replace("/account");
   };
 
@@ -43,7 +32,7 @@ const ResetPassword = () => {
         value={password}
         onChange={(event) => setPassword(event.target.value)}
       />
-      {error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
+      {!!error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
 
       <Button onClick={handleClick} disabled={isLoading || !password}>
         Submit

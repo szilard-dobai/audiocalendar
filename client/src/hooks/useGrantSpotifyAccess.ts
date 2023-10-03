@@ -3,11 +3,15 @@
 import QueryKeys from "@/hooks/queryKeys";
 import { Scopes, SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const useGrantSpotifyAccess = () => {
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  return useMutation<void, string>({
+  const mutation = useMutation<void, string>({
     mutationFn: async () => {
       await SpotifyApi.performUserAuthorization(
         process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
@@ -25,6 +29,15 @@ const useGrantSpotifyAccess = () => {
       ]),
     retry: 0,
   });
+
+  useEffect(() => {
+    if (window.location.search.includes("code") && mutation.isIdle) {
+      mutation.mutate();
+      router.replace(pathname);
+    }
+  }, [mutation, router, pathname]);
+
+  return mutation;
 };
 
 export default useGrantSpotifyAccess;

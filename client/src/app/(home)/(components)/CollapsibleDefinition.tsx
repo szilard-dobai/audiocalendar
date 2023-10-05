@@ -21,6 +21,7 @@ const CollapsibleDefinition = ({
     : {
         opacity: "100",
         maxHeight: collapsibleRef.current?.scrollHeight + "px",
+        marginTop: "0.75rem",
       };
 
   return (

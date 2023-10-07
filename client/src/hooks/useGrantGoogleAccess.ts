@@ -33,7 +33,8 @@ const useGrantGoogleAccess = () => {
   const grantAccess = useGoogleLogin({
     scope: "https://www.googleapis.com/auth/calendar",
     flow: "auth-code",
-    redirect_uri: window.location.origin,
+    redirect_uri:
+      typeof window !== "undefined" ? window.location.origin : undefined,
     onSuccess: mutationResult.mutate,
   });
 

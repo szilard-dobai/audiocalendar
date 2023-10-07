@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
+import ProgressBarProvider from "@/components/ProgressBarProvider";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -19,11 +20,13 @@ const RootLayout = ({ children }: PropsWithChildren) => {
       <body
         className={`${inter.className} min-h-screen max-w-screen-xl mx-auto flex flex-col`}
       >
-        <Navigation />
-        <main className="flex-1 px-8 md:px-16">{children}</main>
-        <Footer />
+        <ProgressBarProvider>
+          <Navigation />
+          <main className="flex-1 px-8 md:px-16">{children}</main>
+          <Footer />
 
-        <Analytics />
+          <Analytics />
+        </ProgressBarProvider>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 import SongHistory from "./(components)/SongHistory";
 
-const Account = async () => {
+const AccountPage = async () => {
   return (
     <>
       <SongHistory />
@@ -8,4 +8,4 @@ const Account = async () => {
   );
 };
 
-export default Account;
+export default AccountPage;

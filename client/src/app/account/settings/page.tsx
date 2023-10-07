@@ -1,7 +1,7 @@
 import { getCurrentUser } from "../me/getCurrentUser";
 import ManageAccount from "./(components)/ManageAccount";
 
-const Settings = async () => {
+const SettingsPage = async () => {
   const user = await getCurrentUser();
 
   return (
@@ -11,4 +11,4 @@ const Settings = async () => {
   );
 };
 
-export default Settings;
+export default SettingsPage;

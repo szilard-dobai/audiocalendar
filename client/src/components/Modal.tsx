@@ -1,6 +1,6 @@
 "use client";
 
-import useOutsideClickCallback from "@/utils/client/useOutsideClickCallback";
+import useOutsideClickCallback from "@/hooks/useOutsideClickCallback";
 import Image from "next/image";
 import { useLayoutEffect, useRef, type PropsWithChildren } from "react";
 import close from "../../public/close.svg";

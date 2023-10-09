@@ -12,7 +12,7 @@ const PAGES = [
 ];
 
 const Menu = () => {
-  const { data } = useGetNotifications();
+  const { data: notifications } = useGetNotifications();
   const pathname = usePathname();
 
   return (
@@ -27,7 +27,7 @@ const Menu = () => {
               }`}
             >
               {label}
-              {showBubble && !!data?.length && (
+              {showBubble && !!notifications?.length && (
                 <span className="inline-block w-3 h-3 bg-red-500 rounded-full mx-3 -translate-x-1/2 animate-pulse" />
               )}
             </Link>

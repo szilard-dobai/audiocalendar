@@ -73,9 +73,13 @@ const SongHistory = () => {
                 className="border"
                 alt={`${el.artist} -  ${el.album}`}
               />
-              <span>
+              <Link
+                className="hover:font-semibold cursor-pointer"
+                href={el.songUrl}
+                target="_blank"
+              >
                 {el.artist} - {el.song} ({el.album})
-              </span>
+              </Link>
             </p>
             {el.songPreviewUrl && <audio src={el.songPreviewUrl} controls />}
           </div>

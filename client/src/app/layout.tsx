@@ -22,7 +22,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
       >
         <ProgressBarProvider>
           <Navigation />
-          <main className="flex-1 px-8 md:px-16">{children}</main>
+          <main className="flex-1 px-4 md:px-16">{children}</main>
           <Footer />
 
           <Analytics />

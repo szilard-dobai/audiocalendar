@@ -1,8 +1,10 @@
 "use client";
 
 import Button from "@/components/Button";
+import WeeklyCalendar from "@/components/WeeklyCalendar";
 import QueryKeys from "@/hooks/queryKeys";
 import { createSupabaseClient } from "@/utils/client/supabase";
+import type { Database } from "@audiocalendar/types";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
@@ -12,6 +14,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 dayjs.extend(isoWeek);
+
+type Song = Database["public"]["Tables"]["history"]["Row"];
 
 const useSongCalendar = (from: string, to: string) => {
   const supabase = createSupabaseClient();
@@ -34,15 +38,16 @@ const useSongCalendar = (from: string, to: string) => {
         .lte("playedAt", to)
         .throwOnError();
 
-      return data?.reduce<Record<string, typeof data>>((acc, el) => {
-        const key = dayjs(el.playedAt).startOf("day").format("dddd");
-        if (acc[key]) {
-          acc[key].push(el);
-        } else {
-          acc[key] = [];
-        }
-        return acc;
-      }, {});
+      return data;
+      // return data?.reduce<Record<string, Song[]>>((acc, el) => {
+      //   const key = dayjs(el.playedAt).startOf("day").format("dddd");
+      //   if (acc[key]) {
+      //     acc[key].push(el);
+      //   } else {
+      //     acc[key] = [];
+      //   }
+      //   return acc;
+      // }, {});
     },
     queryKey: QueryKeys.calendar(from),
     keepPreviousData: true,
@@ -85,7 +90,7 @@ const SongCalendar = () => {
             {dayjs(from).add(index, "days").format("DD/MMM/YYYY")}
           </span>
         </p>
-        {!!songs?.length && (
+        {/* {!!songs?.length && (
           <div className="flex flex-col">
             {songs.map((el) => (
               <div key={el.id} className="border-b pb-4 mb-4">
@@ -115,7 +120,7 @@ const SongCalendar = () => {
               </div>
             ))}
           </div>
-        )}
+        )} */}
       </div>
     );
   };
@@ -139,14 +144,15 @@ const SongCalendar = () => {
           </Button>
         </div>
       </div>
+      <WeeklyCalendar data={data || []} startTimestamp={from.valueOf()} />
 
-      {!!data && (
+      {/* {!!data && (
         <div className="grid grid-cols-7 gap-x-3">
           {Array.from({ length: 7 }, (_, index) => index).map((day) =>
             renderDay(day, data[DAYS[day]])
           )}
         </div>
-      )}
+      )} */}
     </div>
   );
 };

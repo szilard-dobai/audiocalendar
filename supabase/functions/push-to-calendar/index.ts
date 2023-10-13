@@ -82,12 +82,10 @@ serve(async (req) => {
               calendarId,
               auth: gAuth,
               requestBody: {
-                start: {
-                  dateTime: playedAt
-                    .subtract(song.songDuration, "ms")
-                    .toISOString(),
+                start: { dateTime: playedAt.toISOString() },
+                end: {
+                  dateTime: playedAt.add(song.songDuration, "ms").toISOString(),
                 },
-                end: { dateTime: playedAt.toISOString() },
                 description: `Artist: <a href="${song.artistUrl}">${song.artist}</a>\nAlbum: <a href="${song.albumUrl}">${song.album}</a>\nSong: <a href="${song.songUrl}">${song.song}</a>`,
                 reminders: { useDefault: false, overrides: [] },
                 summary: `${song.artist}: ${song.song}`,

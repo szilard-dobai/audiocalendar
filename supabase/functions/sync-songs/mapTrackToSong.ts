@@ -1,4 +1,5 @@
 import type { PlayHistory } from "https://esm.sh/@spotify/web-api-ts-sdk";
+import dayjs from "https://esm.sh/dayjs@1.11.9";
 import type { Song } from "../_shared/supabaseClient.ts";
 
 export const mapTrackToSong = (
@@ -22,7 +23,9 @@ export const mapTrackToSong = (
     artist: artist.join(", "),
     artistId: artistId.join(", "),
     artistUrl: artistUrl.join(", "),
-    playedAt: song.played_at,
+    playedAt: dayjs(song.played_at)
+      .subtract(song.track.duration_ms, "ms")
+      .toISOString(),
     song: song.track.name,
     songDuration: song.track.duration_ms,
     songId: song.track.id,

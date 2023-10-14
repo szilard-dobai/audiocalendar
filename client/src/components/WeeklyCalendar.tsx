@@ -38,12 +38,18 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
     params: any,
     api: CustomSeriesRenderItemAPI
   ): CustomSeriesRenderItemReturn => {
-    var categoryIndex = api.value(0);
-    var name = data[params.dataIndex].song;
-    var start = api.coord([categoryIndex, api.value(1)]);
-    var end = api.coord([categoryIndex, api.value(2)]);
-    var width = api.size!([0, 1])[0] * 0.9;
-    var rectShape = graphic.clipRectByRect(
+    if (!api.size) {
+      // NOTE: This is badly typed...
+      return;
+    }
+
+    const categoryIndex = api.value(0);
+    const name = data[params.dataIndex].song;
+    const start = api.coord([categoryIndex, api.value(1)]);
+    const end = api.coord([categoryIndex, api.value(2)]);
+    const size = api.size([0, 1]);
+    const width = (typeof size === "object" ? size[0] : size) * 0.9;
+    const rectShape = graphic.clipRectByRect(
       {
         x: start[0] - width / 2,
         y: start[1],

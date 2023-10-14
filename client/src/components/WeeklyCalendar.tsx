@@ -47,8 +47,8 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
     const name = data[params.dataIndex].song;
     const start = api.coord([categoryIndex, api.value(1)]);
     const end = api.coord([categoryIndex, api.value(2)]);
-    const size = api.size([0, 1]);
-    const width = (typeof size === "object" ? size[0] : size) * 0.9;
+    const size: number[] = api.size([0, 1]);
+    const width = size[0] * 0.9;
     const rectShape = graphic.clipRectByRect(
       {
         x: start[0] - width / 2,

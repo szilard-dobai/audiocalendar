@@ -8,6 +8,7 @@ import type {
   SeriesOption,
 } from "echarts";
 import { graphic } from "echarts";
+import type { CallbackDataParams } from "echarts/types/dist/shared";
 import ReactEcharts from "./ReactEcharts";
 
 type Song = Database["public"]["Tables"]["history"]["Row"];
@@ -16,24 +17,43 @@ type Props = { data: Song[]; startTimestamp: string };
 
 dayjs.extend(utc);
 
+const ONE_HOUR = 3600 * 1000;
+
 const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
   const isMobile = useIsMobile();
-  const timeRef = dayjs(0); //.startOf("day");
+  const timeRef = dayjs(0);
 
-  const groupedByWeekday = data?.reduce<Record<string, Song[]>>((acc, el) => {
-    const key = dayjs(el.playedAt).format("dddd\nMMMM DD");
-    if (acc[key]) {
-      acc[key].push(el);
-    } else {
-      acc[key] = [];
-    }
-    return acc;
-  }, {});
+  //   const groupedByWeekday = data?.reduce<Record<string, Song[]>>((acc, el) => {
+  //     const key = dayjs(el.playedAt).format("dddd\nMMMM DD");
+  //     if (acc[key]) {
+  //       acc[key].push(el);
+  //     } else {
+  //       acc[key] = [];
+  //     }
+  //     return acc;
+  //   }, {});
 
   const xAxisData = [0, 1, 2, 3, 4, 5, 6].map((index) =>
     dayjs(startTimestamp).add(index, "day").toISOString()
   );
-  console.log(xAxisData.map((e) => dayjs(e).toISOString()));
+
+  const getTime = (date: string) =>
+    dayjs(date).diff(dayjs(date).startOf("day")).valueOf();
+
+  const transformData = (): SeriesOption["data"] => {
+    return data.map((el) => {
+      return {
+        name: el.song,
+        value: [
+          dayjs(el.playedAt).isoWeekday() - 1,
+          getTime(el.playedAt),
+          getTime(el.playedAt) + el.songDuration,
+          el.songDuration,
+        ],
+      };
+    });
+  };
+
   const renderItem = (
     params: any,
     api: CustomSeriesRenderItemAPI
@@ -47,7 +67,7 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
     const name = data[params.dataIndex].song;
     const start = api.coord([categoryIndex, api.value(1)]);
     const end = api.coord([categoryIndex, api.value(2)]);
-    const size: number[] = api.size([0, 1]);
+    const size = api.size([0, 1]) as number[];
     const width = size[0] * 0.9;
     const rectShape = graphic.clipRectByRect(
       {
@@ -137,42 +157,21 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
     );
   };
 
-  const getTime = (date: string) =>
-    dayjs(date).diff(dayjs(date).startOf("day")).valueOf();
-
-  const transformData = (): SeriesOption["data"] => {
-    // console.log(data);
-    return data.map((el) => {
-      //   console.log(el.song, el.playedAt, getTime(el.playedAt));
-      return {
-        name: el.song,
-        value: [
-          dayjs(el.playedAt).isoWeekday() - 1,
-          getTime(el.playedAt),
-          getTime(el.playedAt) + el.songDuration,
-          el.songDuration,
-        ],
-      };
-    });
-  };
-
   return (
     <>
       <ReactEcharts
         lazyUpdate
         style={{ height: "100vh" }}
         options={{
-          // tooltip: {
-          //   formatter: function (params) {
-          //     return (
-          //       params.marker +
-          //       params.name +
-          //       ": " +
-          //       params.value[3] / 1000 / 3600 +
-          //       " h"
-          //     );
-          //   },
-          // },
+          tooltip: {
+            formatter: (params) => {
+              const item = params as CallbackDataParams;
+              const value = item.value as number[];
+              return (
+                item.marker + item.name + ": " + value[3] / 1000 / 3600 + " h"
+              );
+            },
+          },
           dataZoom: [
             {
               type: "slider",
@@ -181,17 +180,14 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
               left: 0,
               width: 10,
               orient: "vertical",
-              minValueSpan: 3600 * 1 * 1000 * 1,
-              startValue: 10 * 3600 * 1000,
-              endValue: 20 * 3600 * 1000,
+              minValueSpan: ONE_HOUR,
+              startValue: 10 * ONE_HOUR,
+              endValue: 20 * ONE_HOUR,
               labelFormatter: "",
             },
             {
               type: "inside",
               orient: "vertical",
-
-              // minValueSpan: 360000000,
-              // filterMode: 'weakFilter'
             },
           ],
           grid: {
@@ -239,21 +235,10 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
               },
             },
           },
-          //   tooltip: {
-          //     formatter: (param) => {
-          //       const item = param as CallbackDataParams;
-          //       return `${dayjs(data[item.dataIndex].playedAt).format(
-          //         "HH:mm"
-          //       )}, ${dayjs(data[item.dataIndex].playedAt).isoWeekday()}`;
-          //     },
-          //   },
           series: [
             {
               type: "custom",
               renderItem: renderItem,
-              itemStyle: {
-                opacity: 0.8,
-              },
               encode: {
                 y: [1, 2],
                 x: 0,

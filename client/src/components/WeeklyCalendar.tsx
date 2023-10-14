@@ -164,13 +164,8 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
         style={{ height: "100vh" }}
         options={{
           tooltip: {
-            formatter: (params) => {
-              const item = params as CallbackDataParams;
-              const value = item.value as number[];
-              return (
-                item.marker + item.name + ": " + value[3] / 1000 / 3600 + " h"
-              );
-            },
+            triggerOn: "click",
+            confine: true,
           },
           dataZoom: [
             {
@@ -244,6 +239,40 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
                 x: 0,
               },
               data: transformData(),
+              colorBy: "data",
+              tooltip: {
+                formatter: (params) => {
+                  const item = params as CallbackDataParams;
+                  const dataPoint = data[item.dataIndex];
+                  const [_, startedAt, endedAt] = item.value as number[];
+
+                  return `
+                  <div class="flex flex-row items-center gap-3 pointer-events-auto max-w-lg whitespace-normal">
+                    <img src="${
+                      dataPoint.albumImage
+                    }" height="100px" width="100px" alt="${
+                    dataPoint.album
+                  }" style="border: 1px solid ${item.color}"/>
+                    <div>
+                        <p>${dayjs.utc(startedAt).format("HH:mm")} - ${dayjs
+                    .utc(endedAt)
+                    .format("HH:mm")}</p>
+                        <p class="text-lg font-semibold" style="color: ${
+                          item.color
+                        }">${dataPoint.artist} - ${dataPoint.song}</p>
+                        <a class="cursor-pointer hover:underline" href="${
+                          dataPoint.songUrl
+                        }" target="_blank">Listen on Spotify</a>
+                        ${
+                          dataPoint.songPreviewUrl
+                            ? `<audio src="${dataPoint.songPreviewUrl}" controls />`
+                            : ""
+                        }
+                        </div>
+                  </div>
+                    `;
+                },
+              },
             },
           ],
         }}

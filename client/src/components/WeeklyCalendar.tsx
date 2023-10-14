@@ -65,6 +65,7 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
 
     const categoryIndex = api.value(0);
     const name = data[params.dataIndex].song;
+    const image = data[params.dataIndex].albumImage;
     const start = api.coord([categoryIndex, api.value(1)]);
     const end = api.coord([categoryIndex, api.value(2)]);
     const size = api.size([0, 1]) as number[];
@@ -120,8 +121,7 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
           {
             type: "image",
             style: {
-              image:
-                "https://audiocalendar.app/_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b273f4021229806dee1ed58835d2&w=128&q=75",
+              image,
               x: rectShape.x + rectShape.width * 0.1,
               y:
                 rectShape.y +

@@ -66,6 +66,8 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
     const size = api.size([0, 1]) as number[];
     const width = size[0] * 0.9;
 
+    const textXPadding = isMobile ? 4 : 8;
+
     const shape = graphic.clipRectByRect(
       {
         x: startCoords[0] - width / 2,
@@ -97,7 +99,7 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
           {
             type: "text",
             style: {
-              x: shape.x + shape.width * 0.05,
+              x: shape.x + textXPadding,
               y: shape.y + shape.height * 0.5,
               verticalAlign: "middle",
               text: name,
@@ -105,7 +107,7 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
               fill: "#fff",
               textShadowColor: "black",
               textShadowBlur: 2,
-              width: 0.95 * width,
+              width: width - textXPadding,
               height: shape.height,
               overflow: "truncate",
               ellipsis: "..",

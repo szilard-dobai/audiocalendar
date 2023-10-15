@@ -161,7 +161,7 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
     <>
       <ReactEcharts
         lazyUpdate
-        style={{ height: "100vh" }}
+        style={{ height: "800px" }}
         options={{
           tooltip: {
             triggerOn: "click",
@@ -176,8 +176,8 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
               width: 10,
               orient: "vertical",
               minValueSpan: ONE_HOUR,
-              startValue: 10 * ONE_HOUR,
-              endValue: 20 * ONE_HOUR,
+              startValue: 12 * ONE_HOUR,
+              endValue: 15 * ONE_HOUR,
               labelFormatter: "",
             },
             {

@@ -27,6 +27,7 @@ const SongCalendar = () => {
   const statistics:
     | {
         numberOfSongs: number;
+        numberOfUniqueSongs: number;
         numberOfArtists: number;
         songOfTheWeek: SongWithCount;
       }
@@ -57,6 +58,9 @@ const SongCalendar = () => {
       };
       return acc;
     }, {});
+
+    const numberOfUniqueSongs = Object.keys(songsMap).length;
+
     const songOfTheWeekId = Object.keys(songsMap).sort(
       (s1, s2) => songsMap[s2].count - songsMap[s1].count
     )[0];
@@ -64,6 +68,7 @@ const SongCalendar = () => {
 
     return {
       numberOfSongs,
+      numberOfUniqueSongs,
       numberOfArtists,
       songOfTheWeek,
     };
@@ -113,14 +118,21 @@ const SongCalendar = () => {
       {statistics && (
         <dl className="flex flex-col md:flex-row gap-6 items-center md:items-baseline mb-6">
           <div className="text-center flex-1">
-            <dt className="uppercase font-light text-lg"># of songs</dt>
+            <dt className="uppercase font-light text-lg"># songs</dt>
             <dd className="text-xl font-semibold">
               {statistics.numberOfSongs}
             </dd>
           </div>
 
           <div className="text-center flex-1">
-            <dt className="uppercase font-light text-lg"># of artists</dt>
+            <dt className="uppercase font-light text-lg"># unique songs</dt>
+            <dd className="text-xl font-semibold">
+              {statistics.numberOfUniqueSongs}
+            </dd>
+          </div>
+
+          <div className="text-center flex-1">
+            <dt className="uppercase font-light text-lg"># artists</dt>
             <dd className="text-xl font-semibold">
               {statistics.numberOfArtists}
             </dd>

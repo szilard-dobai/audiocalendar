@@ -3,6 +3,7 @@
 import Button from "@/components/Button";
 import WeeklyCalendar from "@/components/WeeklyCalendar";
 import QueryKeys from "@/hooks/queryKeys";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { createSupabaseClient } from "@/utils/client/supabase";
 import chevronLeft from "@public/chevron-left-solid.svg";
 import chevronRight from "@public/chevron-right-solid.svg";
@@ -13,6 +14,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 dayjs.extend(isoWeek);
+
+const TODAY = dayjs();
 
 const useSongCalendar = (from: string, to: string) => {
   const supabase = createSupabaseClient();
@@ -43,6 +46,7 @@ const useSongCalendar = (from: string, to: string) => {
 };
 
 const SongCalendar = () => {
+  const isMobile = useIsMobile();
   const [referenceDate, setReferenceDate] = useState(dayjs());
   const [from, setFrom] = useState(referenceDate.startOf("isoWeek"));
   const [to, setTo] = useState(referenceDate.endOf("isoWeek"));
@@ -56,28 +60,39 @@ const SongCalendar = () => {
     setTo(referenceDate.endOf("isoWeek"));
   }, [referenceDate]);
 
+  const renderMonth = () => {
+    if (from.isSame(to, "month")) {
+      return from.format("MMMM YYYY");
+    }
+
+    const month = isMobile ? "MMM" : "MMMM";
+    const monthWithYear = `${month} YYYY`;
+    return `${from.format(month)}-${to.format(monthWithYear)}`;
+  };
+
   return (
     <div className="mb-10">
       <div className="flex items-center justify-between mb-6">
-        <p className="font-semibold text-2xl text-brand">
-          {from.isSame(to, "month")
-            ? from.format("MMMM YYYY")
-            : `${from.format("MMMM")}-${to.format("MMMM YYYY")}`}
-        </p>
+        <p className="font-semibold text-2xl text-brand">{renderMonth()}</p>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 shrink-0">
           <Button
             onClick={() => setReferenceDate((ref) => ref.subtract(1, "week"))}
           >
-            <Image src={chevronLeft} alt="previous week" height={20} />
+            <Image
+              src={chevronLeft}
+              alt="previous week"
+              height={12}
+              width={12}
+            />
           </Button>
           <Button
             onClick={() => setReferenceDate((ref) => ref.add(1, "week"))}
-            disabled={referenceDate.isSame(dayjs(), "week")}
+            disabled={referenceDate.isSame(TODAY, "week")}
           >
-            <Image src={chevronRight} alt="next week" height={20} />
+            <Image src={chevronRight} alt="next week" height={12} width={12} />
           </Button>
-          <Button onClick={() => setReferenceDate(dayjs())}>Today</Button>
+          <Button onClick={() => setReferenceDate(TODAY)}>Today</Button>
         </div>
       </div>
 

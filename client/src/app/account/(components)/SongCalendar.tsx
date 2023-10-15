@@ -111,7 +111,7 @@ const SongCalendar = () => {
       </div>
 
       {statistics && (
-        <dl className="flex flex-col md:flex-row gap-6 items-baseline mb-6">
+        <dl className="flex flex-col md:flex-row gap-6 items-center md:items-baseline mb-6">
           <div className="text-center flex-1">
             <dt className="uppercase font-light text-lg"># Songs</dt>
             <dd className="text-xl font-semibold">

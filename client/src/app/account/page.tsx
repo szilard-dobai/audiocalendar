@@ -1,9 +1,9 @@
-import SongHistory from "./(components)/SongHistory";
+import SongCalendar from "./(components)/SongCalendar";
 
 const AccountPage = async () => {
   return (
     <>
-      <SongHistory />
+      <SongCalendar />
     </>
   );
 };

@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import SongCalendar from "./SongCalendar";
 
 const PAGE_SIZE = 20;
 
@@ -19,8 +18,6 @@ const SongHistory = () => {
 
   return (
     <>
-      <SongCalendar />
-
       <div className="flex items-baseline justify-between mb-1 gap-3">
         <h1 className="font-semibold text-2xl">Song History</h1>
         {showPagination && (

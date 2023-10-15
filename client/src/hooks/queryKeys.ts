@@ -1,8 +1,7 @@
 const QueryKeys = {
   currentUser: () => ["currentUser"],
   notifications: () => ["notifications"],
-  history: (page: number) => ["history", page],
-  calendar: (from: string) => ["calendar", from],
+  songs: (from: string) => ["songs", from],
 };
 
 export default QueryKeys;

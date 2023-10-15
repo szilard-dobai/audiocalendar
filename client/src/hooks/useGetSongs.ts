@@ -1,18 +1,12 @@
 import { createSupabaseClient } from "@/utils/client/supabase";
+import type { Database } from "@audiocalendar/types";
 import { useQuery } from "@tanstack/react-query";
 import QueryKeys from "./queryKeys";
 
-const getPagination = (page: number, size: number) => {
-  const p = page - 1;
-  const from = p * size;
-  const to = from + size - 1;
+export type Song = Database["public"]["Tables"]["history"]["Row"];
 
-  return { from, to };
-};
-
-const useGetSongHistory = (page: number = 1, size: number = 20) => {
+export const useGetSongs = (from: string, to: string) => {
   const supabase = createSupabaseClient();
-  const { from, to } = getPagination(page, size);
 
   return useQuery({
     queryFn: async () => {
@@ -23,18 +17,18 @@ const useGetSongHistory = (page: number = 1, size: number = 20) => {
       if (!session) {
         throw new Error("User must be logged in!");
       }
-      return supabase
+      const { data } = await supabase
         .from("history")
         .select("*", { count: "exact" })
         .eq("userId", session?.user.id)
         .order("playedAt", { ascending: false })
-        .range(from, to)
-        .throwOnError()
-        .then(({ data, count }) => ({ songs: data, count }));
+        .gte("playedAt", from)
+        .lte("playedAt", to)
+        .throwOnError();
+
+      return data;
     },
-    queryKey: QueryKeys.history(page),
+    queryKey: QueryKeys.songs(from),
     keepPreviousData: true,
   });
 };
-
-export default useGetSongHistory;

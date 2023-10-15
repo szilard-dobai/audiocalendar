@@ -58,7 +58,9 @@ serve(async (req) => {
           const recentlyPlayedTracksFilter: QueryRange | undefined =
             latestSong?.playedAt
               ? {
-                  timestamp: dayjs(latestSong.playedAt).valueOf(),
+                  timestamp: dayjs(latestSong.playedAt)
+                    .add(latestSong.songDuration, "millisecond")
+                    .valueOf(),
                   type: "after",
                 }
               : undefined;

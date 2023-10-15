@@ -186,7 +186,7 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
             },
           ],
           grid: {
-            top: 40,
+            top: 50,
             left: 60,
             bottom: 10,
             right: 25,
@@ -218,14 +218,25 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
             },
             axisLabel: {
               interval: 0,
-              formatter: (value) =>
-                dayjs(value).format(
-                  isMobile ? "ddd[\n{date|]D}" : "dddd[\n{date|]D}"
-                ),
+              formatter: (value) => {
+                const day = isMobile ? "ddd" : "dddd";
+                const isToday = dayjs(value).isSame(dayjs(), "day");
+
+                return dayjs(value).format(
+                  `${day}[\n{${isToday ? "today" : "date"}|]D}`
+                );
+              },
               rich: {
+                today: {
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  lineHeight: 30,
+                  color: "#17bf3e",
+                },
                 date: {
                   fontSize: 20,
                   fontWeight: "bold",
+                  lineHeight: 30,
                 },
               },
             },

@@ -1,4 +1,5 @@
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { inter } from "@/utils/client/fonts";
 import type { Database } from "@audiocalendar/types";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -22,16 +23,6 @@ const ONE_HOUR = 3600 * 1000;
 const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
   const isMobile = useIsMobile();
   const timeRef = dayjs(0);
-
-  //   const groupedByWeekday = data?.reduce<Record<string, Song[]>>((acc, el) => {
-  //     const key = dayjs(el.playedAt).format("dddd\nMMMM DD");
-  //     if (acc[key]) {
-  //       acc[key].push(el);
-  //     } else {
-  //       acc[key] = [];
-  //     }
-  //     return acc;
-  //   }, {});
 
   const xAxisData = [0, 1, 2, 3, 4, 5, 6].map((index) =>
     dayjs(startTimestamp).add(index, "day").toISOString()
@@ -63,19 +54,24 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
       return;
     }
 
-    const categoryIndex = api.value(0);
-    const name = data[params.dataIndex].song;
-    const image = data[params.dataIndex].albumImage;
-    const start = api.coord([categoryIndex, api.value(1)]);
-    const end = api.coord([categoryIndex, api.value(2)]);
+    const { artist, song } = data[params.dataIndex];
+    const name = `${artist} - ${song}`;
+
+    const day = api.value(0);
+    const startValue = api.value(1);
+    const startCoords = api.coord([day, startValue]);
+    const endValue = api.value(2);
+    const endCoords = api.coord([day, endValue]);
+
     const size = api.size([0, 1]) as number[];
     const width = size[0] * 0.9;
-    const rectShape = graphic.clipRectByRect(
+
+    const shape = graphic.clipRectByRect(
       {
-        x: start[0] - width / 2,
-        y: start[1],
+        x: startCoords[0] - width / 2,
+        y: startCoords[1],
         width: width,
-        height: end[1] - start[1],
+        height: endCoords[1] - startCoords[1],
       },
       {
         x: params.coordSys.x,
@@ -84,72 +80,36 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
         height: params.coordSys.height,
       }
     );
+
     return (
-      rectShape && {
+      shape && {
         type: "group",
         children: [
           {
             type: "rect",
             transition: ["shape"],
-            shape: { ...rectShape, r: 10 },
-            // textContent: {
-            //   style: {
-            //     text: name,
-            //     fontFamily: 'Verdana',
-            //     fill: '#000',
-            //     width: width - 4,
-            //     overflow: 'truncate',
-            //     ellipsis: '..',
-            //     truncateMinChar: 1
-            //   },
-            //   emphasis: {
-            //     style: {
-            //       stroke: '#000',
-            //       lineWidth: 0.5
-            //     }
-            //   }
-            // },
-            // textConfig: {
-            //   position: 'insideRight'
-            // },
+            shape: { ...shape, r: 10 },
             style: api.style({
               stroke: "white",
-              lineWidth: 2,
-              opacity: 1,
+              lineWidth: 1,
             }),
           },
           {
-            type: "image",
+            type: "text",
             style: {
-              image,
-              x: rectShape.x + rectShape.width * 0.1,
-              y:
-                rectShape.y +
-                rectShape.height * 0.5 -
-                Math.min(rectShape.height * 0.6, rectShape.width * 0.6) / 2,
-              height: Math.min(rectShape.height * 0.6, rectShape.width * 0.6),
-            },
-            textContent: {
-              type: "text",
-              style: {
-                text: name,
-                fontFamily: "Verdana",
-                fill: "#000",
-                width: width - 4,
-                overflow: "truncate",
-                ellipsis: "..",
-                truncateMinChar: 1,
-              },
-              emphasis: {
-                style: {
-                  stroke: "#000",
-                  lineWidth: 0.5,
-                },
-              },
-            },
-            textConfig: {
-              position: "insideRight",
-              layoutRect: rectShape,
+              x: shape.x + shape.width * 0.05,
+              y: shape.y + shape.height * 0.5,
+              verticalAlign: "middle",
+              text: name,
+              fontFamily: inter.style.fontFamily,
+              fill: "#fff",
+              textShadowColor: "black",
+              textShadowBlur: 2,
+              width: 0.95 * width,
+              height: shape.height,
+              overflow: "truncate",
+              ellipsis: "..",
+              truncateMinChar: 1,
             },
           },
         ],
@@ -157,138 +117,141 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
     );
   };
 
+  const formatTooltip = (item: CallbackDataParams) => {
+    const { albumImage, album, artist, song, songUrl, songPreviewUrl } =
+      data[item.dataIndex];
+    const [_, startedAt, endedAt] = item.value as number[];
+
+    return `
+    <div class="flex flex-row items-center gap-3 pointer-events-auto max-w-lg whitespace-normal">
+      <img src="${albumImage}" height="100px" width="100px" alt="${album}" style="border: 1px solid ${
+      item.color
+    }"/>
+      <div>
+          <p>${dayjs.utc(startedAt).format("HH:mm")} - ${dayjs
+      .utc(endedAt)
+      .format("HH:mm")}</p>
+          <p class="text-lg font-semibold" style="color: ${
+            item.color
+          }">${artist} - ${song}</p>
+          <a class="cursor-pointer hover:underline" href="${songUrl}" target="_blank">Listen on Spotify</a>
+          ${songPreviewUrl ? `<audio src="${songPreviewUrl}" controls />` : ""}
+          </div>
+    </div>
+      `;
+  };
+
   return (
-    <>
-      <ReactEcharts
-        lazyUpdate
-        style={{ height: "800px" }}
-        options={{
-          tooltip: {
-            triggerOn: "click",
-            confine: true,
+    <ReactEcharts
+      style={{ height: "800px" }}
+      options={{
+        tooltip: {
+          triggerOn: "click",
+          confine: true,
+        },
+        dataZoom: [
+          {
+            type: "slider",
+            filterMode: "filter",
+            brushSelect: false,
+            left: 0,
+            width: 10,
+            orient: "vertical",
+            minValueSpan: ONE_HOUR,
+            maxValueSpan: 5 * ONE_HOUR,
+            startValue: 12 * ONE_HOUR,
+            endValue: 15 * ONE_HOUR,
+            labelFormatter: "",
+            handleSize: 0,
+            fillerColor: "#17bf3e",
+            borderColor: "#17bf3e",
           },
-          dataZoom: [
-            {
-              type: "slider",
-              filterMode: "weakFilter",
-              // showDataShadow: false,
-              left: 0,
-              width: 10,
-              orient: "vertical",
-              minValueSpan: ONE_HOUR,
-              startValue: 12 * ONE_HOUR,
-              endValue: 15 * ONE_HOUR,
-              labelFormatter: "",
-            },
-            {
-              type: "inside",
-              orient: "vertical",
-            },
-          ],
-          grid: {
-            top: 50,
-            left: 60,
-            bottom: 10,
-            right: 25,
+          {
+            type: "inside",
+            orient: "vertical",
           },
-          yAxis: {
-            min: timeRef.valueOf(),
-            max: timeRef.add(1, "day").valueOf(),
-            type: "time",
-            inverse: true,
-            axisLabel: {
-              formatter: (val) => dayjs.utc(val).format("HH:mm"),
-            },
-            splitLine: {
-              show: true,
+        ],
+        grid: {
+          top: 60,
+          left: 60,
+          bottom: 10,
+          right: 25,
+        },
+        yAxis: {
+          min: timeRef.valueOf(),
+          max: timeRef.add(1, "day").valueOf(),
+          type: "time",
+          inverse: true,
+          axisLabel: {
+            formatter: (val) => dayjs.utc(val).format("HH:mm"),
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#ecf0ff",
             },
           },
-          xAxis: {
-            type: "category",
-            data: xAxisData,
-            position: "top",
-            axisLine: {
-              show: false,
+        },
+        xAxis: {
+          type: "category",
+          data: xAxisData,
+          position: "top",
+          axisLine: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#ecf0ff",
             },
-            axisTick: {
-              show: false,
-            },
-            splitLine: {
-              show: true,
-            },
-            axisLabel: {
-              interval: 0,
-              formatter: (value) => {
-                const day = isMobile ? "ddd" : "dddd";
-                const isToday = dayjs(value).isSame(dayjs(), "day");
+          },
+          axisLabel: {
+            interval: 0,
+            formatter: (value) => {
+              const day = isMobile ? "ddd" : "dddd";
+              const isToday = dayjs(value).isSame(dayjs(), "day");
 
-                return dayjs(value).format(
-                  `${day}[\n{${isToday ? "today" : "date"}|]D}`
-                );
+              return dayjs(value)
+                .format(`${day}[\n{${isToday ? "today" : "date"}|]D}`)
+                .toUpperCase();
+            },
+            color: "#2f2e41",
+            rich: {
+              TODAY: {
+                fontSize: 24,
+                lineHeight: 36,
+                color: "#17bf3e",
               },
-              rich: {
-                today: {
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  lineHeight: 30,
-                  color: "#17bf3e",
-                },
-                date: {
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  lineHeight: 30,
-                },
+              DATE: {
+                fontSize: 24,
+                lineHeight: 36,
               },
             },
           },
-          series: [
-            {
-              type: "custom",
-              renderItem: renderItem,
-              encode: {
-                y: [1, 2],
-                x: 0,
-              },
-              data: transformData(),
-              colorBy: "data",
-              tooltip: {
-                formatter: (params) => {
-                  const item = params as CallbackDataParams;
-                  const dataPoint = data[item.dataIndex];
-                  const [_, startedAt, endedAt] = item.value as number[];
-
-                  return `
-                  <div class="flex flex-row items-center gap-3 pointer-events-auto max-w-lg whitespace-normal">
-                    <img src="${
-                      dataPoint.albumImage
-                    }" height="100px" width="100px" alt="${
-                    dataPoint.album
-                  }" style="border: 1px solid ${item.color}"/>
-                    <div>
-                        <p>${dayjs.utc(startedAt).format("HH:mm")} - ${dayjs
-                    .utc(endedAt)
-                    .format("HH:mm")}</p>
-                        <p class="text-lg font-semibold" style="color: ${
-                          item.color
-                        }">${dataPoint.artist} - ${dataPoint.song}</p>
-                        <a class="cursor-pointer hover:underline" href="${
-                          dataPoint.songUrl
-                        }" target="_blank">Listen on Spotify</a>
-                        ${
-                          dataPoint.songPreviewUrl
-                            ? `<audio src="${dataPoint.songPreviewUrl}" controls />`
-                            : ""
-                        }
-                        </div>
-                  </div>
-                    `;
-                },
-              },
+        },
+        textStyle: {
+          fontFamily: inter.style.fontFamily,
+        },
+        series: [
+          {
+            type: "custom",
+            renderItem: renderItem,
+            encode: {
+              y: [1, 2],
+              x: 0,
             },
-          ],
-        }}
-      />
-    </>
+            data: transformData(),
+            colorBy: "data",
+            tooltip: {
+              formatter: formatTooltip,
+            },
+          },
+        ],
+      }}
+    />
   );
 };
 

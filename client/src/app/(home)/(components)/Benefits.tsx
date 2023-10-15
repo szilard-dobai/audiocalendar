@@ -1,7 +1,7 @@
 import Card from "@/components/Card";
-import dna from "../../../../public/dna.svg";
-import folder from "../../../../public/folder.svg";
-import history from "../../../../public/history.svg";
+import dna from "@public/dna.svg";
+import folder from "@public/folder.svg";
+import history from "@public/history.svg";
 import Benefit from "./Benefit";
 
 const Benefits = () => (

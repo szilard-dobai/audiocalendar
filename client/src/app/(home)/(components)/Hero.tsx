@@ -1,7 +1,7 @@
 import Button from "@/components/Button";
+import banner from "@public/undraw_walk_in_the_city.svg";
 import Image from "next/image";
 import Link from "next/link";
-import banner from "../../../../public/undraw_walk_in_the_city.svg";
 
 const Hero = () => {
   return (

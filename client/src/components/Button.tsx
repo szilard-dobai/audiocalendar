@@ -1,7 +1,7 @@
-import { forwardRef } from "react";
-import google from "../../public/google.svg";
-import spotify from "../../public/spotify.svg";
+import google from "@public/google.svg";
+import spotify from "@public/spotify.svg";
 import Image from "next/image";
+import { forwardRef } from "react";
 
 type Props = JSX.IntrinsicElements["button"] & {
   variant?: "solid" | "gradient" | "outline";

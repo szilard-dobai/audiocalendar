@@ -1,9 +1,9 @@
 "use client";
 
 import useOutsideClickCallback from "@/hooks/useOutsideClickCallback";
+import close from "@public/close.svg";
 import Image from "next/image";
 import { useLayoutEffect, useRef, type PropsWithChildren } from "react";
-import close from "../../public/close.svg";
 
 type Props = PropsWithChildren<{
   isOpen: boolean;

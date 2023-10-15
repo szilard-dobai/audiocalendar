@@ -3,11 +3,11 @@
 import Button from "@/components/Button";
 import TextInput from "@/components/TextInput";
 import useLogin from "@/hooks/useLogin";
+import google from "@public/google.svg";
+import spotify from "@public/spotify.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
-import google from "../../../../public/google.svg";
-import spotify from "../../../../public/spotify.svg";
 
 const Login = () => {
   const [email, setEmail] = useState("");

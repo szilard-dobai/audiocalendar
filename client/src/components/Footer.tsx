@@ -1,7 +1,7 @@
+import linkedin from "@public/LI-In-Bug.svg";
+import github from "@public/github-mark-white.svg";
 import Image from "next/image";
 import Link from "next/link";
-import linkedin from "../../public/LI-In-Bug.svg";
-import github from "../../public/github-mark-white.svg";
 
 const Footer = () => {
   return (

@@ -1,5 +1,5 @@
+import imagination from "@public/undraw_imagination.svg";
 import Image from "next/image";
-import imagination from "../../../public/undraw_imagination.svg";
 import Benefits from "./(components)/Benefits";
 import CTA from "./(components)/CTA";
 import FAQ from "./(components)/FAQ";

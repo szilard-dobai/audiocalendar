@@ -4,9 +4,12 @@ import Button from "@/components/Button";
 import WeeklyCalendar from "@/components/WeeklyCalendar";
 import QueryKeys from "@/hooks/queryKeys";
 import { createSupabaseClient } from "@/utils/client/supabase";
+import chevronLeft from "@public/chevron-left-solid.svg";
+import chevronRight from "@public/chevron-right-solid.svg";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 dayjs.extend(isoWeek);
@@ -56,7 +59,7 @@ const SongCalendar = () => {
   return (
     <div className="mb-10">
       <div className="flex items-center justify-between mb-6">
-        <p>
+        <p className="font-semibold text-2xl text-brand">
           {from.isSame(to, "month")
             ? from.format("MMMM YYYY")
             : `${from.format("MMMM")}-${to.format("MMMM YYYY")}`}
@@ -66,14 +69,15 @@ const SongCalendar = () => {
           <Button
             onClick={() => setReferenceDate((ref) => ref.subtract(1, "week"))}
           >
-            Previous
+            <Image src={chevronLeft} alt="previous week" height={20} />
           </Button>
           <Button
             onClick={() => setReferenceDate((ref) => ref.add(1, "week"))}
-            disabled={dayjs(from).isSame(dayjs(), "week")}
+            disabled={referenceDate.isSame(dayjs(), "week")}
           >
-            Next
+            <Image src={chevronRight} alt="next week" height={20} />
           </Button>
+          <Button onClick={() => setReferenceDate(dayjs())}>Today</Button>
         </div>
       </div>
 

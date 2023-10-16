@@ -1,9 +1,11 @@
 import { createSupabaseClient } from "@/utils/client/supabase";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const useLogout = () => {
   const supabase = createSupabaseClient();
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useMutation<void>({
     mutationFn: async () => {
@@ -13,7 +15,10 @@ const useLogout = () => {
       }
     },
     retry: 0,
-    onSuccess: () => queryClient.invalidateQueries({ refetchType: "none" }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ refetchType: "none" });
+      router.push("/");
+    },
   });
 };
 

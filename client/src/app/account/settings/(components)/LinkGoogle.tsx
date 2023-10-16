@@ -86,7 +86,7 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
           Are you sure you want to remove Audiocalendar&apos;s access to your
           Google account?
         </p>
-        <div className="flex justify-between gap-3">
+        <div className="flex flex-col md:flex-row md:justify-between gap-3">
           <Button variant="outline" onClick={closeModal}>
             No, I&apos;ve changed my mind
           </Button>

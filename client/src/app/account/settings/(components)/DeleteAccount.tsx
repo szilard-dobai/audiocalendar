@@ -70,7 +70,7 @@ const DeleteAccount = ({ email, className }: Props) => {
           onChange={(event) => setVerification(event.target.value)}
         />
 
-        <div className="flex justify-between gap-3">
+        <div className="flex flex-col md:flex-row md:justify-between gap-3">
           <Button variant="outline" onClick={closeModal}>
             No, I&apos;ve changed my mind
           </Button>

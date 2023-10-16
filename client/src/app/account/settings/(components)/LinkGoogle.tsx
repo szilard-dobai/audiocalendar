@@ -31,7 +31,7 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
 
   const renderGrantAccess = () => (
     <>
-      <p className="mb-3">
+      <p className="mb-3 text-primary">
         Click the button below to grant Audiocalendar access to your Google
         Calendar.
       </p>
@@ -40,6 +40,7 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
         className="ml-auto"
         variant="outline"
         image="google"
+        color="brand"
         disabled={isGrantingAccess}
         onClick={() => grantAccess()}
       >
@@ -53,7 +54,7 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
 
   const renderRevokeAccess = () => (
     <>
-      <p className="mb-3">
+      <p className="mb-3 text-primary">
         Click the button below to revoke Audiocalendar&apos;s access to your
         Google account. For extra security, go to your{" "}
         <Link
@@ -69,6 +70,7 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
       <Button
         className="ml-auto"
         variant="outline"
+        color="brand"
         disabled={isRevokingAccess}
         onClick={openModal}
         image="google"
@@ -104,6 +106,8 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
 
   return (
     <div className={className}>
+      <h1 className="text-lg font-semibold text-primary">Google Calendar</h1>
+
       {isAccessGranted ? renderRevokeAccess() : renderGrantAccess()}
     </div>
   );

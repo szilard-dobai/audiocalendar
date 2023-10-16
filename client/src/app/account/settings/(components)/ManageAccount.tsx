@@ -6,6 +6,7 @@ import type { CurrentUser } from "../../me/schema";
 import LinkGoogle from "./LinkGoogle";
 import LinkSpotify from "./LinkSpotify";
 import Notifications from "./Notifications";
+import DeleteAccount from "./DeleteAccount";
 
 type Props = {
   initialData: CurrentUser;
@@ -27,6 +28,8 @@ const ManageAccount = ({ initialData }: Props) => {
       <LinkSpotify isAccessGranted={user.hasSpotifyAccess} />
       <hr className="my-6" />
       <LinkGoogle isAccessGranted={user.hasGoogleAccess} />
+      <hr className="my-6" />
+      <DeleteAccount email={user.email} />
     </div>
   );
 };

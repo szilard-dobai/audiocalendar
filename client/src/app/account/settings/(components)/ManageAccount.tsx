@@ -1,6 +1,6 @@
 "use client";
 
-import useGetCurrentUserQuery from "@/hooks/useGetCurrentUserQuery";
+import useGetCurrentUser from "@/hooks/useGetCurrentUser";
 import useGetNotifications from "@/hooks/useGetNotifications";
 import type { CurrentUser } from "../../me/schema";
 import LinkGoogle from "./LinkGoogle";
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const ManageAccount = ({ initialData }: Props) => {
-  const { data: user } = useGetCurrentUserQuery(initialData);
+  const { data: user } = useGetCurrentUser(initialData);
   const { data: notifications } = useGetNotifications();
 
   return (

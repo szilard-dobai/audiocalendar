@@ -4,11 +4,7 @@ import ManageAccount from "./(components)/ManageAccount";
 const SettingsPage = async () => {
   const user = await getCurrentUser();
 
-  return (
-    <>
-      <ManageAccount initialData={user} />
-    </>
-  );
+  return <ManageAccount initialData={user} />;
 };
 
 export default SettingsPage;

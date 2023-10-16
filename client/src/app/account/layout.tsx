@@ -1,6 +1,7 @@
 "use client";
 
 import QueryClientProvider from "@/components/QueryClientProvider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import type { PropsWithChildren } from "react";
 import Menu from "./(components)/Menu";
@@ -11,6 +12,7 @@ const AccountLayout = ({ children }: PropsWithChildren) => {
       <QueryClientProvider>
         <Menu />
         {children}
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </GoogleOAuthProvider>
   );

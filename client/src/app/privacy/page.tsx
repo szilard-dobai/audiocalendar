@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Privacy = () => {
   return (
-    <div className="text-justify">
+    <div className="text-justify text-primary">
       <Heading level={1}>Privacy Policy</Heading>
       <p>Last updated: October 23, 2023</p>
 

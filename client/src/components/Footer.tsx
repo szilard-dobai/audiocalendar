@@ -35,6 +35,14 @@ const Footer = () => {
           className="w-5 min-w-[1.25rem] mx-1 shrink-0 inline align-baseline"
         />
       </Link>
+
+      <span>|</span>
+      <Link
+        href="/privacy"
+        className="hover:[text-shadow:_0_0_1px_white] cursor-pointer whitespace-nowrap"
+      >
+        Privacy Policy
+      </Link>
     </footer>
   );
 };

@@ -16,7 +16,7 @@ const useGrantSpotifyAccess = () => {
       await SpotifyApi.performUserAuthorization(
         process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
         `${window.location.origin}/account/settings`,
-        Scopes.userRecents,
+        ["user-read-recently-played"],
         `${window.location.origin}/auth/spotify`
       ).catch((error) => {
         throw `Oh no! An error occured: ${error.message}`;

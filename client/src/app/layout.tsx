@@ -10,6 +10,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Audiocalendar",
   description: "Never Miss a Beat",
+  other: {
+    "google-site-verification": "Vxh5hqcjaO7651G0D5PWHPEeVfLnwMAWDGtui93aLWw",
+  },
 };
 
 const RootLayout = ({ children }: PropsWithChildren) => {

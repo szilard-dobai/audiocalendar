@@ -125,20 +125,29 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
     const [_, startedAt, endedAt] = item.value as number[];
 
     return `
-    <div class="flex flex-row items-center gap-3 pointer-events-auto max-w-lg whitespace-normal">
-      <img src="${albumImage}" height="100px" width="100px" alt="${album}" style="border: 1px solid ${
+    <div class='pointer-events-auto max-w-lg'>
+      <div class="flex flex-row items-center gap-3 whitespace-normal mb-3">
+        <img src="${albumImage}" height="100px" width="100px" alt="${artist} - ${album}" style="border: 1px solid ${
       item.color
     }"/>
-      <div>
+        <div>
           <p>${dayjs.utc(startedAt).format("HH:mm")} - ${dayjs
       .utc(endedAt)
       .format("HH:mm")}</p>
           <p class="text-lg font-semibold" style="color: ${
             item.color
-          }">${artist} - ${song}</p>
-          <a class="cursor-pointer hover:underline" href="${songUrl}" target="_blank">Listen on Spotify</a>
-          ${songPreviewUrl ? `<audio src="${songPreviewUrl}" controls />` : ""}
-          </div>
+          }">${song}</p>
+          <p class="text-base leading-tight text-primary">${artist}</p>
+          <p class="text-base leading-tight text-primary">${album}</p>
+        </div>
+      </div>
+      ${
+        songPreviewUrl
+          ? `<audio src="${songPreviewUrl}" class="mb-3" controls></audio>`
+          : ""
+      }
+
+      <a class="cursor-pointer hover:underline" href="${songUrl}" target="_blank">Listen on Spotify</a>
     </div>
       `;
   };
@@ -236,6 +245,7 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
         },
         textStyle: {
           fontFamily: inter.style.fontFamily,
+          color: "#2f2e41",
         },
         series: [
           {

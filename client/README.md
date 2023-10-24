@@ -1,60 +1,34 @@
-![banner](./banner.png)
-
-![Vercel Deployment](https://vercelbadge.vercel.app/api/szilard-dobai/audiocalendar)
-
-# Audiocalendar
-
-Audiocalendar is a unique application that helps you keep track of the songs you've listened to, seamlessly integrating with Spotify and Google Calendar.
-
-## Table of Contents
-
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-- [License](#license)
-
-## Features
-
-- **Track Every Song**: Audiocalendar automatically logs every song you listen to on Spotify, so you never have to wonder what that catchy tune was.
-
-- **Discover Your Music DNA**: Gain insights into your listening habits, favorite genres, and artists. Discover your unique music profile and enhance your music experience.
-
-- **Stay Organized**: Easily manage and organize your song history, making every listening session unforgettable.
-
-## Project Structure
-
-This monorepo is organized as follows:
-
-- **client**: The Next.js web app for Audiocalendar.
-- **packages**: Shared packages.
-- **supabase**: Contains Supabase Edge functions and database migration files.
-
-## Installation
-
-To get started with Audiocalendar, follow these installation steps:
-
-1. Clone this repository:
-
-```bash
-git clone https://github.com/szilard-dobai/audiocalendar.git
-cd audiocalendar
-```
-
-2. Install dependencies:
-
-```bash
-pnpm install
-```
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
-To start up the NextJS app, simply run the following command in either the root of the project, or inside `client/`.
+First, run the development server:
 
 ```bash
+npm run dev
+# or
+yarn dev
+# or
 pnpm dev
 ```
 
-## License
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Audiocalendar is released under the [MIT License](LICENSE).
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

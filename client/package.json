@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0"
+    "@typescript-eslint/parser": "^5.62.0",
+    "next-sitemap": "^4.2.3"
   }
 }

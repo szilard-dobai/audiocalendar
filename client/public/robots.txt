@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://audiocalendar.app
+
+# Sitemaps
+Sitemap: https://audiocalendar.app/sitemap.xml

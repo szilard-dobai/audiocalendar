@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import dayjs from "https://esm.sh/dayjs@1.11.9";
 import { corsHeaders } from "../_shared/cors.ts";
 import { createResponse } from "../_shared/createResponse.ts";
-import { createSlackClient } from "../_shared/slackClient.ts";
+import { postErrorToSlack } from "../_shared/slackClient.ts";
 import { createSpotifyClient } from "../_shared/spotifyClient.ts";
 import {
   createSupabaseServerClient,
@@ -96,11 +96,7 @@ serve(async (req) => {
       data: null,
     });
   } catch (error) {
-    const slack = createSlackClient();
-    await slack.chat.postMessage({
-      text: `Uh oh, \`sync-songs\` encountered an error: ${error.message}!`,
-      channel: "C05QUF7G30F",
-    });
+    await postErrorToSlack("sync-songs", error.message);
 
     console.error(error.message);
 

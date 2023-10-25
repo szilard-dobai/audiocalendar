@@ -4,7 +4,7 @@
 
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import { createResponse } from "../_shared/createResponse.ts";
-import { CHANNEL, createSlackClient } from "../_shared/slackClient.ts";
+import { CHANNEL, postErrorToSlack, slack } from "../_shared/slackClient.ts";
 import { validateRequest } from "./validateRequest.ts";
 
 type InsertPayload = {
@@ -18,8 +18,6 @@ type InsertPayload = {
 };
 
 serve(async (req) => {
-  const slack = createSlackClient();
-
   try {
     validateRequest(req.headers);
     const body = (await req.json()) as InsertPayload;
@@ -34,10 +32,7 @@ serve(async (req) => {
       data: null,
     });
   } catch (error) {
-    await slack.chat.postMessage({
-      text: `*ERROR!* Uh oh, \`notify-user-registered\` encountered an error: ${error.message}`,
-      channel: CHANNEL,
-    });
+    await postErrorToSlack("notify-user-registered", error.message);
 
     console.error(error.message);
 

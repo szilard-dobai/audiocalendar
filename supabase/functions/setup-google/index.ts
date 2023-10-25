@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import { google } from "https://esm.sh/googleapis@126.0.1";
 import { corsHeaders } from "../_shared/cors.ts";
 import { createResponse } from "../_shared/createResponse.ts";
-import { createSlackClient } from "../_shared/slackClient.ts";
+import { postErrorToSlack } from "../_shared/slackClient.ts";
 import { createSupabaseServerClient } from "../_shared/supabaseClient.ts";
 import { getUserFromRequest } from "../_shared/user.ts";
 import { createCalendar, getCalendar } from "./calendar.ts";
@@ -78,11 +78,7 @@ serve(async (req) => {
       data: { calendarId: newCalendar.id },
     });
   } catch (error) {
-    const slack = createSlackClient();
-    await slack.chat.postMessage({
-      text: `Uh oh, \`setup-google\` encountered an error: ${error.message}!`,
-      channel: "C05QUF7G30F",
-    });
+    await postErrorToSlack("setup-google", error.message);
 
     console.error(error.message);
 

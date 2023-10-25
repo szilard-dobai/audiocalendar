@@ -3,7 +3,7 @@ import dayjs from "https://esm.sh/dayjs@1.11.9";
 import { google } from "https://esm.sh/googleapis@126.0.1";
 import { corsHeaders } from "../_shared/cors.ts";
 import { createResponse } from "../_shared/createResponse.ts";
-import { createSlackClient } from "../_shared/slackClient.ts";
+import { postErrorToSlack } from "../_shared/slackClient.ts";
 import { createSupabaseServerClient } from "../_shared/supabaseClient.ts";
 import { verifyPromises } from "../_shared/verifyPromises.ts";
 import { getCalendars, getSongs, getTokens } from "./helpers.ts";
@@ -122,11 +122,7 @@ serve(async (req) => {
       data: null,
     });
   } catch (error) {
-    const slack = createSlackClient();
-    await slack.chat.postMessage({
-      text: `Uh oh, \`push-to-calendar\` encountered an error: ${error.message}!`,
-      channel: "C05QUF7G30F",
-    });
+    await postErrorToSlack("push-to-calendar", error.message);
 
     console.error(error.message);
 

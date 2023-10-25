@@ -4,8 +4,10 @@ const TOKEN = Deno.env.get("VITE_SLACK_TOKEN") || "";
 
 export const CHANNEL = "C05QUF7G30F";
 
-export const createSlackClient = () => {
-  const slack = new WebClient(TOKEN);
+export const slack = new WebClient(TOKEN);
 
-  return slack;
-};
+export const postErrorToSlack = (functionName: string, message: string) =>
+  slack.chat.postMessage({
+    text: `*ERROR!* Uh oh, \`${functionName}\` encountered an error: ${message}!`,
+    channel: CHANNEL,
+  });

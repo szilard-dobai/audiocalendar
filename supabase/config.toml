@@ -88,11 +88,11 @@ auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
 # `twitter`, `slack`, `spotify`, `workos`, `zoom`.
 [auth.external.spotify]
 enabled = true
-client_id = "env(VITE_SPOTIFY_CLIENT_ID)"
+client_id = "env(SPOTIFY_CLIENT_ID)"
 # DO NOT commit your OAuth provider secret to git. Use environment variable substitution instead:
-secret = "env(VITE_SPOTIFY_CLIENT_SECRET)"
+secret = "env(SPOTIFY_CLIENT_SECRET)"
 # Overrides the default auth redirectUrl.
-redirect_uri = "env(VITE_SPOTIFY_REDIRECT_URL)"
+redirect_uri = "env(SPOTIFY_REDIRECT_URL)"
 # Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
 # or any other third-party OIDC providers.
 url = ""

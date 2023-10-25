@@ -8,10 +8,10 @@ import { createSupabaseServerClient } from "../_shared/supabaseClient.ts";
 import { verifyPromises } from "../_shared/verifyPromises.ts";
 import { getCalendars, getSongs, getTokens } from "./helpers.ts";
 
-const GOOGLE_CLIENT_ID = Deno.env.get("VITE_GOOGLE_CLIENT_ID");
-const GOOGLE_CLIENT_SECRET = Deno.env.get("VITE_GOOGLE_CLIENT_SECRET");
+const GOOGLE_CLIENT_ID = Deno.env.get("GOOGLE_CLIENT_ID");
+const GOOGLE_CLIENT_SECRET = Deno.env.get("GOOGLE_CLIENT_SECRET");
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY");
-const PUSH_TO_CALENDAR_SECRET = Deno.env.get("VITE_PUSH_TO_CALENDAR_SECRET");
+const PUSH_TO_CALENDAR_SECRET = Deno.env.get("PUSH_TO_CALENDAR_SECRET");
 
 const validateRequest = (headers: Headers) => {
   if (

@@ -9,8 +9,8 @@ import {
   type SpotifyToken,
 } from "./supabaseClient.ts";
 
-const CLIENT_ID = Deno.env.get("VITE_SPOTIFY_CLIENT_ID") || "";
-const CLIENT_SECRET = Deno.env.get("VITE_SPOTIFY_CLIENT_SECRET") || "";
+const CLIENT_ID = Deno.env.get("SPOTIFY_CLIENT_ID") || "";
+const CLIENT_SECRET = Deno.env.get("SPOTIFY_CLIENT_SECRET") || "";
 
 export const createSpotifyClient = async ({
   accessToken,

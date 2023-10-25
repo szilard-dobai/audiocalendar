@@ -8,8 +8,8 @@ import { getUserFromRequest } from "../_shared/user.ts";
 import { createCalendar, getCalendar } from "./calendar.ts";
 import { parseBody } from "./parseBody.ts";
 
-const GOOGLE_CLIENT_ID = Deno.env.get("VITE_GOOGLE_CLIENT_ID");
-const GOOGLE_CLIENT_SECRET = Deno.env.get("VITE_GOOGLE_CLIENT_SECRET");
+const GOOGLE_CLIENT_ID = Deno.env.get("GOOGLE_CLIENT_ID");
+const GOOGLE_CLIENT_SECRET = Deno.env.get("GOOGLE_CLIENT_SECRET");
 
 serve(async (req) => {
   // This is needed in order to invoke function from a browser.

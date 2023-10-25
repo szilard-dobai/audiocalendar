@@ -14,7 +14,7 @@ const Navigation = () => {
 
       <Link href="/account" passHref legacyBehavior>
         <Button variant="solid" color="complement">
-          My Account
+          My Account (TEST)
         </Button>
       </Link>
     </nav>

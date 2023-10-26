@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
+import Heading from "@/components/Heading";
 import Modal from "@/components/Modal";
 import useGrantSpotifyAccess from "@/hooks/useGrantSpotifyAccess";
 import useRevokeSpotifyAccess from "@/hooks/useRevokeSpotifyAccess";
@@ -106,7 +107,7 @@ const LinkSpotify = ({ isAccessGranted, className }: Props) => {
 
   return (
     <div className={className}>
-      <h1 className="text-lg font-semibold text-primary">Spotify</h1>
+      <Heading level={4}>Spotify</Heading>
 
       {isAccessGranted ? renderRevokeAccess() : renderGrantAccess()}
     </div>

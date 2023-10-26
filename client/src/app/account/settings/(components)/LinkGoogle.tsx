@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
+import Heading from "@/components/Heading";
 import Modal from "@/components/Modal";
 import useGrantGoogleAccess from "@/hooks/useGrantGoogleAccess";
 import useRevokeGoogleAccess from "@/hooks/useRevokeGoogleAccess";
@@ -106,7 +107,7 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
 
   return (
     <div className={className}>
-      <h1 className="text-lg font-semibold text-primary">Google Calendar</h1>
+      <Heading level={4}>Google Calendar</Heading>
 
       {isAccessGranted ? renderRevokeAccess() : renderGrantAccess()}
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
+import Heading from "@/components/Heading";
 import Modal from "@/components/Modal";
 import TextInput from "@/components/TextInput";
 import useDeleteCurrentUser from "@/hooks/useDeleteCurrentUser";
@@ -26,7 +27,9 @@ const DeleteAccount = ({ email, className }: Props) => {
 
   return (
     <div className={className}>
-      <h1 className="text-lg text-red-500 font-semibold">Delete account</h1>
+      <Heading level={4} className="text-red-500">
+        Delete account
+      </Heading>
 
       <p className="mb-3 text-red-500">
         Once you delete your account, there is no going back. Please be certain.

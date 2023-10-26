@@ -37,5 +37,10 @@ export const getCurrentUser = async () => {
     hasSpotifyAccess: !!spotifyToken && !!spotifyToken.refreshToken,
   };
 
-  return GetCurrentUserOutput.parse(currentUser);
+  const parsedUser = GetCurrentUserOutput.parse(currentUser);
+  if ("error" in parsedUser) {
+    throw parsedUser.error;
+  }
+
+  return parsedUser;
 };

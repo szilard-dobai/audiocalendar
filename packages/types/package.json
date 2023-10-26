@@ -9,8 +9,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "supabase": "^1.77.6",
+  "dependencies": {
     "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "supabase": "^1.77.6"
   }
 }

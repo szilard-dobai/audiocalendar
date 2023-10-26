@@ -9,6 +9,7 @@ export type Database = DB;
 
 export type Song = Database["public"]["Tables"]["history"]["Row"];
 export type Calendar = Database["public"]["Tables"]["google_calendars"]["Row"];
+export type Notification = Database["public"]["Tables"]["notifications"]["Row"];
 export type SpotifyToken =
   Database["public"]["Tables"]["spotify_tokens"]["Row"];
 

@@ -228,6 +228,28 @@ export interface Database {
           }
         ]
       }
+      user_preferences: {
+        Row: {
+          emailNotifications: boolean
+          id: string
+        }
+        Insert: {
+          emailNotifications?: boolean
+          id: string
+        }
+        Update: {
+          emailNotifications?: boolean
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_preferences_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       latest_played_songs: {

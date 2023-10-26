@@ -4,6 +4,9 @@ export const CurrentUser = z.object({
   id: z.string(),
   email: z.string(),
   created_at: z.string(),
+  preferences: z.object({
+    emailNotifications: z.boolean(),
+  }),
   hasGoogleAccess: z.boolean(),
   hasSpotifyAccess: z.boolean(),
 });

@@ -22,15 +22,20 @@ export const getCurrentUser = async () => {
     .select("*")
     .eq("userId", user.id)
     .single();
+  const { data: preferences } = await supabase
+    .from("user_preferences")
+    .select("*")
+    .eq("id", user.id)
+    .single();
 
   const currentUser: GetCurrentUserOutput = {
     id: user.id,
     email: user.email!,
     created_at: user.created_at,
+    preferences: preferences!,
     hasGoogleAccess: !!googleToken && !!googleToken.refreshToken,
     hasSpotifyAccess: !!spotifyToken && !!spotifyToken.refreshToken,
   };
-  GetCurrentUserOutput.parse(currentUser);
 
-  return currentUser;
+  return GetCurrentUserOutput.parse(currentUser);
 };

@@ -39,14 +39,22 @@ serve(async (req) => {
       throw new Error(`Missing user email address for user ${userId}`);
     }
 
-    await sendEmail({
-      to: user.email,
-      data: {
-        createdAt,
-        type,
-        message,
-      },
-    });
+    const { data: preferences } = await supabase
+      .from("user_preferences")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    if (preferences?.emailNotifications) {
+      await sendEmail({
+        to: user.email,
+        data: {
+          createdAt,
+          type,
+          message,
+        },
+      });
+    }
 
     return createResponse({
       code: 200,

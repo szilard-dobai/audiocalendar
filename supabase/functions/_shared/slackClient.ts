@@ -8,6 +8,6 @@ export const slack = new WebClient(TOKEN);
 
 export const postErrorToSlack = (functionName: string, message: string) =>
   slack.chat.postMessage({
-    text: `*ERROR!* Uh oh, \`${functionName}\` encountered an error: ${message}!`,
+    text: `*ERROR!* Uh oh, \`${functionName}\` encountered an issue: ${message}!`,
     channel: CHANNEL,
   });

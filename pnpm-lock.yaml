@@ -122,14 +122,13 @@ importers:
         version: 4.2.3(next@13.4.19)
 
   packages/types:
-    dependencies:
-      zod:
-        specifier: ^3.22.2
-        version: 3.22.2
     devDependencies:
       supabase:
         specifier: ^1.77.6
         version: 1.77.6
+      zod:
+        specifier: ^3.22.2
+        version: 3.22.2
 
   supabase:
     devDependencies:
@@ -4536,7 +4535,6 @@ packages:
 
   /zod@3.22.2:
     resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
-    dev: false
 
   /zrender@5.4.4:
     resolution: {integrity: sha512-0VxCNJ7AGOMCWeHVyTrGzUgrK4asT4ml9PEkeGirAkKNYXYzoPJCLvmyfdoOXcjTHPs10OZVMfD1Rwg16AZyYw==}

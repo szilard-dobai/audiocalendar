@@ -6,7 +6,12 @@ import { createResponse } from "../_shared/createResponse.ts";
 import { postErrorToSlack } from "../_shared/slackClient.ts";
 import { createSupabaseServerClient } from "../_shared/supabaseClient.ts";
 import { verifyPromises } from "../_shared/verifyPromises.ts";
-import { getCalendars, getSongs, getTokens } from "./helpers.ts";
+import {
+  getCalendars,
+  getNotifications,
+  getSongs,
+  getTokens,
+} from "./helpers.ts";
 
 const GOOGLE_CLIENT_ID = Deno.env.get("GOOGLE_CLIENT_ID");
 const GOOGLE_CLIENT_SECRET = Deno.env.get("GOOGLE_CLIENT_SECRET");
@@ -36,6 +41,7 @@ serve(async (req) => {
     const songsMap = await getSongs(supabase);
     const calendarsMap = await getCalendars(supabase);
     const tokens = await getTokens(supabase);
+    const notificationsMap = await getNotifications(supabase);
 
     const gCal = google.calendar("v3");
 
@@ -44,8 +50,14 @@ serve(async (req) => {
         const userId = token.userId;
         const songs = songsMap[userId];
         const { id: calendarId } = calendarsMap[userId];
+        const notification = notificationsMap[userId];
 
-        if (!songs || !songs.length || !calendarId) {
+        if (
+          !songs ||
+          !songs.length ||
+          !calendarId ||
+          (notification && !notification.resolved)
+        ) {
           return;
         }
 

@@ -12,6 +12,12 @@ export type Calendar = Database["public"]["Tables"]["google_calendars"]["Row"];
 export type Notification = Database["public"]["Tables"]["notifications"]["Row"];
 export type SpotifyToken =
   Database["public"]["Tables"]["spotify_tokens"]["Row"];
+export type NotificationType = Database["public"]["Enums"]["notification_type"];
+export const NotificationType: Record<NotificationType, NotificationType> = {
+  INVALID_GOOGLE_REFRESH_TOKEN: "INVALID_GOOGLE_REFRESH_TOKEN",
+  INVALID_SPOTIFY_REFRESH_TOKEN: "INVALID_SPOTIFY_REFRESH_TOKEN",
+  OTHER: "OTHER",
+};
 
 export const createSupabaseClient = (token: string) => {
   const supabaseClient = createClient<DB>(

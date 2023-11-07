@@ -1,8 +1,6 @@
 import {
-  NotificationType,
   type Calendar,
   type Client,
-  type Notification,
   type Song,
 } from "../_shared/supabaseClient.ts";
 
@@ -47,18 +45,4 @@ export const getTokens = async (supabase: Client) => {
     throw new Error("No tokens!");
   }
   return tokens;
-};
-
-export const getNotifications = async (supabase: Client) => {
-  const { data: notifications } = await supabase
-    .from("notifications")
-    .select("*")
-    .eq("type", NotificationType.INVALID_GOOGLE_REFRESH_TOKEN);
-  const notificationsMap =
-    notifications?.reduce<Record<string, Notification>>(
-      (acc, it) => ({ ...acc, [it.userId]: it }),
-      {}
-    ) || {};
-
-  return notificationsMap;
 };

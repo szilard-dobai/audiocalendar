@@ -5,9 +5,7 @@ import { createResponse } from "../_shared/createResponse.ts";
 import { postErrorToSlack } from "../_shared/slackClient.ts";
 import { createSpotifyClient } from "../_shared/spotifyClient.ts";
 import {
-  NotificationType,
   createSupabaseServerClient,
-  type Notification,
   type Song,
 } from "../_shared/supabaseClient.ts";
 import { verifyPromises } from "../_shared/verifyPromises.ts";
@@ -38,16 +36,6 @@ serve(async (req) => {
         {}
       ) || {};
 
-    const { data: notifications } = await supabase
-      .from("notifications")
-      .select("*")
-      .eq("type", NotificationType.INVALID_SPOTIFY_REFRESH_TOKEN);
-    const notificationsMap =
-      notifications?.reduce<Record<string, Notification>>(
-        (acc, it) => ({ ...acc, [it.userId]: it }),
-        {}
-      ) || {};
-
     const { data: spotifyTokens } = await supabase
       .from("spotify_tokens")
       .select("*");
@@ -59,11 +47,6 @@ serve(async (req) => {
       spotifyTokens.map(async (token) => {
         const userId = token.userId;
         const latestSong = latestUserSongMap[userId];
-
-        const notification = notificationsMap[userId];
-        if (notificationsMap && !notification.resolved) {
-          return;
-        }
 
         const spotify = await createSpotifyClient(token);
         if (!spotify) {

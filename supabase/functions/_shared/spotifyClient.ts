@@ -23,17 +23,17 @@ export const createSpotifyClient = async ({
   const now = dayjs();
   let token: string | null;
 
+  if (!refreshToken) {
+    console.log(`Missing refresh token for ${userId}`);
+    return;
+  }
+
   if (
     !accessToken ||
     !expiresAt ||
     !expiresIn ||
     dayjs(expiresAt).isBefore(now)
   ) {
-    if (!refreshToken) {
-      console.log(`Missing refresh token for ${userId}`);
-      return;
-    }
-
     console.log(`Refreshing token for ${userId}`);
     const newToken = await getNewAccessToken(refreshToken)
       .catch(async (error) => {

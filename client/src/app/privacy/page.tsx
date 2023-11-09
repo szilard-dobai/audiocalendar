@@ -5,7 +5,7 @@ const Privacy = () => {
   return (
     <div className="text-justify text-primary">
       <Heading level={1}>Privacy Policy</Heading>
-      <p>Last updated: October 23, 2023</p>
+      <p>Last updated: November 9, 2023</p>
 
       <br />
 
@@ -231,6 +231,18 @@ const Privacy = () => {
         You choose to provide such information and Personal Data, during
         registration or otherwise, You are giving the Company permission to use,
         share, and store it in a manner consistent with this Privacy Policy.
+      </p>
+      <p>
+        The Service&apos;s use and transfer of information received from Google
+        APIs to any other app will adhere to{" "}
+        <Link
+          href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes"
+          target="_blank"
+          className="text-brand font-semibold hover:underline"
+        >
+          Google API Services User Data Policy
+        </Link>
+        , including the Limited Use requirements.
       </p>
 
       <br />

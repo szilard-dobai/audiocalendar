@@ -1,4 +1,5 @@
 import Card from "@/components/Card";
+import Link from "next/link";
 import CollapsibleDefinition from "./CollapsibleDefinition";
 
 const FAQ = () => (
@@ -17,9 +18,24 @@ const FAQ = () => (
 
         <CollapsibleDefinition
           term="Is my data safe?"
-          description="We take your privacy seriously. Audiocalendar only accesses the
-        necessary information to create calendar events. Your data is secure and
-        never shared with third parties."
+          description={
+            <>
+              We take your privacy seriously. Audiocalendar only accesses the
+              necessary information to create calendar events. Your data is
+              secure and never shared with third parties.
+              <br />
+              Audiocalendar&apos;s use and transfer of information received from
+              Google APIs to any other app will adhere to{" "}
+              <Link
+                href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes"
+                target="_blank"
+                className="font-semibold hover:underline"
+              >
+                Google API Services User Data Policy
+              </Link>
+              , including the Limited Use requirements.
+            </>
+          }
         />
 
         <CollapsibleDefinition

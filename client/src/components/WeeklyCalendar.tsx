@@ -147,7 +147,10 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
           : ""
       }
 
-      <a class="cursor-pointer hover:underline" href="${songUrl}" target="_blank">Listen on Spotify</a>
+      <a class="cursor-pointer hover:underline inline-flex items-center gap-1" href="${songUrl}" target="_blank">
+        <img src="../../spotify.svg" alt="Spotify Logo" width="25px" height="25px" />
+        PLAY ON SPOTIFY
+      </a>
     </div>
       `;
   };

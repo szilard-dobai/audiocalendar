@@ -6,6 +6,7 @@ import { useGetSongs, type Song } from "@/hooks/useGetSongs";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import chevronLeft from "@public/chevron-left-solid.svg";
 import chevronRight from "@public/chevron-right-solid.svg";
+import spotify from "@public/spotify.svg";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import Image from "next/image";
@@ -154,6 +155,15 @@ const AccountPage = () => {
                   <br />
                   {statistics.songOfTheWeek.song} (
                   {statistics.songOfTheWeek.count})
+                  <br />
+                  <Image
+                    src={spotify}
+                    alt="Spotify Logo"
+                    width="25"
+                    height="25"
+                    className="inline"
+                  />
+                  <span className="ml-1 text-lg">PLAY ON SPOTIFY</span>
                 </a>
               ) : (
                 "-"

@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "supabase": "^1.77.6",
-    "zod": "^3.22.2"
+    "supabase": "^1.165.0",
+    "zod": "^3.23.8"
   }
 }

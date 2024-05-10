@@ -9,7 +9,7 @@ import type {
   SeriesOption,
 } from "echarts";
 import { graphic } from "echarts";
-import type { CallbackDataParams } from "echarts/types/dist/shared";
+import type { CallbackDataParams } from "echarts/types/dist/shared.js";
 import ReactEcharts from "./ReactEcharts";
 
 type Song = Database["public"]["Tables"]["history"]["Row"];

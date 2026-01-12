@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "pipeline": {
+  "tasks": {
     "dev": {
       "dependsOn": ["@audiocalendar/types#generate", "@audiocalendar/supabase#start"],
       "cache": false,

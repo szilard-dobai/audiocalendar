@@ -46,7 +46,8 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
   };
 
   const renderItem = (
-    params: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    params: any, // ECharts CustomSeriesRenderItemParams is not properly exported
     api: CustomSeriesRenderItemAPI
   ): CustomSeriesRenderItemReturn => {
     if (!api.size) {
@@ -122,7 +123,7 @@ const WeeklyCalendar = ({ data = [], startTimestamp }: Props) => {
   const formatTooltip = (item: CallbackDataParams) => {
     const { albumImage, album, artist, song, songUrl, songPreviewUrl } =
       data[item.dataIndex];
-    const [_, startedAt, endedAt] = item.value as number[];
+    const [, startedAt, endedAt] = item.value as number[];
 
     return `
     <div class='pointer-events-auto max-w-lg'>

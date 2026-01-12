@@ -3,9 +3,7 @@
 import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 import Loader from "./Loader";
 
-type Props = { className?: string };
-
-const GlobalLoader = ({ className = "" }: Props) => {
+const GlobalLoader = () => {
   const isFetching = useIsFetching();
   const isMutating = useIsMutating();
 

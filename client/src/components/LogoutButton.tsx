@@ -10,7 +10,7 @@ type Props = {
 
 const Logout = ({ className = "" }: Props) => {
   const router = useRouter();
-  const { mutateAsync: logout, isLoading } = useLogout();
+  const { mutateAsync: logout, isPending } = useLogout();
 
   const handleClick = async () => {
     await logout();
@@ -21,7 +21,7 @@ const Logout = ({ className = "" }: Props) => {
     <Button
       className={`${className} flex items-center`}
       variant="outline"
-      disabled={isLoading}
+      disabled={isPending}
       onClick={handleClick}
     >
       Logout

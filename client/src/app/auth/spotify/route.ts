@@ -1,4 +1,4 @@
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { type CookieOptions, createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 import { PostSpotifyInput } from "./schema";
@@ -10,20 +10,44 @@ export const POST = async (req: NextRequest) => {
     const { access_token, expires, expires_in, refresh_token } =
       PostSpotifyInput.parse(body);
 
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const cookieStore = await cookies();
+    const supabase = createServerClient<Database>(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return cookieStore.getAll();
+          },
+          setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
+            try {
+              cookiesToSet.forEach(({ name, value, options }) =>
+                cookieStore.set(name, value, options)
+              );
+            } catch {
+              // The `setAll` method was called from a Server Component.
+              // This can be ignored if you have middleware refreshing
+              // user sessions.
+            }
+          },
+        },
+      }
+    );
     const {
       data: { session },
     } = await supabase.auth.getSession();
-    await supabase.from("spotify_tokens").upsert(
-      {
-        userId: session!.user.id,
-        accessToken: access_token,
-        refreshToken: refresh_token,
-        expiresAt: expires,
-        expiresIn: expires_in,
-      },
-      { onConflict: "userId" }
-    );
+
+    type SpotifyToken = Database["public"]["Tables"]["spotify_tokens"]["Insert"];
+    const tokenData: SpotifyToken = {
+      userId: session!.user.id,
+      accessToken: access_token,
+      refreshToken: refresh_token,
+      expiresAt: expires,
+      expiresIn: expires_in,
+    };
+
+    await supabase.from("spotify_tokens").upsert(tokenData, { onConflict: "userId" });
+
     await supabase
       .from("notifications")
       .update({ resolved: true })

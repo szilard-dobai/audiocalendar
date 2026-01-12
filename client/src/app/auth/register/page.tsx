@@ -12,7 +12,7 @@ import { useState, type FormEvent } from "react";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { mutateAsync: register, isLoading, error } = useRegister();
+  const { mutateAsync: register, isPending, error } = useRegister();
 
   const handleRegister = async (provider?: "google" | "spotify") => {
     const data = await (provider
@@ -39,7 +39,7 @@ const Register = () => {
         <Button
           className="flex items-center"
           variant="outline"
-          disabled={isLoading}
+          disabled={isPending}
           onClick={() => handleRegister("google")}
         >
           <Image src={google} alt="Google Logo" className="inline w-8 mr-2" />
@@ -48,7 +48,7 @@ const Register = () => {
         <Button
           className="flex items-center"
           variant="outline"
-          disabled={isLoading}
+          disabled={isPending}
           onClick={() => handleRegister("spotify")}
         >
           <Image src={spotify} alt="Spotify Logo" className="inline w-8 mr-2" />
@@ -80,7 +80,7 @@ const Register = () => {
         <Button
           className="mb-4"
           type="submit"
-          disabled={isLoading || !password || !email}
+          disabled={isPending || !password || !email}
         >
           Sign up
         </Button>

@@ -1,7 +1,7 @@
 "use client";
 
 import QueryKeys from "@/hooks/queryKeys";
-import { Scopes, SpotifyApi } from "@spotify/web-api-ts-sdk";
+import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";

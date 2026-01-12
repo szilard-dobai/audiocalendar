@@ -17,7 +17,7 @@ const DeleteAccount = ({ email, className }: Props) => {
   const [verification, setVerification] = useState("");
   const {
     mutate: deleteAccount,
-    isLoading: isDeletingAccount,
+    isPending: isDeletingAccount,
     error: errorDeletingAccount,
   } = useDeleteCurrentUser();
 

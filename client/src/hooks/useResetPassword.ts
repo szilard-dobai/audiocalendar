@@ -1,4 +1,4 @@
-import { createSupabaseClient } from "@/utils/client/supabase";
+import { createClient } from "@/utils/client/supabase";
 import { useMutation } from "@tanstack/react-query";
 
 export type ResetPasswordInput = {
@@ -6,7 +6,7 @@ export type ResetPasswordInput = {
 };
 
 const useResetPassword = () => {
-  const supabase = createSupabaseClient();
+  const supabase = createClient();
 
   return useMutation<void, string, ResetPasswordInput>({
     mutationFn: async ({ email }) => {

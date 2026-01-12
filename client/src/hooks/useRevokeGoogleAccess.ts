@@ -1,11 +1,11 @@
 "use client";
 
 import QueryKeys from "@/hooks/queryKeys";
-import { createSupabaseClient } from "@/utils/client/supabase";
+import { createClient } from "@/utils/client/supabase";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const useRevokeGoogleAccess = () => {
-  const supabase = createSupabaseClient();
+  const supabase = createClient();
   const queryClient = useQueryClient();
 
   return useMutation<void, string, void>({

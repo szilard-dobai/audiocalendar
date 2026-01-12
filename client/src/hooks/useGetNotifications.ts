@@ -1,9 +1,9 @@
-import { createSupabaseClient } from "@/utils/client/supabase";
+import { createClient } from "@/utils/client/supabase";
 import { useQuery } from "@tanstack/react-query";
 import QueryKeys from "./queryKeys";
 
 const useGetNotifications = () => {
-  const supabase = createSupabaseClient();
+  const supabase = createClient();
 
   return useQuery({
     queryFn: async () => {

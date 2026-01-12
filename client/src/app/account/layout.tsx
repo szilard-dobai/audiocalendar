@@ -6,6 +6,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import type { PropsWithChildren } from "react";
 import Menu from "./(components)/Menu";
 
+export const dynamic = "force-dynamic";
+
 const AccountLayout = ({ children }: PropsWithChildren) => {
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>

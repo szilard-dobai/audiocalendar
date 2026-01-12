@@ -18,9 +18,6 @@ const TODAY = dayjs();
 
 type SongWithCount = Song & { count: number };
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 const AccountPage = () => {
   const isMobile = useIsMobile();
   const [referenceDate, setReferenceDate] = useState(dayjs());

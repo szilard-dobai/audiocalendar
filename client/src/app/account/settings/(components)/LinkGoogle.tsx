@@ -17,12 +17,12 @@ const LinkGoogle = ({ isAccessGranted, className }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     mutate: grantAccess,
-    isLoading: isGrantingAccess,
+    isPending: isGrantingAccess,
     error: errorGrantingAccess,
   } = useGrantGoogleAccess();
   const {
     mutate: revokeAccess,
-    isLoading: isRevokingAccess,
+    isPending: isRevokingAccess,
     error: errorRevokingAccess,
   } = useRevokeGoogleAccess();
 

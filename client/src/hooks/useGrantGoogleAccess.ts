@@ -1,12 +1,12 @@
 "use client";
 
 import QueryKeys from "@/hooks/queryKeys";
-import { createSupabaseClient } from "@/utils/client/supabase";
+import { createClient } from "@/utils/client/supabase";
 import { useGoogleLogin, type CodeResponse } from "@react-oauth/google";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const useGrantGoogleAccess = () => {
-  const supabase = createSupabaseClient();
+  const supabase = createClient();
   const queryClient = useQueryClient();
 
   const mutationResult = useMutation<void, string, CodeResponse>({

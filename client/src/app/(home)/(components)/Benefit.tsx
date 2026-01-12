@@ -1,9 +1,9 @@
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { type ReactNode } from "react";
 
 type Props = {
   className?: string;
-  imageSrc: any;
+  imageSrc: StaticImageData | string;
   imageAlt: string;
   title: string;
   description: ReactNode;

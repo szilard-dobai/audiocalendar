@@ -8,7 +8,7 @@ type Props = {
 };
 
 const Preferences = ({ emailNotifications, className = "" }: Props) => {
-  const { mutate, isLoading } = useToggleEmailNotifications();
+  const { mutate, isPending } = useToggleEmailNotifications();
 
   return (
     <div
@@ -22,7 +22,7 @@ const Preferences = ({ emailNotifications, className = "" }: Props) => {
         </p>
       </div>
       <Switch
-        disabled={isLoading}
+        disabled={isPending}
         checked={emailNotifications}
         onChange={(checked) => mutate({ areOn: checked })}
         checkedIcon={false}

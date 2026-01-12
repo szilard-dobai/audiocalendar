@@ -1,6 +1,6 @@
 import google from "@public/google.svg";
 import spotify from "@public/spotify.svg";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { forwardRef } from "react";
 
 type Props = JSX.IntrinsicElements["button"] & {
@@ -11,7 +11,7 @@ type Props = JSX.IntrinsicElements["button"] & {
 
 const imageMap: Record<
   NonNullable<Props["image"]>,
-  { src: any; alt: string }
+  { src: StaticImageData; alt: string }
 > = {
   google: { src: google, alt: "Google Logo" },
   spotify: { src: spotify, alt: "Spotify Logo" },

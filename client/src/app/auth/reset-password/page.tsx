@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
-  const { mutateAsync: updatePassword, isLoading, error } = useUpdatePassword();
+  const { mutateAsync: updatePassword, isPending, error } = useUpdatePassword();
 
   const handleClick = async () => {
     await updatePassword({ password });
@@ -34,7 +34,7 @@ const ResetPassword = () => {
       />
       {!!error && <p className="text-rose-500 font-semibold mb-6">{error}</p>}
 
-      <Button onClick={handleClick} disabled={isLoading || !password}>
+      <Button onClick={handleClick} disabled={isPending || !password}>
         Submit
       </Button>
     </div>

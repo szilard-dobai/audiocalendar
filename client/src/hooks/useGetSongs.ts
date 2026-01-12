@@ -1,4 +1,4 @@
-import { createSupabaseClient } from "@/utils/client/supabase";
+import { createClient } from "@/utils/client/supabase";
 import type { Database } from "@audiocalendar/types";
 import { useQuery } from "@tanstack/react-query";
 import QueryKeys from "./queryKeys";
@@ -6,9 +6,9 @@ import QueryKeys from "./queryKeys";
 export type Song = Database["public"]["Tables"]["history"]["Row"];
 
 export const useGetSongs = (from: string, to: string) => {
-  const supabase = createSupabaseClient();
+  const supabase = createClient();
 
-  return useQuery({
+  return useQuery<Song[]>({
     queryFn: async () => {
       const {
         data: { session },
@@ -26,9 +26,9 @@ export const useGetSongs = (from: string, to: string) => {
         .lte("playedAt", to)
         .throwOnError();
 
-      return data;
+      return data ?? [];
     },
     queryKey: QueryKeys.songs(from),
-    keepPreviousData: true,
+    // keepPreviousData removed in v5, use placeholderData for similar behavior
   });
 };

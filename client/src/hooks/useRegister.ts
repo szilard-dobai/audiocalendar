@@ -1,4 +1,4 @@
-import { createSupabaseClient } from "@/utils/client/supabase";
+import { createClient } from "@/utils/client/supabase";
 import { useMutation } from "@tanstack/react-query";
 
 export type RegisterInput =
@@ -11,7 +11,7 @@ export type RegisterInput =
     };
 
 const useRegister = () => {
-  const supabase = createSupabaseClient();
+  const supabase = createClient();
 
   const register = async (input: RegisterInput) => {
     const promise =

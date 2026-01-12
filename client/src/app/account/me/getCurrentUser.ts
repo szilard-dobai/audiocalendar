@@ -1,8 +1,8 @@
-import { createSupabaseClient } from "@/utils/handler/supabase";
+import { createClient } from "@/utils/handler/supabase";
 import { GetCurrentUserOutput } from "./schema";
 
 export const getCurrentUser = async () => {
-  const supabase = createSupabaseClient();
+  const supabase = await createClient();
 
   const {
     data: { user },
@@ -33,8 +33,8 @@ export const getCurrentUser = async () => {
     email: user.email!,
     created_at: user.created_at,
     preferences: preferences!,
-    hasGoogleAccess: !!googleToken && !!googleToken.refreshToken,
-    hasSpotifyAccess: !!spotifyToken && !!spotifyToken.refreshToken,
+    hasGoogleAccess: !!googleToken?.refreshToken,
+    hasSpotifyAccess: !!spotifyToken?.refreshToken,
   };
 
   const parsedUser = GetCurrentUserOutput.parse(currentUser);

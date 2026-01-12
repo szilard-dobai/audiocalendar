@@ -13,11 +13,11 @@ const QueryClientProvider = ({ children }: PropsWithChildren) => {
         defaultOptions: {
           queries: {
             staleTime: 1 * 60 * 1000, // 1 minute
-            cacheTime: 14 * 24 * 60 * 60 * 1000, // 2 weeks
+            gcTime: 14 * 24 * 60 * 60 * 1000, // 2 weeks
             refetchOnWindowFocus: true,
             refetchOnReconnect: "always",
             refetchOnMount: true,
-            keepPreviousData: true,
+            // keepPreviousData removed in v5, use placeholderData instead if needed
           },
         },
       })

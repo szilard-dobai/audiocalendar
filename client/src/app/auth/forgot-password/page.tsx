@@ -10,7 +10,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const {
     mutate: resetPassword,
-    isLoading,
+    isPending,
     isSuccess,
     error,
   } = useResetPassword();
@@ -48,7 +48,7 @@ const ForgotPassword = () => {
           </p>
         )}
 
-        <Button className="mb-4" type="submit" disabled={isLoading || !email}>
+        <Button className="mb-4" type="submit" disabled={isPending || !email}>
           Submit
         </Button>
       </form>

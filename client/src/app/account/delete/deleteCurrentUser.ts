@@ -1,11 +1,13 @@
 import {
-  createSupabaseAdminClient,
-  createSupabaseClient,
+  createAdminClient,
+  createClient,
 } from "@/utils/handler/supabase";
 
 export const deleteCurrentUser = async () => {
-  const supabase = createSupabaseClient();
-  const admin = createSupabaseAdminClient();
+  const [supabase, admin] = await Promise.all([
+    createClient(),
+    Promise.resolve(createAdminClient())
+  ]);
 
   const {
     data: { user },

@@ -16,17 +16,17 @@ export const getCurrentUser = async () => {
     .from("google_tokens")
     .select("*")
     .eq("userId", user.id)
-    .single();
+    .maybeSingle();
   const { data: spotifyToken } = await supabase
     .from("spotify_tokens")
     .select("*")
     .eq("userId", user.id)
-    .single();
+    .maybeSingle();
   const { data: preferences } = await supabase
     .from("user_preferences")
     .select("*")
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
 
   const currentUser: GetCurrentUserOutput = {
     id: user.id,

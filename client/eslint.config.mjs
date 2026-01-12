@@ -24,6 +24,7 @@ const config = [
       '**/build/**',
       '**/*.config.js',
       '**/*.config.mjs',
+      'next-env.d.ts',
     ],
   },
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
@@ -31,13 +32,11 @@ const config = [
     plugins: {
       '@typescript-eslint': typescriptEslint,
     },
-
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 'latest',
       sourceType: 'module',
     },
-
     rules: {
       '@typescript-eslint/consistent-type-imports': [
         'error',
